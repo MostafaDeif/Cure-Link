@@ -3,6 +3,8 @@ import { useState } from "react";
 import "./App.css";
 
 // Pages & Components
+import ScrollToTop from "./Components/ScrollToTop";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Error from "./Pages/Error";
@@ -13,7 +15,8 @@ import Medicine from "./Pages/Medicine";
 import Nursing from "./Pages/Nurcing";
 import User from "./Pages/User";
 import Admin from "./Pages/Admin";
-import ProtectedRoute from "./Pages/ProtectedRoute";
+import Cart from "./Pages/Cart";
+import ProductInfo from "./Pages/ProductInfo";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -35,15 +38,19 @@ const App = () => {
 
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/medicine" element={<Medicine />} />
           <Route path="/nursing" element={<Nursing />} />
-          <Route path="/user" element={<User />} />
           <Route path="/login" element={<Login setAuth={setAuth} />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/product" element={<ProductInfo />} />
+          <Route path="/cart" element={<Cart />} />
+          {/* protected routes */}
+          <Route path="/user"  element={<ProtectedRoute user={auth}><User /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute user={auth}><Admin /></ProtectedRoute>} />
           <Route path="*" element={<Error />} />
         </Routes>
