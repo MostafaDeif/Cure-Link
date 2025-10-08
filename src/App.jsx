@@ -17,12 +17,13 @@ import User from "./Pages/User";
 import Admin from "./Pages/Admin";
 import Cart from "./Pages/Cart";
 import ProductInfo from "./Pages/ProductInfo";
+import SignUp from "./Pages/Register";
 
 const Layout = ({ children }) => {
   const location = useLocation();
 
   // Navbar يظهر فقط في الصفحات اللي موجودة هنا
-  const showNavbarOn = ["/", "/about", "/medicine", "/pharmacy", "/nursing", "/user", "/admin"];
+  const showNavbarOn = ["/", "/about", "/medicine", "/pharmacy", "/nursing", "/user", "/admin", "/cart", "/product"];
   const showNavbar = showNavbarOn.includes(location.pathname);
 
   return (
@@ -32,7 +33,7 @@ const Layout = ({ children }) => {
     </>
   );
 };
-// pull me
+
 const App = () => {
   const [auth, setAuth] = useState(false);
 
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/product" element={<ProductInfo />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/signup" element={<SignUp />} />
           {/* protected routes */}
           <Route path="/user"  element={<ProtectedRoute user={auth}><User /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute user={auth}><Admin /></ProtectedRoute>} />
