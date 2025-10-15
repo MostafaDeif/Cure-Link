@@ -5,7 +5,11 @@ const User = () => {
   const [activeSection, setActiveSection] = useState("profile");
 
   return (
-    <div className="flex flex-col md:flex-row bg-gray-50 p-2 md:p-4 rounded-xl" dir="rtl">
+    <div
+      className="flex flex-col md:flex-row bg-gray-50 p-2 md:p-4 rounded-xl"
+      dir="rtl"
+      style={{ minHeight: "80vh" }}
+    >
       {/* القائمة الجانبية */}
       <div className="w-full md:w-1/4 bg-white p-4 rounded-lg shadow mb-4 md:mb-0 md:ml-5" style={{ backgroundColor: "#EDF3F5" }}>
         <div className="text-center mb-4">
