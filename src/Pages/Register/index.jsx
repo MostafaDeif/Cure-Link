@@ -10,7 +10,6 @@ export default function SignUp() {
   const [selectedRole, setSelectedRole] = useState(null);
   const navigate = useNavigate();
 
-  // استدعاء الصور يدوياً
   const roleImages = {
     Client: clientImg,
     Doctor: doctorImg,
@@ -92,7 +91,6 @@ export default function SignUp() {
               />
             </div>
 
-            {/* تعديل هنا: استدعاء الصور يدوياً */}
             <div className="mt-6 w-full">
               <p className="text-sm text-gray-500/90 mb-3 text-center">
                 Choose your role:
