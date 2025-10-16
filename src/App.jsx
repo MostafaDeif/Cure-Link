@@ -18,6 +18,10 @@ import Admin from "./Pages/Admin";
 import Cart from "./Pages/Cart";
 import ProductInfo from "./Pages/ProductInfo";
 import SignUp from "./Pages/Register";
+import Landing from "./Components/Landing";
+import DoctorRegister from "./Pages/Register/DoctorRegister";
+import UnderReview from "./Pages/UnderReview";
+
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -56,6 +60,11 @@ const App = () => {
           {/* <Route path="/user"  element={<ProtectedRoute user={auth}><User /></ProtectedRoute>} /> */}
           <Route path="/admin" element={<ProtectedRoute user={auth}><Admin /></ProtectedRoute>} />
           <Route path="*" element={<Error />} />
+          <Route path="/landing" element={<Landing />} />
+          <Route path="/doctor-register" element={<DoctorRegister />} />
+          <Route path="/under-review" element={<UnderReview />} />
+
+
         </Routes>
       </Layout>
     </Router>
