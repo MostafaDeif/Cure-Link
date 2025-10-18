@@ -20,6 +20,8 @@ import ProductInfo from "./Pages/ProductInfo";
 import SignUp from "./Pages/Register";
 import Landing from "./Components/Landing";
 import DoctorRegister from "./Pages/Register/DoctorRegister";
+import NurseRegister from "./Pages/Register/NurseRegister";
+import PharmacyRegister from "./Pages/Register/PharmacyRegister";
 import UnderReview from "./Pages/UnderReview";
 
 
@@ -62,6 +64,9 @@ const App = () => {
           <Route path="*" element={<Error />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/doctor-register" element={<DoctorRegister />} />
+          <Route path="/nurse-register" element={< NurseRegister/>}/>
+           <Route path="/pharmacy-register" element={< PharmacyRegister/>}/>
+
           <Route path="/under-review" element={<UnderReview />} />
 
 
