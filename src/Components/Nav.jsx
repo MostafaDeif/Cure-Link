@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/JustLogo.jpg'
+import Services from '../Pages/Services'
 
 
 export default function Nav() {
@@ -22,6 +23,7 @@ export default function Nav() {
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
                 <Link to="/contact">Contact</Link>
+                <Link to="/services">Services</Link>
 
                 <Link to="/user" className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition">
                     <span className="inline-block h-8 w-8 rounded-full bg-gray-200 overflow-hidden">

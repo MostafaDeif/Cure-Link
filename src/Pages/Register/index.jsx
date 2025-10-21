@@ -48,7 +48,7 @@ export default function SignUp() {
 
             <button
               type="button"
-              className="w-full mt-8 bg-gray-500/10 flex items-center justify-center h-12 rounded-full"
+              className="w-full mt-2 bg-gray-500/10 flex items-center justify-center h-12 rounded-full"
             >
               <img
                 src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleLogo.svg"
@@ -120,7 +120,7 @@ export default function SignUp() {
 
             <button
               type="submit"
-              className="mt-8 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity"
+              className="mt-4 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity"
             >
               Sign Up
             </button>

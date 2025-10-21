@@ -23,13 +23,17 @@ import DoctorRegister from "./Pages/Register/DoctorRegister";
 import NurseRegister from "./Pages/Register/NurseRegister";
 import PharmacyRegister from "./Pages/Register/PharmacyRegister";
 import UnderReview from "./Pages/UnderReview";
+import Services from "./Pages/Services";
+import Pharmacy from "./Pages/Pharmacy";
+import Doctor from "./Pages/Doctor";
 
 
 const Layout = ({ children }) => {
   const location = useLocation();
 
   // Navbar يظهر فقط في الصفحات اللي موجودة هنا
-  const showNavbarOn = ["/", "/about", "/medicine", "/pharmacy", "/nursing", "/user", "/admin", "/cart", "/product"];
+  const showNavbarOn = ["/", "/about", "/medicine", "/pharmacy", "/nursing", "/user", "/admin", "/cart", "/product", "/services",
+     "/doctor", "/pharmacy"];
   const showNavbar = showNavbarOn.includes(location.pathname);
 
   return (
@@ -56,19 +60,22 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/product" element={<ProductInfo />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/pharmacy" element={<Pharmacy />} />
+          <Route path="/doctor" element={<Doctor />} />
           <Route path="/signup" element={<SignUp />} />
+
           {/* protected routes */}
           <Route path="/user"  element={<User />} />
           {/* <Route path="/user"  element={<ProtectedRoute user={auth}><User /></ProtectedRoute>} /> */}
           <Route path="/admin" element={<ProtectedRoute user={auth}><Admin /></ProtectedRoute>} />
-          <Route path="*" element={<Error />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/doctor-register" element={<DoctorRegister />} />
-          <Route path="/nurse-register" element={< NurseRegister/>}/>
+          <Route path="/nurse-register" element={<NurseRegister />} />
            <Route path="/pharmacy-register" element={< PharmacyRegister/>}/>
 
           <Route path="/under-review" element={<UnderReview />} />
-
+          <Route path="*" element={<Error />} />
 
         </Routes>
       </Layout>
