@@ -22,6 +22,7 @@ import Landing from "./Components/Landing";
 import DoctorRegister from "./Pages/Register/DoctorRegister";
 import NurseRegister from "./Pages/Register/NurseRegister";
 import PharmacyRegister from "./Pages/Register/PharmacyRegister";
+import ClientRegister from "./Pages/Register/ClientRegister";
 import UnderReview from "./Pages/UnderReview";
 import Services from "./Pages/Services";
 import Pharmacy from "./Pages/Pharmacy";
@@ -73,7 +74,7 @@ const App = () => {
           <Route path="/doctor-register" element={<DoctorRegister />} />
           <Route path="/nurse-register" element={<NurseRegister />} />
            <Route path="/pharmacy-register" element={< PharmacyRegister/>}/>
-
+          <Route path="/client-register" element={< ClientRegister/>}/>
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />
 

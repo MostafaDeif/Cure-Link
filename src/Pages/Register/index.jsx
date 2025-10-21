@@ -25,7 +25,7 @@ export default function SignUp() {
       return;
     }
 
-    if (selectedRole === "Client") navigate("/landing");
+    if (selectedRole === "Client") navigate("/client-register");
     else if (selectedRole === "Doctor") navigate("/doctor-register");
     else if (selectedRole === "Nurse") navigate("/nurse-register");
     else if (selectedRole === "Pharmacy") navigate("/pharmacy-register");
