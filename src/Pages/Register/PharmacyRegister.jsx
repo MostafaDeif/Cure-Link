@@ -17,6 +17,102 @@ export default function PharmacyRegister() {
 
   const navigate = useNavigate();
 
+  // refs for map and marker
+  const mapContainerRef = React.useRef(null);
+  const mapInstanceRef = React.useRef(null);
+  const markerRef = React.useRef(null);
+
+  // ensure Leaflet CSS is loaded
+  React.useEffect(() => {
+    const id = "leaflet-css";
+    if (!document.getElementById(id)) {
+      const link = document.createElement("link");
+      link.id = id;
+      link.rel = "stylesheet";
+      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      link.crossOrigin = "";
+      document.head.appendChild(link);
+    }
+  }, []);
+
+  // initialize or update map whenever location changes (or when first created)
+  React.useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (!mapContainerRef.current) return;
+      // dynamically import leaflet so that the main bundle doesn't break if not installed
+      const leafletModule = await import("leaflet");
+      const L = leafletModule && leafletModule.default ? leafletModule.default : leafletModule;
+
+      // create map once
+      if (!mapInstanceRef.current) {
+        // create map centered on a fallback if no location yet
+        const initialCenter = location.lat && location.lon ? [location.lat, location.lon] : [24.7136, 46.6753]; // Riyadh as fallback
+        mapInstanceRef.current = L.map(mapContainerRef.current, {
+          center: initialCenter,
+          zoom: 13,
+        });
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '&copy; OpenStreetMap contributors',
+        }).addTo(mapInstanceRef.current);
+
+        // add click handler to map to set location
+        mapInstanceRef.current.on("click", (e) => {
+          const { lat, lng } = e.latlng;
+          setLocation({ lat, lon: lng });
+          setAddress(`Latitude: ${lat.toFixed(5)}, Longitude: ${lng.toFixed(5)}`);
+
+          // if marker exists, move it; otherwise create draggable marker
+          if (markerRef.current) {
+            markerRef.current.setLatLng(e.latlng);
+          } else {
+            markerRef.current = L.marker(e.latlng, { draggable: true }).addTo(mapInstanceRef.current);
+            markerRef.current.on("dragend", function (ev) {
+              const pos = ev.target.getLatLng();
+              setLocation({ lat: pos.lat, lon: pos.lng });
+              setAddress(`Latitude: ${pos.lat.toFixed(5)}, Longitude: ${pos.lng.toFixed(5)}`);
+            });
+          }
+        });
+      }
+
+      // if we already have a location, center map and add/move marker
+      if (location.lat && location.lon && mapInstanceRef.current && !cancelled) {
+        const latlng = [location.lat, location.lon];
+        mapInstanceRef.current.setView(latlng, 15);
+        if (markerRef.current) {
+          markerRef.current.setLatLng(latlng);
+        } else {
+          // reuse imported L to create marker
+          markerRef.current = L.marker(latlng, { draggable: true }).addTo(mapInstanceRef.current);
+          markerRef.current.on("dragend", function (ev) {
+            const pos = ev.target.getLatLng();
+            setLocation({ lat: pos.lat, lon: pos.lng });
+            setAddress(`Latitude: ${pos.lat.toFixed(5)}, Longitude: ${pos.lng.toFixed(5)}`);
+          });
+        }
+      }
+    })();
+
+    // do not remove the map here to preserve it across renders; only mark as cancelled
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.lat, location.lon]);
+
+  // cleanup on unmount: remove map instance
+  React.useEffect(() => {
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+        markerRef.current = null;
+      }
+    };
+  }, []);
+
   // 📍 Get location
   const handleGetLocation = () => {
     if (!navigator.geolocation) {
@@ -181,19 +277,13 @@ export default function PharmacyRegister() {
             </button>
           </div>
 
-          {/* ✅ Google Maps Embed */}
-          {location.lat && location.lon && (
-            <div className="mt-3 w-full h-64 rounded-lg overflow-hidden shadow-md border">
-              <iframe
-                src={`https://www.google.com/maps?q=${location.lat},${location.lon}&z=15&output=embed`}
-                width="100%"
-                height="100%"
-                allowFullScreen=""
-                loading="lazy"
-                title="Pharmacy Location"
-              ></iframe>
-            </div>
-          )}
+          {/* Interactive map (click to change location, drag marker) */}
+          <div className="mt-3 w-full h-64 rounded-lg overflow-hidden shadow-md border">
+            <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
+            <p className="text-xs text-gray-500 mt-1">
+              اضغط على الخريطة لتغيير الموقع أو اسحب العلامة بعد إنشائها.
+            </p>
+          </div>
         </div>
 
         {/* 📎 Upload Section */}
