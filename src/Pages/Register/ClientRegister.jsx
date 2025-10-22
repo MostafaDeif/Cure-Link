@@ -1,16 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "leaflet/dist/leaflet.css";
 
 export default function ClientRegister() {
   const [phone, setPhone] = useState("");
   const [diseases, setDiseases] = useState("");
   const [address, setAddress] = useState("");
-  const [location, setLocation] = useState({ lat: null, lon: null });
+  const [location, setLocation] = useState({ lat: 30.0444, lon: 31.2357 }); // Default Cairo
   const [loadingLocation, setLoadingLocation] = useState(false);
 
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
   const navigate = useNavigate();
 
-  // 📍 Get user location
+  useEffect(() => {
+    const loadLeaflet = async () => {
+      const leafletModule = await import("leaflet");
+      const L =
+        leafletModule && leafletModule.default
+          ? leafletModule.default
+          : leafletModule;
+
+      if (!mapRef.current) {
+        const map = L.map("map").setView([location.lat, location.lon], 13);
+        mapRef.current = map;
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        const marker = L.marker([location.lat, location.lon], { draggable: true }).addTo(map);
+        markerRef.current = marker;
+
+        marker.on("dragend", function () {
+          const pos = marker.getLatLng();
+          setLocation({ lat: pos.lat, lon: pos.lng });
+          setAddress(`Latitude: ${pos.lat.toFixed(5)}, Longitude: ${pos.lng.toFixed(5)}`);
+        });
+
+        map.on("click", function (e) {
+          const { lat, lng } = e.latlng;
+          marker.setLatLng(e.latlng);
+          setLocation({ lat, lon: lng });
+          setAddress(`Latitude: ${lat.toFixed(5)}, Longitude: ${lng.toFixed(5)}`);
+        });
+      }
+    };
+
+    loadLeaflet();
+  }, []);
+
   const handleGetLocation = () => {
     if (!navigator.geolocation) {
       alert("Your browser does not support location access.");
@@ -25,6 +64,11 @@ export default function ClientRegister() {
         setLocation({ lat: latitude, lon: longitude });
         setAddress(`Latitude: ${latitude.toFixed(5)}, Longitude: ${longitude.toFixed(5)}`);
         setLoadingLocation(false);
+
+        if (mapRef.current && markerRef.current) {
+          mapRef.current.setView([latitude, longitude], 15);
+          markerRef.current.setLatLng([latitude, longitude]);
+        }
       },
       () => {
         alert("Unable to fetch location. Please allow location access.");
@@ -43,7 +87,7 @@ export default function ClientRegister() {
       location,
     });
 
-    navigate("/landing"); 
+    navigate("/landing");
   };
 
   return (
@@ -87,18 +131,8 @@ export default function ClientRegister() {
             </button>
           </div>
 
-          {location.lat && location.lon && (
-            <div className="mt-3 w-full h-64 rounded-lg overflow-hidden shadow-md border">
-              <iframe
-                src={`https://www.google.com/maps?q=${location.lat},${location.lon}&z=15&output=embed`}
-                width="100%"
-                height="100%"
-                allowFullScreen=""
-                loading="lazy"
-                title="Client Location"
-              ></iframe>
-            </div>
-          )}
+          {/* Leaflet Map */}
+          <div id="map" className="mt-3 w-full h-64 rounded-lg overflow-hidden shadow-md border"></div>
         </div>
 
         <button
