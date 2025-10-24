@@ -2,6 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function DoctorRegister() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); 
   const [phone, setPhone] = useState("");
   const [nationalId, setNationalId] = useState("");
   const [gender, setGender] = useState("");
@@ -101,7 +105,6 @@ export default function DoctorRegister() {
     };
   }, []);
 
-  // 📍 Get current location
   const handleGetLocation = () => {
     if (!navigator.geolocation) {
       alert("Your browser does not support location access.");
@@ -124,12 +127,21 @@ export default function DoctorRegister() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
     if (!idFront || !idBack) {
       alert("Please upload both front and back ID images before submitting.");
       return;
     }
 
     console.log({
+      fullName,
+      email,
+      password,
       phone,
       nationalId,
       gender,
@@ -175,7 +187,12 @@ export default function DoctorRegister() {
     <div className="flex flex-col items-center min-h-screen bg-gray-50 px-4 py-10">
       <h2 className="text-2xl font-semibold text-indigo-500 mb-6">Doctor Registration</h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-xl">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-xl bg-white p-6 rounded-lg shadow-md">
+        <input type="text" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
+        <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
+        <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
+
         <input type="text" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
         <input type="text" placeholder="National ID" value={nationalId} onChange={(e) => setNationalId(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
         <select value={gender} onChange={(e) => setGender(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required>
@@ -187,7 +204,6 @@ export default function DoctorRegister() {
         <input type="text" placeholder="Clinic" value={clinic} onChange={(e) => setClinic(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
         <input type="text" placeholder="Specialization" value={specialization} onChange={(e) => setSpecialization(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
 
-        {/* 📍 Location Section */}
         <div className="flex flex-col gap-2 mt-2">
           <label className="text-sm font-medium text-gray-700">Clinic / Hospital Location</label>
           <div className="flex gap-2">
@@ -197,7 +213,6 @@ export default function DoctorRegister() {
             </button>
           </div>
 
-          {/* 🗺️ Map */}
           <div className="mt-3 w-full h-64 rounded-lg overflow-hidden shadow-md border">
             <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
             <p className="text-xs text-gray-500 mt-1">اضغط على الخريطة لتحديد مكان العيادة أو اسحب العلامة لتغييره.</p>
@@ -210,7 +225,7 @@ export default function DoctorRegister() {
         </div>
 
         <button type="submit" className="mt-6 w-full py-3 rounded-md text-white bg-indigo-500 hover:bg-indigo-600 transition">
-          Submit
+          Register
         </button>
       </form>
     </div>
