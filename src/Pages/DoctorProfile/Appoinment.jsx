@@ -166,7 +166,7 @@ const Appointment = () => {
               localizer={localizer}
               events={events}
               date={date}
-              onNavigate={(newDate) => setDate(newDate)} // <-- هنا بيتغير التاريخ لما تدوسي على next/back/today
+              onNavigate={(newDate) => setDate(newDate)} 
               view={view}
               onView={(newView) => setView(newView)}
               startAccessor="start"
