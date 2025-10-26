@@ -140,7 +140,8 @@ const Appointment = () => {
     },
   ]);
 
-  const [view, setView] = useState("month"); // <-- ده اللي بيخلي التنقل يشتغل
+  const [view, setView] = useState("month");
+  const [date, setDate] = useState(new Date()); 
 
   const eventStyleGetter = (event) => ({
     style: {
@@ -164,6 +165,8 @@ const Appointment = () => {
             <Calendar
               localizer={localizer}
               events={events}
+              date={date}
+              onNavigate={(newDate) => setDate(newDate)} // <-- هنا بيتغير التاريخ لما تدوسي على next/back/today
               view={view}
               onView={(newView) => setView(newView)}
               startAccessor="start"
