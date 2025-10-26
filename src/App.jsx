@@ -29,7 +29,7 @@ import Pharmacy from "./Pages/Pharmacy";
 import Doctor from "./Pages/Doctor";
 import PharmacyDashboard from "./Pages/PharmacyDashbord";
 import Dashboard from "./Pages/DoctorProfile/Dashboard";
-import Appoiment from "./Pages/DoctorProfile/Appoiment";
+import Appoinment from "./Pages/DoctorProfile/Appoinment";
 
 
 const Layout = ({ children }) => {
@@ -79,7 +79,7 @@ const App = () => {
           <Route path="/pharmacy-register" element={<PharmacyRegister />} />
           <Route path="/pharmacy-dashboard" element={<PharmacyDashboard />} />
           <Route path="/doctor-dashboard" element={<Dashboard />} />
-         <Route path="/doctor-appointments" element={<Appoiment />} />
+         <Route path="/doctor-appointments" element={<Appoinment />} />
           <Route path="/client-register" element={<ClientRegister />} />
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />

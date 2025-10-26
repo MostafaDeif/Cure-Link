@@ -115,9 +115,8 @@ const Header = () => {
     </header>
   );
 };
-
 // -------- MAIN CONTENT ----------
-const Appointments = () => {
+const Appointment = () => {
   const localizer = momentLocalizer(moment);
 
   const [events] = useState([
@@ -141,6 +140,8 @@ const Appointments = () => {
     },
   ]);
 
+  const [view, setView] = useState("month"); // <-- ده اللي بيخلي التنقل يشتغل
+
   const eventStyleGetter = (event) => ({
     style: {
       backgroundColor: event.color,
@@ -163,9 +164,11 @@ const Appointments = () => {
             <Calendar
               localizer={localizer}
               events={events}
+              view={view}
+              onView={(newView) => setView(newView)}
               startAccessor="start"
               endAccessor="end"
-              defaultView="month"
+              views={["month", "week", "day", "agenda"]}
               eventPropGetter={eventStyleGetter}
               style={{ height: "100%" }}
             />
@@ -176,4 +179,4 @@ const Appointments = () => {
   );
 };
 
-export default Appointments;
+export default Appointment;
