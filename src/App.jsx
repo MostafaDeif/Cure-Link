@@ -27,6 +27,7 @@ import UnderReview from "./Pages/UnderReview";
 import Services from "./Pages/Services";
 import Pharmacy from "./Pages/Pharmacy";
 import Doctor from "./Pages/Doctor";
+import PharmacyDashboard from "./Pages/PharmacyDashbord";
 
 
 const Layout = ({ children }) => {
@@ -34,7 +35,7 @@ const Layout = ({ children }) => {
 
   // Navbar يظهر فقط في الصفحات اللي موجودة هنا
   const showNavbarOn = ["/", "/about", "/medicine", "/pharmacy", "/nursing", "/user", "/admin", "/cart", "/product", "/services",
-     "/doctor", "/pharmacy"];
+    "/doctor", "/pharmacy"];
   const showNavbar = showNavbarOn.includes(location.pathname);
 
   return (
@@ -64,17 +65,18 @@ const App = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/pharmacy" element={<Pharmacy />} />
           <Route path="/doctor" element={<Doctor />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/landing" element={<Landing />} />
 
           {/* protected routes */}
-          <Route path="/user"  element={<User />} />
+          <Route path="/user" element={<User />} />
           {/* <Route path="/user"  element={<ProtectedRoute user={auth}><User /></ProtectedRoute>} /> */}
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/admin" element={<ProtectedRoute user={auth}><Admin /></ProtectedRoute>} />
-          <Route path="/landing" element={<Landing />} />
           <Route path="/doctor-register" element={<DoctorRegister />} />
           <Route path="/nurse-register" element={<NurseRegister />} />
-           <Route path="/pharmacy-register" element={< PharmacyRegister/>}/>
-          <Route path="/client-register" element={< ClientRegister/>}/>
+          <Route path="/pharmacy-register" element={<PharmacyRegister />} />
+          <Route path="/pharmacy-dashboard" element={<PharmacyDashboard />} />
+          <Route path="/client-register" element={<ClientRegister />} />
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />
 
