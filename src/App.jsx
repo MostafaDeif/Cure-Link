@@ -30,7 +30,8 @@ import Doctor from "./Pages/Doctor";
 import PharmacyDashboard from "./Pages/PharmacyDashbord";
 import Dashboard from "./Pages/DoctorProfile/Dashboard";
 import Appoinment from "./Pages/DoctorProfile/Appoinment";
-
+import Patients from "./Pages/DoctorProfile/Patients";
+import Profile from "./Pages/DoctorProfile/Profile";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -80,6 +81,9 @@ const App = () => {
           <Route path="/pharmacy-dashboard" element={<PharmacyDashboard />} />
           <Route path="/doctor-dashboard" element={<Dashboard />} />
           <Route path="/doctor-appointments" element={<Appoinment />} />
+          <Route path="/doctor-patients" element={<Patients />} />
+          <Route path="/doctor-profile" element={<Profile/>} />
+          
           <Route path="/client-register" element={<ClientRegister />} />
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />

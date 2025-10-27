@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useNavigate } from "react-router-dom";
-// ========== COMPONENTS ==========
+// ========== ICONS ==========
 const IconLayoutDashboard = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
     <rect width="7" height="9" x="3" y="3" rx="1" />
@@ -65,7 +62,6 @@ const Sidebar = () => {
       >
         CureLink
       </div>
-
       <div className="p-6 text-center border-b">
         <img
           src="https://placehold.co/96x96/E0E7FF/4F46E5?text=DR"
@@ -76,14 +72,13 @@ const Sidebar = () => {
         <h2 className="text-lg font-semibold">Dr. Mohamed Ahmad</h2>
         <p className="text-sm text-gray-500">Cairo University Hospital</p>
       </div>
-
       <nav className="flex-1 mt-6 px-4">
         {navItems.map((item) => (
           <button
             key={item.name}
             onClick={() => navigate(item.path)}
             className={`flex items-center w-full text-left px-4 py-3 mb-2 rounded-lg text-gray-600 hover:bg-[#E0F2F1] hover:text-[#006d77] ${
-              item.name === "Appointments" ? "bg-[#E0F2F1] text-[#006d77] font-bold" : ""
+              item.name === "Patients" ? "bg-[#E0F2F1] text-[#006d77] font-bold" : ""
             }`}
           >
             {item.icon}
@@ -94,11 +89,9 @@ const Sidebar = () => {
     </div>
   );
 };
-
 // -------- HEADER ----------
 const Header = () => {
   const navigate = useNavigate();
-
   return (
     <header className="bg-white shadow-sm p-4 flex justify-end items-center">
       <div className="flex items-center space-x-6">
@@ -115,77 +108,96 @@ const Header = () => {
     </header>
   );
 };
-// -------- MAIN CONTENT ----------
-const Appointment = () => {
-  const localizer = momentLocalizer(moment);
-
-  const [events] = useState([
-    {
-      title: "Mrs. Sarah Lee - Flu",
-      start: new Date(2025, 9, 21, 10, 0),
-      end: new Date(2025, 9, 21, 11, 0),
-      color: "#80CBC4",
-    },
-    {
-      title: "Mr. Ahmed Nabil - Checkup",
-      start: new Date(2025, 9, 22, 12, 0),
-      end: new Date(2025, 9, 22, 13, 0),
-      color: "#FFCC80",
-    },
-    {
-      title: "Mrs. Mona Saad - Diabetes",
-      start: new Date(2025, 9, 23, 9, 0),
-      end: new Date(2025, 9, 23, 10, 0),
-      color: "#90CAF9",
-    },
-    {
-      title: "Mr. John Adel - Flu",
-      start: new Date(2025, 9, 26, 9, 0),
-      end: new Date(2025, 9, 26, 10, 0),
-      color: "#075c53ff",
-    }
-  ]);
-
-  const [view, setView] = useState("month");
-  const [date, setDate] = useState(new Date()); 
-
-  const eventStyleGetter = (event) => ({
-    style: {
-      backgroundColor: event.color,
-      borderRadius: "6px",
-      color: "#000",
-      border: "none",
-      display: "block",
-      padding: "4px 8px",
-    },
-  });
-
+// -------- PATIENTS PAGE ----------
+const Patients = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+  const patients = [
+    { name: "John Smith", id: "ID-00123", lastVisit: "Oct 22, 2025", status: "Inactive" },
+    { name: "Ms. Sarah Lee", id: "ID-00245", lastVisit: "Oct 22, 2025", status: "Active" },
+    { name: "L. Smith Lee", id: "ID-00312", lastVisit: "Oct 22, 2025", status: "Inactive" },
+    { name: "David Brown", id: "ID-00456", lastVisit: "Oct 22, 2025", status: "Active" },
+    { name: "Mr. Ahmed Nabil", id: "ID-00459", lastVisit: "Oct 26, 2025", status: "Active" },
+    { name: "Mrs. Mona Saad ", id: "ID-00561", lastVisit: "Nov 22, 2025", status: "Active" },
+     { name: "John Adel", id: "ID-00256", lastVisit: "Oct 26, 2025", status: "Active" },
+  ];
+  const filteredPatients = patients.filter((p) =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
+  <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
-        <div className="p-6 bg-gray-100 flex-1">
-          <h1 className="text-2xl font-bold mb-6 text-[#006d77]">Appointments Calendar</h1>
-          <div className="bg-white p-4 rounded-lg shadow-sm h-[80vh]">
-            <Calendar
-              localizer={localizer}
-              events={events}
-              date={date}
-              onNavigate={(newDate) => setDate(newDate)} 
-              view={view}
-              onView={(newView) => setView(newView)}
-              startAccessor="start"
-              endAccessor="end"
-              views={["month", "week", "day", "agenda"]}
-              eventPropGetter={eventStyleGetter}
-              style={{ height: "100%" }}
-            />
+        <main className="flex-1 overflow-y-auto p-8">
+          <div className="bg-white rounded-2xl shadow-md p-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+              <h1 className="text-2xl font-bold text-gray-800 mb-4 md:mb-0">Patients</h1>
+              <div className="flex items-center space-x-3">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="border rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-[#006d77]"
+                />
+                <button className="bg-[#006d77] text-white px-4 py-2 rounded-lg hover:bg-[#004f52]">
+                  + Add New Patient
+                </button>
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border border-gray-200 rounded-lg">
+                <thead className="bg-[#E0F2F1] text-[#006d77]">
+                  <tr>
+                    <th className="text-left py-3 px-4">Patient Name</th>
+                    <th className="text-left py-3 px-4">Patient ID</th>
+                    <th className="text-left py-3 px-4">Last Visit</th>
+                    <th className="text-left py-3 px-4">Status</th>
+                    <th className="text-left py-3 px-4">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredPatients.map((p, index) => (
+                    <tr key={index} className="border-t hover:bg-gray-50 transition duration-200">
+                      <td className="py-3 px-4">{p.name}</td>
+                      <td className="py-3 px-4">{p.id}</td>
+                      <td className="py-3 px-4">{p.lastVisit}</td>
+                      <td className="py-3 px-4">
+                        <span
+                          className={`px-3 py-1 text-sm rounded-full ${
+                            p.status === "Active"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-red-100 text-red-700"
+                          }`}
+                        >
+                          {p.status}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <button
+                          onClick={() => navigate("")}
+                          className="text-[#006d77] hover:underline"
+                        >
+                          View Record
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {filteredPatients.length === 0 && (
+                    <tr>
+                      <td colSpan="5" className="text-center py-6 text-gray-500 italic">
+                        No patients found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
 };
-
-export default Appointment;
+export default Patients;

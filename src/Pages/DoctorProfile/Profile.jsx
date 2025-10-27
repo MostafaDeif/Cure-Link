@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useNavigate } from "react-router-dom";
-// ========== COMPONENTS ==========
+
+// ========== ICONS ==========
 const IconLayoutDashboard = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
     <rect width="7" height="9" x="3" y="3" rx="1" />
@@ -65,7 +62,6 @@ const Sidebar = () => {
       >
         CureLink
       </div>
-
       <div className="p-6 text-center border-b">
         <img
           src="https://placehold.co/96x96/E0E7FF/4F46E5?text=DR"
@@ -76,14 +72,13 @@ const Sidebar = () => {
         <h2 className="text-lg font-semibold">Dr. Mohamed Ahmad</h2>
         <p className="text-sm text-gray-500">Cairo University Hospital</p>
       </div>
-
       <nav className="flex-1 mt-6 px-4">
         {navItems.map((item) => (
           <button
             key={item.name}
             onClick={() => navigate(item.path)}
             className={`flex items-center w-full text-left px-4 py-3 mb-2 rounded-lg text-gray-600 hover:bg-[#E0F2F1] hover:text-[#006d77] ${
-              item.name === "Appointments" ? "bg-[#E0F2F1] text-[#006d77] font-bold" : ""
+              item.name === "Profile" ? "bg-[#E0F2F1] text-[#006d77] font-bold" : ""
             }`}
           >
             {item.icon}
@@ -94,11 +89,9 @@ const Sidebar = () => {
     </div>
   );
 };
-
 // -------- HEADER ----------
 const Header = () => {
   const navigate = useNavigate();
-
   return (
     <header className="bg-white shadow-sm p-4 flex justify-end items-center">
       <div className="flex items-center space-x-6">
@@ -115,77 +108,91 @@ const Header = () => {
     </header>
   );
 };
-// -------- MAIN CONTENT ----------
-const Appointment = () => {
-  const localizer = momentLocalizer(moment);
-
-  const [events] = useState([
-    {
-      title: "Mrs. Sarah Lee - Flu",
-      start: new Date(2025, 9, 21, 10, 0),
-      end: new Date(2025, 9, 21, 11, 0),
-      color: "#80CBC4",
-    },
-    {
-      title: "Mr. Ahmed Nabil - Checkup",
-      start: new Date(2025, 9, 22, 12, 0),
-      end: new Date(2025, 9, 22, 13, 0),
-      color: "#FFCC80",
-    },
-    {
-      title: "Mrs. Mona Saad - Diabetes",
-      start: new Date(2025, 9, 23, 9, 0),
-      end: new Date(2025, 9, 23, 10, 0),
-      color: "#90CAF9",
-    },
-    {
-      title: "Mr. John Adel - Flu",
-      start: new Date(2025, 9, 26, 9, 0),
-      end: new Date(2025, 9, 26, 10, 0),
-      color: "#075c53ff",
-    }
-  ]);
-
-  const [view, setView] = useState("month");
-  const [date, setDate] = useState(new Date()); 
-
-  const eventStyleGetter = (event) => ({
-    style: {
-      backgroundColor: event.color,
-      borderRadius: "6px",
-      color: "#000",
-      border: "none",
-      display: "block",
-      padding: "4px 8px",
-    },
-  });
-
+// -------- PROFILE PAGE ----------
+const Profile = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
-        <div className="p-6 bg-gray-100 flex-1">
-          <h1 className="text-2xl font-bold mb-6 text-[#006d77]">Appointments Calendar</h1>
-          <div className="bg-white p-4 rounded-lg shadow-sm h-[80vh]">
-            <Calendar
-              localizer={localizer}
-              events={events}
-              date={date}
-              onNavigate={(newDate) => setDate(newDate)} 
-              view={view}
-              onView={(newView) => setView(newView)}
-              startAccessor="start"
-              endAccessor="end"
-              views={["month", "week", "day", "agenda"]}
-              eventPropGetter={eventStyleGetter}
-              style={{ height: "100%" }}
-            />
+        <main className="flex-1 p-10 overflow-y-auto">
+          <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-md p-10">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+              {/* Doctor Image */}
+              <div className="flex flex-col items-center">
+                <img
+                  src="https://placehold.co/96x96/E0E7FF/4F46E5?text=DR"
+                  alt="Doctor"
+                  className="w-40 h-40 rounded-full border-4 border-[#006d77]"
+                />
+                <button className="mt-4 px-4 py-2 bg-[#006d77] text-white rounded-lg hover:bg-[#005a63] transition">
+                  Change Photo
+                </button>
+              </div>
+              {/* Profile Form */}
+              <div className="flex-1 w-full">
+                <h2 className="text-2xl font-semibold text-[#006d77] mb-6">Doctor Information</h2>
+                <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Full Name</label>
+                    <input
+                      type="text"
+                      defaultValue="Dr. Mohamed Ahmad"
+                      className="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-[#006d77]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Email</label>
+                    <input
+                      type="email"
+                      defaultValue="info@cu-hospital.com"
+                      className="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-[#006d77]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Phone</label>
+                    <input
+                      type="text"
+                      defaultValue="(02) 35676105"
+                      className="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-[#006d77]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Specialization</label>
+                    <input
+                      type="text"
+                      defaultValue="Cardiology"
+                      className="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-[#006d77]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Hospital</label>
+                    <input
+                      type="text"
+                      defaultValue="Cairo University Hospital"
+                      className="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-[#006d77]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Years of Experience</label>
+                    <input
+                      type="number"
+                      defaultValue="10"
+                      className="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-[#006d77]"
+                    />
+                  </div>
+                </form>
+                <div className="flex justify-end mt-8 space-x-4">
+                  <button className="px-6 py-2 rounded-lg bg-[#006d77] text-white hover:bg-[#005a63] transition">
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
 };
-
-export default Appointment;
+export default Profile;

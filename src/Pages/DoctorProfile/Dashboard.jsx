@@ -153,7 +153,7 @@ const UpcomingAppointments = () => {
     <div className="bg-white p-6 rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold">Upcoming Appointments</h3>
-        <a href="/doctor-appoinments" className="text-sm text-[#006d77] hover:underline">
+        <a href="/doctor-appointments" className="text-sm text-[#006d77] hover:underline">
           View All
         </a>
       </div>
@@ -217,7 +217,7 @@ const QuickActions = () => {
       <div>
         <h3 className="text-xl font-semibold mb-4">Quick Actions</h3>
         <button
-          onClick={() => navigate("/doctor-appointments")}
+          onClick={() => navigate("/doctor-patients")}
           className="w-full bg-[#006d77] text-white py-3 rounded-lg font-semibold hover:bg-[#004f52] transition-colors"
         >
           + Add Appointment
