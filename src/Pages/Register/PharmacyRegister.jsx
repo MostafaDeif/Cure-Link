@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import cameraIcon from "../../assets/camera.png"; 
+import axios from 'axios';
 
 export default function PharmacyRegister() {
   const [ownerName, setOwnerName] = useState("");
@@ -123,7 +124,7 @@ export default function PharmacyRegister() {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!licenseFile || !idFront || !idBack) {
@@ -136,21 +137,31 @@ export default function PharmacyRegister() {
       return;
     }
 
-    console.log({
-      ownerName,
+    const data = {
+      fullName: ownerName,
       email,
       password,
+      phone,
+      role: 'customer',
       pharmacyName,
       licenseNumber,
-      phone,
-      address,
-      location,
-      licenseFile,
-      idFront,
-      idBack,
-    });
+      pharmacyLicensePhoto: licenseFile,
+      ownerIdFront: idFront,
+      ownerIdBack: idBack,
+      location: {
+        latitude: location.lat,
+        longitude: location.lon,
+      },
+    };
 
-    navigate("/under-review");
+    try {
+      const response = await axios.post('http://localhost:3001/api/auth/signup', data);
+      console.log(response.data);
+      navigate("/under-review");
+    } catch (error) {
+      console.error('Error during signup:', error);
+      alert('Signup failed. Please try again.');
+    }
   };
 
   const UploadField = ({ label, file, setFile, isLicense }) => (
