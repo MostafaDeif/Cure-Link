@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// ========== ICONS ==========
+// ===== ICONS =====
 const IconLayoutDashboard = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect width="7" height="9" x="3" y="3" rx="1" />
     <rect width="7" height="5" x="14" y="3" rx="1" />
     <rect width="7" height="9" x="14" y="12" rx="1" />
@@ -10,7 +10,7 @@ const IconLayoutDashboard = () => (
   </svg>
 );
 const IconCalendarCheck = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
     <line x1="16" x2="16" y1="2" y2="6" />
     <line x1="8" x2="8" y1="2" y2="6" />
@@ -19,7 +19,7 @@ const IconCalendarCheck = () => (
   </svg>
 );
 const IconUsers = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
     <circle cx="9" cy="7" r="4" />
     <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -27,7 +27,7 @@ const IconUsers = () => (
   </svg>
 );
 const IconUser = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
     <circle cx="12" cy="7" r="4" />
   </svg>
@@ -45,8 +45,15 @@ const IconUserCircle = () => (
     <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
   </svg>
 );
-// -------- SIDEBAR ----------
-const Sidebar = () => {
+const IconMenu = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="4" y1="6" x2="20" y2="6" />
+    <line x1="4" y1="12" x2="20" y2="12" />
+    <line x1="4" y1="18" x2="20" y2="18" />
+  </svg>
+);
+// ===== SIDEBAR =====
+const Sidebar = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const navItems = [
     { name: "Dashboard", icon: <IconLayoutDashboard />, path: "/doctor-dashboard" },
@@ -55,12 +62,16 @@ const Sidebar = () => {
     { name: "Profile", icon: <IconUser />, path: "/doctor-profile" },
   ];
   return (
-    <div className="w-64 bg-white shadow-lg flex-col hidden lg:flex">
-      <div
-        onClick={() => navigate("/doctor-dashboard")}
-        className="p-6 text-3xl font-bold text-[#006d77] cursor-pointer"
-      >
+    <div
+      className={`fixed top-0 left-0 h-full bg-white shadow-lg w-64 transform transition-transform duration-500 z-50 ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
+      <div className="p-6 text-3xl font-bold text-[#006d77] flex justify-between items-center border-b">
         CureLink
+        <button onClick={() => toggleSidebar(false)} className="text-gray-600 hover:text-gray-900 text-2xl">
+          ×
+        </button>
       </div>
       <div className="p-6 text-center border-b">
         <img
@@ -76,7 +87,10 @@ const Sidebar = () => {
         {navItems.map((item) => (
           <button
             key={item.name}
-            onClick={() => navigate(item.path)}
+            onClick={() => {
+              navigate(item.path);
+              toggleSidebar(false);
+            }}
             className={`flex items-center w-full text-left px-4 py-3 mb-2 rounded-lg text-gray-600 hover:bg-[#E0F2F1] hover:text-[#006d77] ${
               item.name === "Patients" ? "bg-[#E0F2F1] text-[#006d77] font-bold" : ""
             }`}
@@ -89,47 +103,51 @@ const Sidebar = () => {
     </div>
   );
 };
-// -------- HEADER ----------
-const Header = () => {
+// ===== HEADER =====
+const Header = ({ toggleSidebar, sidebarOpen }) => {
   const navigate = useNavigate();
   return (
-    <header className="bg-white shadow-sm p-4 flex justify-end items-center">
-      <div className="flex items-center space-x-6">
+    <header className="bg-white shadow-sm p-4 flex justify-between items-center sticky top-0 z-40">
+      {!sidebarOpen && (
+        <button
+          onClick={toggleSidebar}
+          className="text-gray-600 hover:text-gray-800 transition-transform hover:scale-110"
+        >
+          <IconMenu />
+        </button>
+      )}
+      <div className="flex items-center space-x-6 ml-auto">
         <button className="text-gray-500 hover:text-gray-700">
           <IconSearch />
         </button>
-        <button
-          className="text-gray-500 hover:text-gray-700"
-          onClick={() => navigate("/doctor-profile")}
-        >
+        <button onClick={() => navigate("/doctor-profile")} className="text-gray-500 hover:text-gray-700">
           <IconUserCircle />
         </button>
       </div>
     </header>
   );
 };
-// -------- PATIENTS PAGE ----------
+// ===== PATIENTS PAGE =====
 const Patients = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
-  const patients = [
-    { name: "John Smith", id: "ID-00123", lastVisit: "Oct 22, 2025", status: "Inactive" },
-    { name: "Ms. Sarah Lee", id: "ID-00245", lastVisit: "Oct 22, 2025", status: "Active" },
-    { name: "L. Smith Lee", id: "ID-00312", lastVisit: "Oct 22, 2025", status: "Inactive" },
-    { name: "David Brown", id: "ID-00456", lastVisit: "Oct 22, 2025", status: "Active" },
-    { name: "Mr. Ahmed Nabil", id: "ID-00459", lastVisit: "Oct 26, 2025", status: "Active" },
-    { name: "Mrs. Mona Saad ", id: "ID-00561", lastVisit: "Nov 22, 2025", status: "Active" },
-     { name: "John Adel", id: "ID-00256", lastVisit: "Oct 26, 2025", status: "Active" },
-  ];
+  const patients = [ { name: "John Smith", id: "ID-00123", lastVisit: "Oct 22, 2025", status: "Inactive" },
+     { name: "Ms. Sarah Lee", id: "ID-00245", lastVisit: "Oct 22, 2025", status: "Active" }, 
+     { name: "L. Smith Lee", id: "ID-00312", lastVisit: "Oct 22, 2025", status: "Inactive" }, 
+     { name: "David Brown", id: "ID-00456", lastVisit: "Oct 22, 2025", status: "Active" }, 
+     { name: "Mr. Ahmed Nabil", id: "ID-00459", lastVisit: "Oct 26, 2025", status: "Active" }, 
+     { name: "Mrs. Mona Saad ", id: "ID-00561", lastVisit: "Nov 22, 2025", status: "Active" }, 
+     { name: "John Adel", id: "ID-00256", lastVisit: "Oct 26, 2025", status: "Active" }, 
+    ];
   const filteredPatients = patients.filter((p) =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-  <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
-        <main className="flex-1 overflow-y-auto p-8">
+    <div className="flex bg-gray-100 min-h-screen transition-all duration-500">
+      <Sidebar isOpen={sidebarOpen} toggleSidebar={setSidebarOpen} />
+      <div className={`flex-1 flex flex-col transition-all duration-500 ${sidebarOpen ? "ml-64" : "ml-0"}`}>
+      <Header toggleSidebar={() => setSidebarOpen(true)} sidebarOpen={sidebarOpen} />
+        <main className="flex-1 p-6">
           <div className="bg-white rounded-2xl shadow-md p-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
               <h1 className="text-2xl font-bold text-gray-800 mb-4 md:mb-0">Patients</h1>
@@ -175,12 +193,7 @@ const Patients = () => {
                         </span>
                       </td>
                       <td className="py-3 px-4">
-                        <button
-                          onClick={() => navigate("")}
-                          className="text-[#006d77] hover:underline"
-                        >
-                          View Record
-                        </button>
+                        <button className="text-[#006d77] hover:underline">View Record</button>
                       </td>
                     </tr>
                   ))}

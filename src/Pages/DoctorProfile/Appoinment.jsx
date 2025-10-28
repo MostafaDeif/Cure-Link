@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useNavigate } from "react-router-dom";
-// ========== COMPONENTS ==========
+// ===== ICONS =====
 const IconLayoutDashboard = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
     <rect width="7" height="9" x="3" y="3" rx="1" />
@@ -48,8 +48,15 @@ const IconUserCircle = () => (
     <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
   </svg>
 );
-// -------- SIDEBAR ----------
-const Sidebar = () => {
+const IconMenu = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="4" y1="6" x2="20" y2="6" />
+    <line x1="4" y1="12" x2="20" y2="12" />
+    <line x1="4" y1="18" x2="20" y2="18" />
+  </svg>
+);
+// ===== SIDEBAR =====
+const Sidebar = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const navItems = [
     { name: "Dashboard", icon: <IconLayoutDashboard />, path: "/doctor-dashboard" },
@@ -58,14 +65,17 @@ const Sidebar = () => {
     { name: "Profile", icon: <IconUser />, path: "/doctor-profile" },
   ];
   return (
-    <div className="w-64 bg-white shadow-lg flex-col hidden lg:flex">
-      <div
-        onClick={() => navigate("/doctor-dashboard")}
-        className="p-6 text-3xl font-bold text-[#006d77] cursor-pointer"
-      >
+    <div
+      className={`fixed top-0 left-0 h-full bg-white shadow-lg w-64 transform transition-transform duration-500 z-50 ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
+      <div className="p-6 text-3xl font-bold text-[#006d77] flex justify-between items-center border-b">
         CureLink
+        <button onClick={() => toggleSidebar(false)} className="text-gray-600 hover:text-gray-900 text-2xl">
+          ×
+        </button>
       </div>
-
       <div className="p-6 text-center border-b">
         <img
           src="https://placehold.co/96x96/E0E7FF/4F46E5?text=DR"
@@ -76,12 +86,14 @@ const Sidebar = () => {
         <h2 className="text-lg font-semibold">Dr. Mohamed Ahmad</h2>
         <p className="text-sm text-gray-500">Cairo University Hospital</p>
       </div>
-
       <nav className="flex-1 mt-6 px-4">
         {navItems.map((item) => (
           <button
             key={item.name}
-            onClick={() => navigate(item.path)}
+            onClick={() => {
+              navigate(item.path);
+              toggleSidebar(false);
+            }}
             className={`flex items-center w-full text-left px-4 py-3 mb-2 rounded-lg text-gray-600 hover:bg-[#E0F2F1] hover:text-[#006d77] ${
               item.name === "Appointments" ? "bg-[#E0F2F1] text-[#006d77] font-bold" : ""
             }`}
@@ -94,14 +106,21 @@ const Sidebar = () => {
     </div>
   );
 };
-
-// -------- HEADER ----------
-const Header = () => {
+// ===== HEADER =====
+const Header = ({ toggleSidebar, sidebarOpen }) => {
   const navigate = useNavigate();
-
   return (
-    <header className="bg-white shadow-sm p-4 flex justify-end items-center">
-      <div className="flex items-center space-x-6">
+<header className="bg-white shadow-sm p-4 flex justify-between items-center fixed top-0 left-0 right-0 z-30 transition-all duration-500"
+  style={{ marginLeft: sidebarOpen ? "16rem" : "0" }}>
+      {!sidebarOpen && (
+        <button
+          onClick={toggleSidebar}
+          className="text-gray-600 hover:text-gray-800 transition-transform hover:scale-110"
+        >
+          <IconMenu />
+        </button>
+      )}
+      <div className="flex items-center space-x-6 ml-auto">
         <button className="text-gray-500 hover:text-gray-700">
           <IconSearch />
         </button>
@@ -115,40 +134,20 @@ const Header = () => {
     </header>
   );
 };
-// -------- MAIN CONTENT ----------
+// ===== MAIN CONTENT =====
 const Appointment = () => {
   const localizer = momentLocalizer(moment);
-
-  const [events] = useState([
-    {
-      title: "Mrs. Sarah Lee - Flu",
-      start: new Date(2025, 9, 21, 10, 0),
-      end: new Date(2025, 9, 21, 11, 0),
-      color: "#80CBC4",
-    },
-    {
-      title: "Mr. Ahmed Nabil - Checkup",
-      start: new Date(2025, 9, 22, 12, 0),
-      end: new Date(2025, 9, 22, 13, 0),
-      color: "#FFCC80",
-    },
-    {
-      title: "Mrs. Mona Saad - Diabetes",
-      start: new Date(2025, 9, 23, 9, 0),
-      end: new Date(2025, 9, 23, 10, 0),
-      color: "#90CAF9",
-    },
-    {
-      title: "Mr. John Adel - Flu",
-      start: new Date(2025, 9, 26, 9, 0),
-      end: new Date(2025, 9, 26, 10, 0),
-      color: "#075c53ff",
-    }
-  ]);
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [view, setView] = useState("month");
-  const [date, setDate] = useState(new Date()); 
-
+  const [date, setDate] = useState(new Date());
+  const toggleSidebar = (value) => {
+    setSidebarOpen(value);
+  };
+  const events = [
+    { title: "Mrs. Sarah Lee - Flu", start: new Date(2025, 9, 21, 10, 0), end: new Date(2025, 9, 21, 11, 0), color: "#80CBC4" },
+    { title: "Mr. Ahmed Nabil - Checkup", start: new Date(2025, 9, 22, 12, 0), end: new Date(2025, 9, 22, 13, 0), color: "#FFCC80" },
+    { title: "Mrs. Mona Saad - Diabetes", start: new Date(2025, 9, 23, 9, 0), end: new Date(2025, 9, 23, 10, 0), color: "#90CAF9" },
+  ];
   const eventStyleGetter = (event) => ({
     style: {
       backgroundColor: event.color,
@@ -159,20 +158,28 @@ const Appointment = () => {
       padding: "4px 8px",
     },
   });
-
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
-        <div className="p-6 bg-gray-100 flex-1">
+    <div className="flex bg-gray-100 min-h-screen transition-all duration-500">
+      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      <div
+        className={`flex-1 flex flex-col overflow-hidden transition-all duration-500 ${
+          sidebarOpen ? "ml-64" : "ml-0"
+        }`}
+      >
+        <Header toggleSidebar={() => toggleSidebar(true)} sidebarOpen={sidebarOpen} />
+<main
+  className="flex-1 overflow-y-auto bg-gray-100 p-4 md:p-8 transition-all duration-500"
+  style={{
+    paddingTop: sidebarOpen ? "6rem" : "6rem", 
+  }}
+>
           <h1 className="text-2xl font-bold mb-6 text-[#006d77]">Appointments Calendar</h1>
           <div className="bg-white p-4 rounded-lg shadow-sm h-[80vh]">
             <Calendar
               localizer={localizer}
               events={events}
               date={date}
-              onNavigate={(newDate) => setDate(newDate)} 
+              onNavigate={(newDate) => setDate(newDate)}
               view={view}
               onView={(newView) => setView(newView)}
               startAccessor="start"
@@ -182,7 +189,7 @@ const Appointment = () => {
               style={{ height: "100%" }}
             />
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
