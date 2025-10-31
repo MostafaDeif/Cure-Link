@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { useState } from "react";
 import "./App.css";
 
@@ -32,13 +37,28 @@ import Dashboard from "./Pages/DoctorProfile/Dashboard";
 import Appoinment from "./Pages/DoctorProfile/Appoinment";
 import Patients from "./Pages/DoctorProfile/Patients";
 import Profile from "./Pages/DoctorProfile/Profile";
+import NurseLayout from "./Pages/Nurcing/NurseLayout";
+import NurseDashboard from "./Pages/Nurcing/NurseDashboard";
+import NursePatients from "./Pages/Nurcing/NursePatients";
+import NurseProfile from "./Pages/Nurcing/NurseProfile";
+import NurseAppointments from "./Pages/Nurcing/NurseAppointments";
 
 const Layout = ({ children }) => {
   const location = useLocation();
-
-  // Navbar يظهر فقط في الصفحات اللي موجودة هنا
-  const showNavbarOn = ["/", "/about", "/medicine", "/pharmacy", "/nursing", "/user", "/admin", "/cart", "/product", "/services",
-    "/doctor", "/pharmacy"];
+  const showNavbarOn = [
+    "/",
+    "/about",
+    "/medicine",
+    "/pharmacy",
+    "/nursing",
+    "/user",
+    "/admin",
+    "/cart",
+    "/product",
+    "/services",
+    "/doctor",
+    "/pharmacy",
+  ];
   const showNavbar = showNavbarOn.includes(location.pathname);
 
   return (
@@ -74,7 +94,14 @@ const App = () => {
           <Route path="/user" element={<User />} />
           {/* <Route path="/user"  element={<ProtectedRoute user={auth}><User /></ProtectedRoute>} /> */}
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/admin" element={<ProtectedRoute user={auth}><Admin /></ProtectedRoute>} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute user={auth}>
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/doctor-register" element={<DoctorRegister />} />
           <Route path="/nurse-register" element={<NurseRegister />} />
           <Route path="/pharmacy-register" element={<PharmacyRegister />} />
@@ -82,12 +109,17 @@ const App = () => {
           <Route path="/doctor-dashboard" element={<Dashboard />} />
           <Route path="/doctor-appointments" element={<Appoinment />} />
           <Route path="/doctor-patients" element={<Patients />} />
-          <Route path="/doctor-profile" element={<Profile/>} />
-          
+          <Route path="/doctor-profile" element={<Profile />} />
           <Route path="/client-register" element={<ClientRegister />} />
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />
-
+          <Route path="/nursing" element={<NurseLayout />}>
+            <Route index element={<NurseDashboard />} />
+            <Route path="nurse_dashboard" element={<NurseDashboard />} />
+            <Route path="nurse_appointments" element={<NurseAppointments />} />
+            <Route path="nurse_patients" element={<NursePatients />} />
+            <Route path="nurse_profile" element={<NurseProfile />} />
+          </Route>
         </Routes>
       </Layout>
     </Router>
