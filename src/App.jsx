@@ -50,7 +50,7 @@ const Layout = ({ children }) => {
     "/about",
     "/medicine",
     "/pharmacy",
-    "/nursing",
+    
     "/user",
     "/admin",
     "/cart",

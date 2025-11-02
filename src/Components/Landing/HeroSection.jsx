@@ -5,7 +5,7 @@ import landingimg from "../../assets/landingimg.png";
 
 const HeroSection = () => {
   useEffect(() => {
-    AOS.init({ duration: 2000, once: false });
+    AOS.init({ duration: 800, once: false });
   }, []);
 
   return (
@@ -19,7 +19,7 @@ const HeroSection = () => {
         className="flex flex-col items-center md:items-end text-center md:text-right w-full md:w-[723px] 
                    mt-0 md:mt-0 mb-[50px] md:mb-[0]"
         data-aos="fade-left"
-        data-aos-delay="200"
+        data-aos-delay="100"
       >
         <h1 className="font-[Alexandria] font-black text-[36px] sm:text-[48px] md:text-[64px] lg:text-[80px] leading-[120%] text-[#0F172A]">
           منصتك الطبية المتكاملة في مكان واحد
@@ -60,13 +60,13 @@ const HeroSection = () => {
       <div
         className="flex justify-center items-center md:items-start md:mr-[96px] md:ml-0 w-full md:w-[529px] h-auto"
         data-aos="fade-right"
-        data-aos-delay="400"
+        data-aos-delay="100"
       >
         <img
           src={landingimg}
           alt="Doctors"
           className="w-full h-auto rounded-[20px] object-cover 
-                     transform transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105"
+                     transform transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.05]"
         />
       </div>
     </section>

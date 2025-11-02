@@ -9,7 +9,7 @@ import logo4 from "../../assets/logo4.png";
 
 const PharmacySection = () => {
   useEffect(() => {
-    AOS.init({ duration: 2000, once: false });
+    AOS.init({ duration: 1000, once: false });
   }, []);
 
   return (
