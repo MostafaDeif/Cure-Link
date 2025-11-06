@@ -22,7 +22,6 @@ export default function Nav() {
 
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
-                <Link to="/contact">Contact</Link>
                 <Link to="/services">Services</Link>
 
                 <Link to="/user" className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition">
