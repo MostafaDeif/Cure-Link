@@ -1,10 +1,10 @@
 import React from 'react';
-import LogoBadge from '../assets/ourLogo.jpeg';        
-import GooglePlayBadge from '../assets/Group.png'; 
-import AppStoreBadge from '../assets/Katman 2.png'; 
-import AppGalleryBadge from '../assets/Badges.png'; 
+import LogoBadge from '../../assets/ourLogo.jpeg';        
+import GooglePlayBadge from '../../assets/Group.png'; 
+import AppStoreBadge from '../../assets/Katman2.png'; 
+import AppGalleryBadge from '../../assets/Badges.png'; 
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaAmbulance } from 'react-icons/fa';
-import './Footer.css'; // ملف CSS مخصص للحركة
+import './index.css'; // ملف CSS مخصص للحركة
 
 const Footer = () => {
   return (

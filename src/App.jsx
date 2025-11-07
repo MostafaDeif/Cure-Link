@@ -42,16 +42,33 @@ import NurseProfile from "./Pages/Nurcing/NurseProfile";
 import NurseAppointments from "./Pages/Nurcing/NurseAppointments";
 import FindDoctors from './Pages/Doctor/find_doctors';
 import DoctorProfile from './Pages/Doctor/DoctorProfile';
+import Footer from "./Components/Footer/Footer";
 const Layout = ({ children }) => {
   const location = useLocation();
   const showNavbarOn = [
     "/", "/about", "/medicine", "/pharmacy", "/user", "/admin", "/cart", "/product", "/services", "/find_doctor", "/pharmacy",
   ];
+    const showFooterOn = [
+    "/",
+    "/about",
+    "/medicine",
+    "/user",
+    "/about",
+    "/admin",
+    "/cart",
+    "/product",
+    "/services",
+    "/doctor",
+    "/pharmacy",
+  ];
+
+  const showFooter = showFooterOn.includes(location.pathname);
   const showNavbar = showNavbarOn.includes(location.pathname);
   return (
     <>
       {showNavbar && <Nav />}
       {children}
+      {showFooter && <Footer />}
     </>
   );
 };
