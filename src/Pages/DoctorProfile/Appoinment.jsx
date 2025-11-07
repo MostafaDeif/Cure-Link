@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useNavigate } from "react-router-dom";
 import HeaderDoctor from "../../Components/HeaderDoctor";
 import DoctorSidebar from "../../Components/DoctorSidebar";
 

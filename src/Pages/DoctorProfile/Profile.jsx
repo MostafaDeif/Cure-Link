@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import HeaderDoctor from "../../Components/HeaderDoctor";
 import DoctorSidebar from "../../Components/DoctorSidebar";

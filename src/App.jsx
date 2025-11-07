@@ -6,8 +6,6 @@ import {
 } from "react-router-dom";
 import { useState } from "react";
 import "./App.css";
-
-// Pages & Components
 import ScrollToTop from "./Components/ScrollToTop";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Login from "./Pages/Login";
@@ -42,25 +40,14 @@ import NurseDashboard from "./Pages/Nurcing/NurseDashboard";
 import NursePatients from "./Pages/Nurcing/NursePatients";
 import NurseProfile from "./Pages/Nurcing/NurseProfile";
 import NurseAppointments from "./Pages/Nurcing/NurseAppointments";
-
+import FindDoctors from './Pages/Doctor/find_doctors';
+import DoctorProfile from './Pages/Doctor/DoctorProfile';
 const Layout = ({ children }) => {
   const location = useLocation();
   const showNavbarOn = [
-    "/",
-    "/about",
-    "/medicine",
-    "/pharmacy",
-
-    "/user",
-    "/admin",
-    "/cart",
-    "/product",
-    "/services",
-    "/doctor",
-    "/pharmacy",
+    "/", "/about", "/medicine", "/pharmacy", "/user", "/admin", "/cart", "/product", "/services", "/find_doctor", "/pharmacy",
   ];
   const showNavbar = showNavbarOn.includes(location.pathname);
-
   return (
     <>
       {showNavbar && <Nav />}
@@ -69,9 +56,22 @@ const Layout = ({ children }) => {
   );
 };
 
+const doctorsData = [
+  { name: 'Dr. Ahmed Youssef', imageUrl: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=400&q=80', specialty: 'General', rating: '4.5', distance: '300m away' },
+  { name: 'Dr. Fatma Hassan', imageUrl: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80', specialty: 'Dentist', rating: '4.9', distance: '700m away' },
+  { name: 'Dr. Aya Nabil', imageUrl: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80', specialty: 'Neurologist', rating: '4.7', distance: '1.2km away' },
+  { name: 'Dr. Salma Hany', imageUrl: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80', specialty: 'Cardiologist', rating: '4.8', distance: '900m away' },
+  { name: 'Dr. Karim Adel', imageUrl: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=400&q=80', specialty: 'ENT', rating: '4.4', distance: '1km away' },
+  { name: 'Dr. Hania Omar', imageUrl: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80', specialty: 'Surgeon', rating: '4.8', distance: '400m away' },
+  { name: 'Dr. Yara Magdy', imageUrl: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80', specialty: 'Dermatologist', rating: '4.5', distance: '600m away' },
+  { name: 'Dr. Ali Moustafa', imageUrl: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=400&q=80', specialty: 'Orthopedic', rating: '4.7', distance: '500m away' },
+  { name: 'Dr. Laila Hassan', imageUrl: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80', specialty: 'Psychiatrist', rating: '4.9', distance: '1.3km away' },
+  { name: 'Dr. Omar Saber', imageUrl: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=400&q=80', specialty: 'Eye Specialist', rating: '4.6', distance: '1.1km away' },
+  { name: 'Dr. Hossam Fathi', imageUrl: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&w=400&q=80', specialty: 'Lungs', rating: '4.5', distance: '950m away' },
+  { name: 'Dr. Sarah Nasser', imageUrl: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&w=400&q=80', specialty: 'Therapist', rating: '4.8', distance: '1.6km away' },
+];
 const App = () => {
   const [auth, setAuth] = useState(false);
-
   return (
     <Router>
       <ScrollToTop />
@@ -92,7 +92,6 @@ const App = () => {
 
           {/* protected routes */}
           <Route path="/user" element={<User />} />
-          {/* <Route path="/user"  element={<ProtectedRoute user={auth}><User /></ProtectedRoute>} /> */}
           <Route path="/signup" element={<SignUp />} />
           <Route
             path="/admin"
@@ -110,9 +109,17 @@ const App = () => {
           <Route path="/doctor-appointments" element={<Appoinment />} />
           <Route path="/doctor-patients" element={<Patients />} />
           <Route path="/doctor-profile" element={<Profile />} />
+
+          {/* FindDoctors page with doctorsData */}
+          <Route path="/find_doctor" element={<FindDoctors doctorsData={doctorsData} />} />
+
+          {/* DoctorProfile page with doctorsData */}
+          <Route path="/doctor-profile/:doctorName" element={<DoctorProfile doctorsData={doctorsData} />} />
+
           <Route path="/client-register" element={<ClientRegister />} />
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />
+
           <Route path="/nursing" element={<NurseLayout />}>
             <Route index element={<NurseDashboard />} />
             <Route path="nurse_dashboard" element={<NurseDashboard />} />
