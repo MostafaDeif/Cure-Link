@@ -1,8 +1,66 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/logo.jpg';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-export default function Login() {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+
+export default function Login({ setAuth }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+        email,
+        password
+      });
+
+      // Handle successful login
+      if (response.data) {
+        // Store token if provided
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
+        // Store user data if provided
+        if (response.data.user) {
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+        }
+        
+        // Update auth state if setAuth prop is provided
+        if (setAuth) {
+          setAuth(true);
+        }
+        
+        // Navigate to appropriate page based on user role
+        const userRole = response.data.user?.role || 'customer';
+        if (userRole === 'admin') {
+          navigate('/admin');
+        } else if (userRole === 'doctor') {
+          navigate('/doctor-dashboard');
+        } else if (userRole === 'nurse') {
+          navigate('/nursing');
+        } else if (userRole === 'pharmacy') {
+          navigate('/pharmacy-dashboard');
+        } else {
+          navigate('/user');
+        }
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || 'Login failed. Please check your credentials.');
+      console.error('Login error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen w-full bg-gray-50 px-4">
       {/* Container */}
@@ -19,11 +77,18 @@ export default function Login() {
 
         {/* الفورم */}
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-6">
-          <form className="w-full max-w-sm flex flex-col items-center justify-center">
+          <form onSubmit={handleSubmit} className="w-full max-w-sm flex flex-col items-center justify-center">
             <h2 className="text-3xl lg:text-4xl text-gray-900 font-medium">Sign in</h2>
             <p className="text-sm text-gray-500/90 mt-3 text-center">
               Welcome back! Please sign in to continue
             </p>
+
+            {/* Error Message */}
+            {error && (
+              <div className="w-full mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
+                {error}
+              </div>
+            )}
 
             {/* زر تسجيل الدخول بجوجل */}
             <button
@@ -62,6 +127,8 @@ export default function Login() {
               <input
                 type="email"
                 placeholder="Email id"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="bg-transparent text-gray-500/80 placeholder-gray-500/80 outline-none text-sm w-full h-full"
                 required
               />
@@ -84,6 +151,8 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="bg-transparent text-gray-500/80 placeholder-gray-500/80 outline-none text-sm w-full h-full"
                 required
               />
@@ -101,14 +170,15 @@ export default function Login() {
             {/* Login Button */}
             <button
               type="submit"
-              className="mt-8 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity"
+              disabled={loading}
+              className="mt-8 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Login
+              {loading ? 'Logging in...' : 'Login'}
             </button>
 
             {/* Sign up Link */}
             <p className="text-gray-500/90 text-sm mt-4 text-center">
-              Don’t have an account?{" "}
+              Don't have an account?{" "}
               <Link to="/register" className="text-indigo-400 hover:underline myColor">
                 Sign up
               </Link>

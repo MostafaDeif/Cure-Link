@@ -1,74 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/JustLogo.jpg";
-import { authAPI, adminAPI } from "../../config/api";
+import axios from "axios";
+import {
+  IconMenu,
+  IconX,
+  IconUserCircle,
+  IconLayoutDashboard,
+  IconUserPlus,
+  IconFileText,
+  IconCheckCircle,
+  IconXCircle,
+} from "../../Components/icons";
 
-// ===== ICONS =====
-const IconLayoutDashboard = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect width="7" height="9" x="3" y="3" rx="1" />
-    <rect width="7" height="5" x="14" y="3" rx="1" />
-    <rect width="7" height="9" x="14" y="12" rx="1" />
-    <rect width="7" height="5" x="3" y="16" rx="1" />
-  </svg>
-);
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
-const IconUserPlus = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <line x1="19" y1="8" x2="19" y2="14" />
-    <line x1="22" y1="11" x2="16" y2="11" />
-  </svg>
-);
-
-const IconFileText = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-    <path d="M14 2v6h6" />
-    <line x1="16" y1="13" x2="8" y2="13" />
-    <line x1="16" y1="17" x2="8" y2="17" />
-    <polyline points="10 9 9 9 8 9" />
-  </svg>
-);
-
-const IconCheckCircle = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-    <polyline points="22 4 12 14.01 9 11.01" />
-  </svg>
-);
-
-const IconXCircle = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" />
-    <line x1="15" y1="9" x2="9" y2="15" />
-    <line x1="9" y1="9" x2="15" y2="15" />
-  </svg>
-);
-
-const IconMenu = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="4" y1="6" x2="20" y2="6" />
-    <line x1="4" y1="12" x2="20" y2="12" />
-    <line x1="4" y1="18" x2="20" y2="18" />
-  </svg>
-);
-
-const IconX = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-);
-
-const IconUserCircle = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" />
-    <circle cx="12" cy="10" r="3" />
-    <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
-  </svg>
-);
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 // ===== SIDEBAR =====
 const Sidebar = ({ isOpen, toggleSidebar, currentView, onSelect }) => {
@@ -95,7 +47,7 @@ const Sidebar = ({ isOpen, toggleSidebar, currentView, onSelect }) => {
           CureLink
         </div>
         <button onClick={toggleSidebar} className="text-gray-500 hover:text-gray-700">
-          <IconX />
+          <IconX width="28" height="28" />
         </button>
       </div>
       <div className="p-6 text-center border-b">
@@ -129,7 +81,7 @@ const Sidebar = ({ isOpen, toggleSidebar, currentView, onSelect }) => {
 // ===== HEADER =====
 const Header = ({ toggleSidebar, isSidebarOpen }) => {
   return (
-    <header
+    <div
       className={`bg-white shadow-sm p-4 flex justify-between items-center fixed top-0 left-0 right-0 transition-all duration-300 ${
         isSidebarOpen ? "ml-64" : "ml-0"
       } z-40`}
@@ -137,17 +89,17 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
       <div className="flex items-center">
         {!isSidebarOpen && (
           <button className="text-gray-600 hover:text-[#006d77] mr-4" onClick={toggleSidebar}>
-            <IconMenu />
+            <IconMenu width="28" height="28" />
           </button>
         )}
         <h1 className="text-xl font-semibold text-gray-800">Admin Dashboard</h1>
       </div>
       <div className="flex items-center space-x-6 ml-auto">
         <button className="text-gray-500 hover:text-gray-700">
-          <IconUserCircle />
+          <IconUserCircle width="28" height="28" />
         </button>
       </div>
-    </header>
+    </div>
   );
 };
 
@@ -180,22 +132,32 @@ export default function Admin() {
   });
 
   // Articles State
-  const [articles, setArticles] = useState([
-    { id: 1, title: "نصائح صحية مهمة", content: "محتوى المقال الأول...", date: "2025-01-15" },
-    { id: 2, title: "الوقاية من الأمراض", content: "محتوى المقال الثاني...", date: "2025-01-14" },
-  ]);
+  const [articles, setArticles] = useState([]);
   const [articleForm, setArticleForm] = useState({ title: "", content: "" });
   const [showArticleForm, setShowArticleForm] = useState(false);
   const [editingArticle, setEditingArticle] = useState(null);
 
   // Pending Approvals State
-  const [pendingRegistrations, setPendingRegistrations] = useState([
-    { id: 1, type: "pharmacy", name: "Pharmacy ABC", email: "pharmacy@example.com", date: "2025-01-10" },
-    { id: 2, type: "doctor", name: "Dr. Ahmed Ali", email: "doctor@example.com", date: "2025-01-11" },
-    { id: 3, type: "nurse", name: "Nurse Sarah", email: "nurse@example.com", date: "2025-01-12" },
-  ]);
+  const [pendingRegistrations, setPendingRegistrations] = useState([]);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+  // Fetch data on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [articlesRes, registrationsRes] = await Promise.all([
+          api.get("/api/admin/articles"),
+          api.get("/api/admin/pending-registrations"),
+        ]);
+        if (articlesRes.data) setArticles(articlesRes.data);
+        if (registrationsRes.data) setPendingRegistrations(registrationsRes.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   // Add Admin Handler
   const handleAddAdmin = async (e) => {
@@ -204,7 +166,7 @@ export default function Admin() {
     setLoading(true);
 
     try {
-      const response = await authAPI.addAdmin(adminForm);
+      const response = await api.post("/api/auth/add-admin", adminForm);
       if (response.data) {
         alert("Admin added successfully!");
         setAdminForm({ fullName: "", email: "", password: "", phone: "" });
@@ -224,11 +186,11 @@ export default function Admin() {
 
     try {
       if (editingArticle) {
-        const response = await adminAPI.updateArticle(editingArticle.id, articleForm);
+        const response = await api.put(`/api/admin/articles/${editingArticle.id}`, articleForm);
         setArticles(articles.map((a) => (a.id === editingArticle.id ? { ...a, ...articleForm } : a)));
         setEditingArticle(null);
       } else {
-        const response = await adminAPI.createArticle(articleForm);
+        const response = await api.post("/api/admin/articles", articleForm);
         const newArticle = { id: Date.now(), ...articleForm, date: new Date().toISOString().split("T")[0] };
         setArticles([newArticle, ...articles]);
       }
@@ -253,7 +215,7 @@ export default function Admin() {
     if (!window.confirm("Are you sure you want to delete this article?")) return;
 
     try {
-      await adminAPI.deleteArticle(id);
+      await api.delete(`/api/admin/articles/${id}`);
       setArticles(articles.filter((a) => a.id !== id));
     } catch (error) {
       console.error("Error deleting article:", error);
@@ -272,7 +234,7 @@ export default function Admin() {
   const handleApprove = async (id, type) => {
     setLoading(true);
     try {
-      await adminAPI.approveRegistration(id, type);
+      await api.post(`/api/admin/approve/${type}/${id}`);
       setPendingRegistrations(pendingRegistrations.filter((r) => r.id !== id));
       alert(`${type} approved successfully!`);
     } catch (error) {
@@ -290,7 +252,7 @@ export default function Admin() {
 
     setLoading(true);
     try {
-      await adminAPI.rejectRegistration(id, type);
+      await api.post(`/api/admin/reject/${type}/${id}`);
       setPendingRegistrations(pendingRegistrations.filter((r) => r.id !== id));
       alert(`${type} rejected.`);
     } catch (error) {

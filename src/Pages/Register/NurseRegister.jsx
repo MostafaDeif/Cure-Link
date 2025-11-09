@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 export default function NurseRegister() {
   const [name, setName] = useState("");
@@ -21,6 +24,8 @@ export default function NurseRegister() {
   const [nurseLicense, setNurseLicense] = useState(null);
   const [idFront, setIdFront] = useState(null);
   const [idBack, setIdBack] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -155,7 +160,7 @@ export default function NurseRegister() {
     </div>
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -168,24 +173,61 @@ export default function NurseRegister() {
       return;
     }
 
-    console.log({
-      name,
-      email,
-      password,
-      phone,
-      nationalId,
-      gender,
-      hospital,
-      ward,
-      yearsExp,
-      address,
-      location,
-      nurseLicense,
-      idFront,
-      idBack,
-    });
+    if (!location.lat || !location.lon) {
+      alert("Please select a location on the map.");
+      return;
+    }
 
-    navigate("/under-review");
+    setError("");
+    setLoading(true);
+
+    try {
+      const signupData = {
+        fullName: name,
+        email,
+        password,
+        phone,
+        role: "nurse",
+        location: {
+          latitude: location.lat,
+          longitude: location.lon,
+        },
+        // Include additional nurse-specific fields if API supports them
+        nationalId,
+        gender,
+        hospital,
+        ward,
+        yearsExp,
+      };
+
+      // Print data before sending to backend
+      console.log("=== JSON Data being sent to backend ===");
+      console.log(JSON.stringify(signupData, null, 2));
+      console.log("API URL:", `${API_BASE_URL}/api/auth/signup`);
+      console.log("=====================================");
+
+      const response = await axios.post(`${API_BASE_URL}/api/auth/signup`, signupData);
+      
+      if (response.data) {
+        // Store token if provided
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
+        // Store user data if provided
+        if (response.data.user) {
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+        }
+        
+        // Navigate to under-review page for approval
+        navigate("/under-review");
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || 'Registration failed. Please try again.');
+      console.error('Signup error:', error);
+      alert(error.response?.data?.message || 'Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -193,6 +235,11 @@ export default function NurseRegister() {
       <h2 className="text-2xl font-semibold text-indigo-500 mb-6">Nurse Registration</h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-xl">
+        {error && (
+          <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
+            {error}
+          </div>
+        )}
         <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-3 border border-gray-300 rounded-md bg-white" required />
@@ -251,8 +298,8 @@ export default function NurseRegister() {
           <UploadField label="ID Card Back" file={idBack} setFile={setIdBack} />
         </div>
 
-        <button type="submit" className="mt-6 w-full py-3 rounded-md text-white bg-indigo-500 hover:bg-indigo-600 transition">
-          Submit
+        <button type="submit" disabled={loading} className="mt-6 w-full py-3 rounded-md text-white bg-indigo-500 hover:bg-indigo-600 transition disabled:opacity-50 disabled:cursor-not-allowed">
+          {loading ? 'Submitting...' : 'Submit'}
         </button>
       </form>
     </div>

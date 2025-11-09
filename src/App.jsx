@@ -213,9 +213,9 @@ const App = () => {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute user={auth}>
+              
                 <Admin />
-              </ProtectedRoute>
+              
             }
           />
           <Route path="/doctor-register" element={<DoctorRegister />} />

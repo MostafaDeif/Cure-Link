@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 export default function ClientRegister() {
   const [fullName, setFullName] = useState("");
@@ -12,6 +15,8 @@ export default function ClientRegister() {
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState({ lat: 30.0444, lon: 31.2357 }); // Default Cairo
   const [loadingLocation, setLoadingLocation] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const mapRef = useRef(null);
   const markerRef = useRef(null);
@@ -90,7 +95,7 @@ export default function ClientRegister() {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -98,17 +103,55 @@ export default function ClientRegister() {
       return;
     }
 
-    console.log({
-      fullName,
-      email,
-      password,
-      phone,
-      diseases,
-      address,
-      location,
-    });
+    if (!location.lat || !location.lon) {
+      alert("Please select a location on the map.");
+      return;
+    }
 
-    navigate("/");
+    setError("");
+    setLoading(true);
+
+    try {
+      const signupData = {
+        fullName,
+        email,
+        password,
+        phone,
+        role: "customer",
+        location: {
+          latitude: location.lat,
+          longitude: location.lon,
+        },
+      };
+
+      // Print data before sending to backend
+      console.log("=== JSON Data being sent to backend ===");
+      console.log(JSON.stringify(signupData, null, 2));
+      console.log("API URL:", `${API_BASE_URL}/api/auth/signup`);
+      console.log("=====================================");
+
+      const response = await axios.post(`${API_BASE_URL}/api/auth/signup`, signupData);
+      
+      if (response.data) {
+        // Store token if provided
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
+        // Store user data if provided
+        if (response.data.user) {
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+        }
+        
+        // Navigate to user dashboard or home
+        navigate("/user");
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || 'Registration failed. Please try again.');
+      console.error('Signup error:', error);
+      alert(error.response?.data?.message || 'Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -121,6 +164,11 @@ export default function ClientRegister() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 w-full max-w-xl bg-white p-6 rounded-lg shadow-md"
       >
+        {error && (
+          <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
+            {error}
+          </div>
+        )}
         <input
           type="text"
           placeholder="Full Name"
@@ -204,9 +252,10 @@ export default function ClientRegister() {
 
         <button
           type="submit"
-          className="mt-6 w-full py-3 rounded-md text-white bg-indigo-500 hover:bg-indigo-600 transition"
+          disabled={loading}
+          className="mt-6 w-full py-3 rounded-md text-white bg-indigo-500 hover:bg-indigo-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Register
+          {loading ? 'Registering...' : 'Register'}
         </button>
       </form>
     </div>
