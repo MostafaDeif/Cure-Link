@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Star } from "lucide-react";
-import {ArrowLeft,} from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { ArrowLeft, Star } from "lucide-react";
+
 export default function DoctorProfile({ doctorsData }) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { doctorName } = useParams();
-  const doctor = doctorsData.find((d) => d.name === doctorName);
+
+  // Hooks يجب أن تكون في الأعلى قبل أي return
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -15,7 +15,18 @@ export default function DoctorProfile({ doctorsData }) {
     { name: "Omar", comment: "Helped me a lot, recommended!" },
   ]);
   const [newComment, setNewComment] = useState("");
+
+  // التأكد من وجود البيانات
+  if (!doctorsData || doctorsData.length === 0)
+    return <p className="p-6 text-red-500">No doctors data available</p>;
+
+  const doctor = doctorsData.find(
+    (d) => d.name.toLowerCase() === doctorName.toLowerCase()
+  );
+
   if (!doctor) return <p className="p-6 text-red-500">Doctor not found</p>;
+
+  // Calendar logic
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -24,9 +35,16 @@ export default function DoctorProfile({ doctorsData }) {
   const daysArray = Array.from({ length: firstDay }, () => null).concat(
     Array.from({ length: daysInMonth }, (_, i) => i + 1)
   );
+
   const availableSlots = [
-    "09:00 AM", "10:00 AM", "11:00 AM", "01:00 PM", "02:00 PM", "03:00 PM",
+    "09:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
   ];
+
   const handleBook = () => {
     if (!selectedDate) return alert("Please select a date first");
     if (!selectedSlot) return alert("Please select a time slot first");
@@ -36,25 +54,27 @@ export default function DoctorProfile({ doctorsData }) {
     setSelectedDate(null);
     setSelectedSlot(null);
   };
+
   const handleAddComment = () => {
     if (newComment.trim() !== "") {
       setComments([...comments, { name: "Anonymous", comment: newComment }]);
       setNewComment("");
     }
   };
-  const prevMonth = () => {
-    setCurrentMonth(new Date(year, month - 1, 1));
-  };
-  const nextMonth = () => {
-    setCurrentMonth(new Date(year, month + 1, 1));
-  };
+
+  const prevMonth = () => setCurrentMonth(new Date(year, month - 1, 1));
+  const nextMonth = () => setCurrentMonth(new Date(year, month + 1, 1));
+
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:px-20 lg:px-32 font-sans">
       {/* Header */}
       <div className="flex items-center mb-6 space-x-6">
-                <button className="rounded-full p-2 hover:bg-gray-100" onClick={() => navigate(-1)}>
-                  <ArrowLeft className="h-6 w-6 text-gray-800" />
-                </button>
+        <button
+          className="rounded-full p-2 hover:bg-gray-100"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft className="h-6 w-6 text-gray-800" />
+        </button>
         <img
           src={doctor.imageUrl}
           alt={doctor.name}
@@ -69,6 +89,7 @@ export default function DoctorProfile({ doctorsData }) {
           </div>
         </div>
       </div>
+
       {/* Calendar */}
       <section className="mb-6">
         <div className="flex justify-between items-center mb-2">
@@ -126,6 +147,7 @@ export default function DoctorProfile({ doctorsData }) {
           )}
         </div>
       </section>
+
       {/* Slots */}
       {selectedDate && (
         <section className="mb-6">
@@ -155,9 +177,12 @@ export default function DoctorProfile({ doctorsData }) {
           </button>
         </section>
       )}
-      {/* Comments Section */}
+
+      {/* Comments */}
       <section>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Patient Comments</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          Patient Comments
+        </h2>
         <div className="space-y-4 mb-4">
           {comments.map((c, idx) => (
             <div key={idx} className="p-4 bg-white rounded-xl shadow-sm">
