@@ -54,7 +54,7 @@ export const HealthcareCategorySelector = () => (
                 </Link>
 
                 <Link
-                    to="/nursing"
+                    to="/find_nurse"
                     className="flex flex-col items-center justify-center text-center p-5 rounded-2xl shadow-xl text-white transition-all duration-300 transform hover:scale-[1.03] hover:shadow-2xl bg-gradient-to-br from-green-500 to-teal-600"
                     aria-label="Nursing"
                 >

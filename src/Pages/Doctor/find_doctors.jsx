@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { doctorsData } from "../Doctor/doctorsData";
 import {
-  Users, ArrowLeft, Search, Stethoscope, AirVent, Smile, Brain, HeartPulse, MapPin, Star, ChevronRight, Bone, Eye, Ear, Thermometer, Activity,
+  Users, ArrowLeft, Search, Stethoscope, AirVent, Smile, Brain,
+  HeartPulse, MapPin, Star, ChevronRight, Bone, Eye, Ear,
+  Thermometer, Activity,
 } from "lucide-react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+// Component for Category Icon
 const CategoryIcon = ({ icon: Icon, label, selected, onClick }) => (
   <div
     onClick={onClick}
     className={`flex flex-col items-center justify-center space-y-2 cursor-pointer transition ${
-      selected ? 'text-blue-600' : 'text-gray-700'
+      selected ? "text-blue-600" : "text-gray-700"
     }`}
   >
     <div
       className={`flex h-16 w-16 items-center justify-center rounded-2xl ${
-        selected ? 'bg-blue-100' : 'bg-blue-50'
+        selected ? "bg-blue-100" : "bg-blue-50"
       }`}
     >
       {Icon && <Icon className="h-8 w-8" />}
@@ -20,79 +24,109 @@ const CategoryIcon = ({ icon: Icon, label, selected, onClick }) => (
     <span className="text-sm font-medium">{label}</span>
   </div>
 );
-const RecommendedDoctorCard = ({ name, specialty, rating, distance, imageUrl, onClick }) => (
-  <div
-    onClick={onClick}
-    className="flex items-center space-x-4 rounded-2xl bg-white p-4 shadow-md hover:shadow-lg transition cursor-pointer"
-  >
-    <img
-      src={imageUrl}
-      alt={name}
-      className="h-24 w-24 rounded-lg object-cover"
-      onError={(e) => {
-        e.target.onerror = null;
-        e.target.src =
-          'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=96&h=96&q=80';
-      }}
-    />
-    <div className="flex-1">
-      <h3 className="text-lg font-bold text-gray-900">{name}</h3>
-      <p className="text-sm text-gray-500">{specialty}</p>
-      <div className="mt-3 flex items-center space-x-4">
-        <div className="flex items-center space-x-1 rounded-full bg-blue-100 px-2 py-0.5">
+// Component for Recommended Doctor Card
+const RecommendedDoctorCard = ({ name, specialty, rating, distance, imageUrl }) => {
+  const navigate = useNavigate();
+  return (
+    <div className="flex items-center space-x-4 rounded-2xl bg-white p-4 shadow-md hover:shadow-lg transition">
+      <img
+        src={imageUrl}
+        alt={name}
+        className="h-24 w-24 rounded-lg object-cover"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src =
+            "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=96&h=96&q=80";
+        }}
+      />
+      <div className="flex-1">
+        <h3 className="text-lg font-bold text-gray-900">{name}</h3>
+        <p className="text-sm text-gray-500">{specialty}</p>
+        <div className="mt-3 flex items-center space-x-4">
+          <div className="flex items-center space-x-1 rounded-full bg-blue-100 px-2 py-0.5">
+            <Star className="h-4 w-4 text-blue-600" fill="#3B82F6" />
+            <span className="text-sm font-semibold text-blue-700">{rating}</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <MapPin className="h-4 w-4 text-gray-400" />
+            <span className="text-sm text-gray-500">{distance}</span>
+          </div>
+        </div>
+        <button
+          onClick={() => navigate(`/doctor-profile/${name}`)}
+          className="mt-3 px-4 py-1 bg-blue-600 rounded-full text-sm font-semibold text-white hover:bg-blue-500 transition"
+        >
+          View Profile
+        </button>
+      </div>
+    </div>
+  );
+};
+// Component for Doctor Card
+const DoctorCard = ({ name, imageUrl, specialty, rating, distance }) => {
+  const navigate = useNavigate();
+  return (
+    <div className="rounded-xl overflow-hidden shadow-md hover:shadow-lg transition transform hover:-translate-y-1 hover:scale-105 group relative bg-white">
+      {/* Doctor Image */}
+      <img
+        src={imageUrl}
+        alt={name}
+        className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src =
+            "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=160&h=160&q=80";
+        }}
+      />
+      {/* Overlay on Hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition flex flex-col justify-center items-center text-white px-4 bg-gradient-to-t from-black/50 via-black/25 to-transparent">
+        <h3 className="text-lg font-bold">{name}</h3>
+        <p className="text-sm">{specialty}</p>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/doctor-profile/${name}`);
+          }}
+          className="mt-2 px-4 py-1 bg-blue-600 rounded-full text-sm font-semibold hover:bg-blue-500 transition"
+        >
+          View Profile
+        </button>
+      </div>
+      {/* Rating & Distance */}
+      <div className="bg-white px-3 py-2 flex justify-between items-center">
+        <div className="flex items-center space-x-1">
           <Star className="h-4 w-4 text-blue-600" fill="#3B82F6" />
-          <span className="text-sm font-semibold text-blue-700">{rating}</span>
+          <span className="text-sm font-semibold text-gray-800">{rating}</span>
         </div>
         <div className="flex items-center space-x-1">
-          <MapPin className="h-4 w-4 text-gray-400" />
-          <span className="text-sm text-gray-500">{distance}</span>
+          <MapPin className="h-4 w-4 text-gray-500" />
+          <span className="text-sm text-gray-600">{distance}</span>
         </div>
       </div>
     </div>
-    <ChevronRight className="h-5 w-5 text-gray-400" />
-  </div>
-);
-const DoctorCard = ({ name, imageUrl, specialty, onClick }) => (
-  <div
-    onClick={onClick}
-    className="rounded-xl bg-white shadow-md hover:shadow-lg overflow-hidden transition cursor-pointer"
-  >
-    <img
-      src={imageUrl}
-      alt={name}
-      className="h-40 w-full object-cover"
-      onError={(e) => {
-        e.target.onerror = null;
-        e.target.src =
-          'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=160&h=160&q=80';
-      }}
-    />
-    <div className="p-3 text-center">
-      <h3 className="text-base font-bold text-gray-800">{name}</h3>
-      <p className="text-sm text-gray-500">{specialty}</p>
-    </div>
-  </div>
-);
-export default function FindDoctors({ doctorsData }) {
+  );
+};
+// Main Component
+export default function FindDoctors() {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const categories = [
-    { label: 'All', icon: Users },
-    { label: 'General', icon: Stethoscope },
-    { label: 'Lungs', icon: AirVent },
-    { label: 'Dentist', icon: Smile },
-    { label: 'Psychiatrist', icon: Brain },
-    { label: 'Surgeon', icon: Stethoscope },
-    { label: 'Cardiologist', icon: HeartPulse },
-    { label: 'Orthopedic', icon: Bone },
-    { label: 'Eye Specialist', icon: Eye },
-    { label: 'ENT', icon: Ear },
-    { label: 'Neurologist', icon: Activity },
-    { label: 'Therapist', icon: Thermometer },
+    { label: "All", icon: Users },
+    { label: "General", icon: Stethoscope },
+    { label: "Lungs", icon: AirVent },
+    { label: "Dentist", icon: Smile },
+    { label: "Psychiatrist", icon: Brain },
+    { label: "Surgeon", icon: Stethoscope },
+    { label: "Cardiologist", icon: HeartPulse },
+    { label: "Orthopedic", icon: Bone },
+    { label: "Eye Specialist", icon: Eye },
+    { label: "ENT", icon: Ear },
+    { label: "Neurologist", icon: Activity },
+    { label: "Therapist", icon: Thermometer },
   ];
   const filteredDoctors =
-    selectedCategory === 'All'
+    selectedCategory === "All"
       ? doctorsData.filter(
           (doc) =>
             doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -104,12 +138,15 @@ export default function FindDoctors({ doctorsData }) {
             (doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
               doc.specialty.toLowerCase().includes(searchTerm.toLowerCase()))
         );
-  const filteredRecommended = filteredDoctors.slice(0, 4);
+  const filteredRecommended = filteredDoctors.slice(0, 3);
   return (
     <div className="min-h-screen w-full bg-gray-50 font-sans px-6 md:px-20 lg:px-32 py-8">
       {/* Header */}
       <header className="mb-6 flex items-center justify-between">
-        <button className="rounded-full p-2 hover:bg-gray-100" onClick={() => navigate(-1)}>
+        <button
+          className="rounded-full p-2 hover:bg-gray-100"
+          onClick={() => navigate("/Services")}
+        >
           <ArrowLeft className="h-6 w-6 text-gray-800" />
         </button>
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 text-center flex-1">
@@ -129,32 +166,44 @@ export default function FindDoctors({ doctorsData }) {
         <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
       </div>
       {/* Categories */}
-      <section className="mb-10">
+      <section className="mb-12">
         <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">Categories</h2>
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6">
-          {categories.map((category) => (
-            <CategoryIcon
-              key={category.label}
-              icon={category.icon}
-              label={category.label}
-              selected={selectedCategory === category.label}
-              onClick={() => setSelectedCategory(category.label)}
-            />
-          ))}
+        <div className="relative overflow-hidden">
+          <div className="flex gap-6 whitespace-nowrap animate-marquee">
+            {[...categories, ...categories].map((cat, index) => (
+              <div key={index} className="inline-block min-w-[120px]">
+                <CategoryIcon
+                  icon={cat.icon}
+                  label={cat.label}
+                  selected={selectedCategory === cat.label}
+                  onClick={() => setSelectedCategory(cat.label)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
+        <style>{`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-marquee {
+            display: inline-flex;
+            animation: marquee 15s linear infinite;
+          }
+          @media (min-width: 768px) {
+            .animate-marquee {
+              animation: marquee 20s linear infinite;
+            }
+          }
+        `}</style>
       </section>
-      {/* Recommended */}
+      {/* Recommended Doctors */}
       <section className="mb-10">
-        <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">
-          Recommended Doctors
-        </h2>
+        <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">Recommended Doctors</h2>
         <div className="space-y-4">
           {filteredRecommended.map((doc) => (
-            <RecommendedDoctorCard
-              key={doc.name}
-              {...doc}
-              onClick={() => navigate(`/doctor-profile/${doc.name}`)}
-            />
+            <RecommendedDoctorCard key={doc.name} {...doc} />
           ))}
         </div>
       </section>
@@ -163,11 +212,7 @@ export default function FindDoctors({ doctorsData }) {
         <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">All Doctors</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {filteredDoctors.map((doctor) => (
-            <DoctorCard
-              key={doctor.name}
-              {...doctor}
-              onClick={() => navigate(`/doctor-profile/${doctor.name}`)}
-            />
+            <DoctorCard key={doctor.name} {...doctor} />
           ))}
         </div>
       </section>
