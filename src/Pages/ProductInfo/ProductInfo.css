@@ -1,0 +1,304 @@
+:root {
+  --accent: #3aa1ff;
+  --accent-dark: #2b93e6;
+  --muted: #9aa3ad;
+  --card-bg: #fff;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, system-ui, Arial;
+  margin: 0;
+  padding: 0;
+  background: #f6f7fb;
+  color: #111;
+}
+
+.pi-wrapper {
+  padding: 40px 24px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Card */
+.pi-card {
+  width: 1100px;
+  background: var(--card-bg);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(19, 30, 59, 0.06);
+  display: flex;
+  gap: 32px;
+  padding: 36px;
+  align-items: flex-start;
+}
+
+/* LEFT */
+.pi-left {
+  flex: 1.05;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pi-main-img {
+  width: 420px;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 6px 20px rgba(20, 40, 80, 0.04);
+}
+
+.pi-main-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.pi-thumbs {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.thumb {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.thumb img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+/* RIGHT */
+.pi-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category {
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* ❤️ Fav button */
+.fav {
+  border: none;
+  background: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.fav.active {
+  color: #f00f1a;
+  transform: scale(1.2);
+}
+
+.title {
+  font-size: 30px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.size {
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.stars {
+  color: #3aa1ff;
+  letter-spacing: 2px;
+}
+
+.rating-number {
+  color: var(--muted);
+}
+
+/* price + qty row */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.price {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.current {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.old {
+  color: var(--muted);
+  text-decoration: line-through;
+  font-size: 14px;
+}
+
+.discount {
+  background: #fff4e6;
+  color: #ff8a4b;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+/* qty */
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: none;
+  background: #f1f5f9;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.qty-num {
+  min-width: 36px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* description */
+.description h3 {
+  margin: 14px 0 6px 0;
+}
+
+.description p {
+  color: #6b7480;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.read-more {
+  color: var(--accent);
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+/* cta */
+.cta-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 22px;
+  align-items: center;
+}
+
+.cart-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: none;
+  background: #eaf6ff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.buy-btn {
+  flex: 1;
+  background: var(--accent);
+  color: #fff;
+  padding: 16px 18px;
+  border-radius: 28px;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Responsive: tablet */
+@media (max-width: 1024px) {
+  .pi-card {
+    width: 920px;
+    padding: 28px;
+  }
+
+  .pi-main-img {
+    width: 360px;
+    height: 360px;
+  }
+}
+
+/* Responsive: small screens => stack vertically (mobile) */
+@media (max-width: 780px) {
+  .pi-card {
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .pi-main-img {
+    width: 260px;
+    height: 260px;
+  }
+
+  .pi-left,
+  .pi-right {
+    width: 100%;
+    align-items: center;
+  }
+
+  .pi-right {
+    align-items: flex-start;
+  }
+
+  .price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .cta-row {
+    width: 100%;
+  }
+
+  .buy-btn {
+    width: 100%;
+  }
+}
