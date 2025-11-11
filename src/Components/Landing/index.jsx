@@ -3,6 +3,7 @@ import HeroSection from "./HeroSection";
 import PharmacySection from "./PharmacySection";
 import ServiceSection from "./ServiceSection";
 import NursingSection from "./NursingSection";
+import DoctorSection from "./DoctorSection";
 import WhatsNewSection from "./WhatsNewSection";
 import "./index.css";
 
@@ -13,6 +14,8 @@ export default function Landing() {
       <PharmacySection />
       <ServiceSection />
       <NursingSection />
+      <div className="w-full bg-[#F5F9FA] mt-10 sm:mt-14 lg:mt-[60px] h-[40px] sm:h-[60px] md:h-[70px] lg:h-[80px]"></div>
+      <DoctorSection  />
       <WhatsNewSection />
     </div>
   );

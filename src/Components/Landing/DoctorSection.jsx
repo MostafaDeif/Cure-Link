@@ -1,7 +1,6 @@
 import React from "react";
-import nursingimg from "../../assets/nursingimg.png";
-
-const NursingSection = () => {
+import doctorimg from "../../assets/Doctorsection.png"; 
+const DoctorSection = () => {
   return (
     <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
       <div
@@ -19,7 +18,7 @@ const NursingSection = () => {
             data-aos-duration="600"
             data-aos-easing="ease-out-sine"
           >
-            التمريض المنزلي
+            ابحث عن دكتورك بسهولة
           </h2>
 
           <p
@@ -29,10 +28,9 @@ const NursingSection = () => {
             data-aos-duration="700"
             data-aos-easing="ease-out-sine"
           >
-            احصل على رعاية تمريضية مهنية في منزلك من مختصين معتمدين. سواء كنت
-            بحاجة إلى متابعة ما بعد العمليات، رعاية كبار السن، الحقن، تغيير
-            الضمادات أو المراقبة الصحية، نوفر زيارات آمنة وموثوقة حسب حالتك
-            واحتياجك
+            اكتشف أفضل الدكاترة القريبين منك واحجز موعدك في ثواني.
+            تصفّح التخصصات، شوف تقييمات المرضى، واختار الموعد اللي يناسبك بكل سهولة.
+            كل الخدمات الطبية في مكان واحد — بسرعة وأمان.
           </p>
 
           <button
@@ -45,7 +43,7 @@ const NursingSection = () => {
             data-aos-duration="750"
             data-aos-easing="ease-out-sine"
           >
-            احجز ممرض منزلي
+            اعثر على دكتور الآن
           </button>
         </div>
 
@@ -58,19 +56,16 @@ const NursingSection = () => {
           data-aos-easing="ease-out-sine"
         >
           <img
-            src={nursingimg}
-            alt="nursing img"
+            src={doctorimg}
+            alt="doctor img"
             className="w-full h-full object-cover rounded-[30px]
               transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
               hover:scale-[1.04] hover:-translate-x-[0.5%] hover:-translate-y-[0.5%]"
           />
         </div>
-        
       </div>
-      
     </section>
-    
   );
 };
 
-export default NursingSection;
+export default DoctorSection;
