@@ -49,6 +49,7 @@ import DoctorProfile from "./Pages/Doctor/DoctorProfile";
 import { doctorsData } from './Pages/Doctor/doctorsData.js';
 
 import Footer from "./Components/Footer/Footer";
+import Articles from "./Pages/Articles/index.jsx";
 const Layout = ({ children }) => {
   const location = useLocation();
   const showNavbarOn = [
@@ -64,7 +65,7 @@ const Layout = ({ children }) => {
     "/find_doctor",
     "/pharmacy",
     "/find_nurse",
-    
+
   ];
   const showFooterOn = [
     "/",
@@ -116,11 +117,12 @@ const App = () => {
           <Route
             path="/admin"
             element={
-              
-                <Admin />
-              
+
+              <Admin />
+
             }
           />
+          <Route path="/articles" element={<Articles />} />
           <Route path="/doctor-register" element={<DoctorRegister />} />
           <Route path="/nurse-register" element={<NurseRegister />} />
           <Route path="/pharmacy-register" element={<PharmacyRegister />} />
@@ -132,14 +134,14 @@ const App = () => {
 
           {/* FindDoctors page with doctorsData */}
           <Route
-            path="/find_doctor"element={<FindDoctors/>} />
+            path="/find_doctor" element={<FindDoctors />} />
 
           {/* DoctorProfile page with doctorsData */}
-       
-<Route
-  path="/doctor-profile/:doctorName"
-  element={<DoctorProfile doctorsData={doctorsData} />}
-/>
+
+          <Route
+            path="/doctor-profile/:doctorName"
+            element={<DoctorProfile doctorsData={doctorsData} />}
+          />
           <Route path="/client-register" element={<ClientRegister />} />
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />
@@ -152,14 +154,14 @@ const App = () => {
             <Route path="nurse_profile" element={<NurseProfile />} />
           </Route>
           <Route
-  path="/find_nurse"
-  element={<FindNurse nursesData={nursesData} />}
-/>
-<Route
-  path="/nurse-book/:nurseName"
-  element={<BookNurse nursesData={nursesData} />}
-/>
-<Route path="/all-nurses" element={<AllNurses nursesData={nursesData} />} />
+            path="/find_nurse"
+            element={<FindNurse nursesData={nursesData} />}
+          />
+          <Route
+            path="/nurse-book/:nurseName"
+            element={<BookNurse nursesData={nursesData} />}
+          />
+          <Route path="/all-nurses" element={<AllNurses nursesData={nursesData} />} />
         </Routes>
       </Layout>
     </Router>
