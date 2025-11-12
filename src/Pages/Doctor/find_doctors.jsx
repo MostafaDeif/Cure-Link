@@ -207,15 +207,80 @@ export default function FindDoctors() {
           ))}
         </div>
       </section>
-      {/* All Doctors */}
-      <section>
-        <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">All Doctors</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {filteredDoctors.map((doctor) => (
-            <DoctorCard key={doctor.name} {...doctor} />
-          ))}
+    {/* All Doctors */}
+<section className="mt-10">
+  <h2 className="mb-6 text-xl md:text-2xl font-semibold text-gray-900 text-center">
+    All Doctors
+  </h2>
+
+  {/* Limited Doctors Preview */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {filteredDoctors.slice(0, 4).map((doctor) => (
+      <div
+        key={doctor.name}
+        className="rounded-2xl bg-white shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-2 hover:scale-[1.02] overflow-hidden border border-gray-100"
+      >
+        <img
+          src={doctor.imageUrl}
+          alt={doctor.name}
+          className="h-48 w-full object-cover transition-transform duration-300 hover:scale-105"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src =
+              'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80';
+          }}
+        />
+        <div className="p-4 text-center">
+          <h3 className="text-lg font-bold text-gray-800">{doctor.name}</h3>
+          <p className="text-sm text-gray-500 mb-2">{doctor.specialty}</p>
+          <div className="flex justify-center items-center gap-3 text-sm text-gray-600">
+            <div className="flex items-center gap-1">
+              <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+              <span>{doctor.rating}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <MapPin className="h-4 w-4 text-blue-500" />
+              <span>{doctor.distance}</span>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate(`/doctor-profile/${doctor.name}`)}
+            className="mt-4 px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full hover:bg-blue-500 transition"
+          >
+            View Profile
+          </button>
         </div>
-      </section>
+      </div>
+    ))}
+  </div>
+
+  {/* Show More Button */}
+  {filteredDoctors.length > 4 && (
+    <div className="flex justify-center mt-10">
+      <button
+        onClick={() => navigate("/all-doctors")}
+        className="group flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:from-blue-500 hover:to-blue-300 transition-all duration-300"
+      >
+        Show More
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+    </div>
+  )}
+</section>
+
     </div>
   );
 }

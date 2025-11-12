@@ -47,6 +47,8 @@ import NurseAppointments from "./Pages/Nurcing/NurseAppointments";
 import FindDoctors from "./Pages/Doctor/find_doctors";
 import DoctorProfile from "./Pages/Doctor/DoctorProfile";
 import { doctorsData } from './Pages/Doctor/doctorsData.js';
+import AllDoctors from "./Pages/Doctor/AllDoctors";
+
 
 import Footer from "./Components/Footer/Footer";
 import Articles from "./Pages/Articles/index.jsx";
@@ -131,6 +133,7 @@ const App = () => {
           <Route path="/doctor-appointments" element={<Appoinment />} />
           <Route path="/doctor-patients" element={<Patients />} />
           <Route path="/doctor-profile" element={<Profile />} />
+             <Route path="/all-doctors" element={<AllDoctors />} />
 
           {/* FindDoctors page with doctorsData */}
           <Route
