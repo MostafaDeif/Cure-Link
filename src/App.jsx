@@ -4,7 +4,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import ScrollToTop from "./Components/ScrollToTop";
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -95,6 +95,24 @@ const Layout = ({ children }) => {
 };
 const App = () => {
   const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState(() => {
+    try {
+      const s = localStorage.getItem("user");
+      return s ? JSON.parse(s) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  // keep localStorage in sync with user state
+  useEffect(() => {
+    try {
+      if (user) localStorage.setItem("user", JSON.stringify(user));
+      else localStorage.removeItem("user");
+    } catch (e) {
+      // ignore
+    }
+  }, [user]);
   return (
     <Router>
       <ScrollToTop />
@@ -104,7 +122,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/medicine" element={<Medicine />} />
           <Route path="/nursing" element={<Nursing />} />
-          <Route path="/login" element={<Login setAuth={setAuth} />} />
+          <Route path="/login" element={<Login setAuth={setAuth} setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/product" element={<ProductInfo />} />
           <Route path="/cart" element={<Cart />} />
@@ -114,24 +132,17 @@ const App = () => {
           <Route path="/landing" element={<Landing />} />
 
           {/* protected routes */}
-          <Route path="/user" element={<User />} />
+          <Route path="/user" element={<ProtectedRoute user={user}><User /></ProtectedRoute>} />
           <Route path="/signup" element={<SignUp />} />
-          <Route
-            path="/admin"
-            element={
-
-              <Admin />
-
-            }
-          />
+          <Route path="/admin" element={<ProtectedRoute user={user} requiredRole="admin"><Admin /></ProtectedRoute>} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/doctor-register" element={<DoctorRegister />} />
           <Route path="/nurse-register" element={<NurseRegister />} />
           <Route path="/pharmacy-register" element={<PharmacyRegister />} />
-          <Route path="/pharmacy-dashboard" element={<PharmacyDashboard />} />
-          <Route path="/doctor-dashboard" element={<Dashboard />} />
-          <Route path="/doctor-appointments" element={<Appoinment />} />
-          <Route path="/doctor-patients" element={<Patients />} />
+          <Route path="/pharmacy-dashboard" element={<ProtectedRoute user={user} requiredRole="pharmacy"><PharmacyDashboard /></ProtectedRoute>} />
+          <Route path="/doctor-dashboard" element={<ProtectedRoute user={user} requiredRole="doctor"><Dashboard /></ProtectedRoute>} />
+          <Route path="/doctor-appointments" element={<ProtectedRoute user={user} requiredRole="doctor"><Appoinment /></ProtectedRoute>} />
+          <Route path="/doctor-patients" element={<ProtectedRoute user={user} requiredRole="doctor"><Patients /></ProtectedRoute>} />
           <Route path="/doctor-profile" element={<Profile />} />
              <Route path="/all-doctors" element={<AllDoctors />} />
 
@@ -149,7 +160,7 @@ const App = () => {
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />
 
-          <Route path="/nursing" element={<NurseLayout />}>
+          <Route path="/nursing" element={<ProtectedRoute user={user} requiredRole="nurse"><NurseLayout /></ProtectedRoute>}>
             <Route index element={<NurseDashboard />} />
             <Route path="nurse_dashboard" element={<NurseDashboard />} />
             <Route path="nurse_appointments" element={<NurseAppointments />} />
