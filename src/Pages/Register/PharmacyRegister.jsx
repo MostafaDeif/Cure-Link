@@ -5,7 +5,7 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
-export default function PharmacyRegister() {
+export default function PharmacyRegister({ setUser }) {
   const [ownerName, setOwnerName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -138,10 +138,9 @@ export default function PharmacyRegister() {
       formData.append("role", "pharmacy");
       formData.append("pharmacyName", pharmacyName);
       formData.append("licenseNumber", licenseNumber);
-      formData.append("location", JSON.stringify({
-        latitude: location.lat,
-        longitude: location.lon,
-      }));
+      // send dotted keys for location to match Mongoose schema
+      formData.append("location.latitude", String(location.lat));
+      formData.append("location.longitude", String(location.lon));
       formData.append("pharmacyLicensePhoto", licenseFile);
       formData.append("ownerIdFront", idFront);
       formData.append("ownerIdBack", idBack);
@@ -167,8 +166,11 @@ export default function PharmacyRegister() {
           localStorage.setItem("token", response.data.token);
         }
 
-        if (response.data.user) {
-          localStorage.setItem("user", JSON.stringify(response.data.user));
+        let userObj = response.data.user;
+        if (userObj) {
+          localStorage.setItem('user', JSON.stringify(userObj));
+          if (setUser) setUser(userObj);
+          window.dispatchEvent(new Event('auth-change'));
         }
 
         navigate("/under-review");

@@ -5,7 +5,25 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
-export default function Login({ setAuth }) {
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
+}
+
+export default function Login({ setAuth, setUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -29,18 +47,45 @@ export default function Login({ setAuth }) {
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
         }
-        // Store user data if provided
+
+        let userObj = null;
+
+        // Prefer explicit user object from server
         if (response.data.user) {
-          localStorage.setItem('user', JSON.stringify(response.data.user));
+          userObj = response.data.user;
+          localStorage.setItem('user', JSON.stringify(userObj));
+        } else if (response.data.token) {
+          // Try to parse JWT token to extract user info (role/name/id)
+          const payload = parseJwt(response.data.token);
+          if (payload) {
+            userObj = {
+              id: payload.sub || payload.userId || payload.id,
+              name: payload.name || payload.fullName || payload.username || payload.email,
+              email: payload.email,
+              role: payload.role || payload.roles || payload?.role?.[0] || 'customer',
+            };
+            // persist a minimal user object so other components can read it
+            try {
+              localStorage.setItem('user', JSON.stringify(userObj));
+            } catch (e) {}
+          }
         }
+
+        // notify app about auth change (cross-tab + same-tab sync)
+        if (userObj && setUser) setUser(userObj);
+        if (setAuth) setAuth(true);
         
-        // Update auth state if setAuth prop is provided
-        if (setAuth) {
-          setAuth(true);
-        }
+        // Dispatch custom event for same-tab listeners
+        window.dispatchEvent(new Event('auth-change'));
         
-        // Navigate to appropriate page based on user role
-        const userRole = response.data.user?.role || 'customer';
+        // Touch a temp key to trigger storage events in other tabs
+        try {
+          localStorage.setItem('__authTimestamp', String(Date.now()));
+          localStorage.removeItem('__authTimestamp');
+        } catch {}
+
+        // Navigate based on role
+        const userRole = userObj?.role || 'customer';
         if (userRole === 'admin') {
           navigate('/admin');
         } else if (userRole === 'doctor') {
@@ -50,7 +95,7 @@ export default function Login({ setAuth }) {
         } else if (userRole === 'pharmacy') {
           navigate('/pharmacy-dashboard');
         } else {
-          navigate('/user');
+          navigate('/');
         }
       }
     } catch (error) {

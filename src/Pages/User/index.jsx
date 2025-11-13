@@ -417,21 +417,24 @@ const SettingsSection = () => (
 
 export default User;
 
-// small logout component placed in the sidebar
 function LogoutButton() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     try {
+      localStorage.removeItem('token');
       localStorage.removeItem('user');
     } catch {}
-    // notify other listeners in same tab
+    
+    // Dispatch custom event for same-tab listeners
     window.dispatchEvent(new Event('auth-change'));
-    // also trigger storage event for other tabs
+    
+    // Touch a temp key to trigger storage events in other tabs
     try {
-      localStorage.setItem('__lastAuth', String(Date.now()));
-      localStorage.removeItem('__lastAuth');
+      localStorage.setItem('__authTimestamp', String(Date.now()));
+      localStorage.removeItem('__authTimestamp');
     } catch {}
+    
     navigate('/');
   };
 

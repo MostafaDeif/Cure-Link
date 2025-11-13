@@ -4,7 +4,7 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
-export default function DoctorRegister() {
+export default function DoctorRegister({ setUser }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -158,10 +158,8 @@ export default function DoctorRegister() {
         password,
         phone,
         role: "doctor",
-        location: {
-          latitude: location.lat,
-          longitude: location.lon,
-        },
+        "location.latitude": location.lat,
+        "location.longitude": location.lon,
         // Include additional doctor-specific fields if API supports them
         nationalId,
         gender,
@@ -183,9 +181,12 @@ export default function DoctorRegister() {
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
         }
-        // Store user data if provided
-        if (response.data.user) {
-          localStorage.setItem('user', JSON.stringify(response.data.user));
+        
+        let userObj = response.data.user;
+        if (userObj) {
+          localStorage.setItem('user', JSON.stringify(userObj));
+          if (setUser) setUser(userObj);
+          window.dispatchEvent(new Event('auth-change'));
         }
         
         // Navigate to under-review page for approval

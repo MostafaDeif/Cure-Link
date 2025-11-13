@@ -1,24 +1,65 @@
 import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ user, children, requiredRole }) => {
-  // If user not passed as prop, try to read from localStorage
-  let currentUser = user;
+const parseJwt = (token) => {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch {
+    return null;
+  }
+};
+
+const ProtectedRoute = ({ children, requiredRole }) => {
+  let currentUser = null;
+
+  // 1) حاول تقرأ التوكن
+  const token = localStorage.getItem("token");
+  if (token) {
+    const payload = parseJwt(token);
+
+    if (payload) {
+      currentUser = {
+        id: payload.id || payload.sub,
+        email: payload.email,
+        name:
+          payload.name ||
+          payload.username ||
+          payload.fullName ||
+          payload.email,
+        role:
+          payload.role ||
+          (Array.isArray(payload.roles) ? payload.roles[0] : payload.roles) ||
+          "customer",
+      };
+
+      localStorage.setItem("user", JSON.stringify(currentUser));
+    }
+  }
+
+  // 2) ولو مفيش توكن، حاول تقرأ user
   if (!currentUser) {
     try {
-      const stored = localStorage.getItem("user");
-      currentUser = stored ? JSON.parse(stored) : null;
-    } catch (e) {
+      const userFromStorage = localStorage.getItem("user");
+      currentUser = userFromStorage ? JSON.parse(userFromStorage) : null;
+    } catch {
       currentUser = null;
     }
   }
 
-  // Not authenticated -> send to login
+  // 3) لو مش مسجل → روح Login
   if (!currentUser) {
     return <Navigate to="/login" replace />;
   }
 
-  // Role-based protection (optional)
-  if (requiredRole && currentUser.role && currentUser.role !== requiredRole) {
+  // 4) لو فيه role مطلوب
+  if (requiredRole && currentUser.role !== requiredRole) {
     return <Navigate to="/" replace />;
   }
 
