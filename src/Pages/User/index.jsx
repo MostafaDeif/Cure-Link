@@ -1,8 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 const User = () => {
   const [activeSection, setActiveSection] = useState("profile");
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const s = localStorage.getItem("user");
+      return s ? JSON.parse(s) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    const onAuth = () => {
+      try {
+        const s = localStorage.getItem("user");
+        setCurrentUser(s ? JSON.parse(s) : null);
+      } catch {
+        setCurrentUser(null);
+      }
+    };
+    window.addEventListener("auth-change", onAuth);
+    window.addEventListener("storage", onAuth);
+    return () => {
+      window.removeEventListener("auth-change", onAuth);
+      window.removeEventListener("storage", onAuth);
+    };
+  }, []);
 
   return (
     <div
@@ -12,10 +38,16 @@ const User = () => {
     >
       {/* القائمة الجانبية */}
       <div className="w-full md:w-1/4 bg-white p-4 rounded-lg shadow mb-4 md:mb-0 md:ml-5" style={{ backgroundColor: "#EBF6FC" }}>
-        <div className="text-center mb-4">
-          <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-2"></div>
-          <h2 className="font-semibold text-lg text-gray-700"> مصطفي ضيف</h2>
-        </div>
+          <div className="text-center mb-4">
+            <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-2 overflow-hidden">
+              <img
+                src={currentUser?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser?.name || 'مصطفي ضيف')}&background=426287&color=fff`}
+                alt="avatar"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h2 className="font-semibold text-lg text-gray-700"> {currentUser?.name || 'مصطفي ضيف'}</h2>
+          </div>
         <ul className="space-y-2 flex md:block justify-between">
           <li
             className={`cursor-pointer p-2 rounded ${
@@ -50,6 +82,9 @@ const User = () => {
             الإعدادات
           </li>
         </ul>
+        <div className="mt-6 text-center">
+          <LogoutButton />
+        </div>
       </div>
 
       {/* المحتوى المتغير */}
@@ -59,6 +94,7 @@ const User = () => {
         {activeSection === "orders" && <OrdersSection />}
         {activeSection === "settings" && <SettingsSection />}
       </div>
+      
     </div>
   );
 };
@@ -380,3 +416,31 @@ const SettingsSection = () => (
 );
 
 export default User;
+
+// small logout component placed in the sidebar
+function LogoutButton() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem('user');
+    } catch {}
+    // notify other listeners in same tab
+    window.dispatchEvent(new Event('auth-change'));
+    // also trigger storage event for other tabs
+    try {
+      localStorage.setItem('__lastAuth', String(Date.now()));
+      localStorage.removeItem('__lastAuth');
+    } catch {}
+    navigate('/');
+  };
+
+  return (
+    <button
+      onClick={handleLogout}
+      className="w-full bg-red-50 text-red-700 px-4 py-2 rounded hover:bg-red-100 transition"
+    >
+      تسجيل الخروج
+    </button>
+  );
+}
