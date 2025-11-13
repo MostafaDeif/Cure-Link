@@ -1,5 +1,6 @@
 import React from "react";
 import nursingimg from "../../assets/nursingimg.png";
+import { Link } from 'react-router-dom';
 
 const NursingSection = () => {
   return (
@@ -35,18 +36,29 @@ const NursingSection = () => {
             واحتياجك
           </p>
 
-          <button
-            className="bg-[#16BC88] text-white font-[Alexandria] font-black text-[18px] sm:text-[20px] leading-none 
-             rounded-[40px] w-full sm:w-[400px] lg:w-[495px] h-[56px] sm:h-[60px] lg:h-[64px] 
-             mt-[40px] lg:mt-[62px] transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
-             hover:opacity-95 hover:scale-[1.04] hover:shadow-lg"
+          <Link
+            to="/find_nurse"
+            className="
+                        bg-[#16BC88] text-white
+                        font-[Alexandria] font-black text-[18px] sm:text-[20px] leading-none
+                        rounded-[40px]
+                        w-full sm:w-[400px] lg:w-[495px]
+                        h-[56px] sm:h-[60px] lg:h-[64px]
+                        mt-[40px] lg:mt-[62px]
+                        flex justify-center items-center
+                        cursor-pointer
+                        transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]
+                        hover:opacity-95 hover:scale-[1.04] hover:shadow-lg
+                        mx-auto
+                      "
             data-aos="fade-left"
             data-aos-delay="250"
             data-aos-duration="750"
             data-aos-easing="ease-out-sine"
           >
             احجز ممرض منزلي
-          </button>
+          </Link>
+
         </div>
 
         {/* Image */}
@@ -65,11 +77,11 @@ const NursingSection = () => {
               hover:scale-[1.04] hover:-translate-x-[0.5%] hover:-translate-y-[0.5%]"
           />
         </div>
-        
+
       </div>
-      
+
     </section>
-    
+
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import landingimg from "../../assets/landingimg.png";
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   useEffect(() => {
@@ -47,13 +48,28 @@ const HeroSection = () => {
           والمستخدمين. كل ما تحتاجه في مجال الرعاية الصحية بين يديك.
         </p>
 
-        <button
-          className="mt-[40px] mx-[116px] md:mt-[49px] bg-[#128ADD] text-white font-[Alexandria] font-black 
-                           text-[16px] md:text-[18px] rounded-[40px] px-[24px] py-[16px] w-[240px] md:w-[317px] 
-                           h-[56px] md:h-[62px] transition-transform duration-500 hover:opacity-90 hover:scale-105"
+        <Link
+          to="/services"
+          className="
+    mt-[40px] md:mt-[49px]
+    w-[240px] md:w-[317px]
+    h-[56px] md:h-[62px]
+    px-[24px] py-[16px]
+    bg-[#128ADD] text-white
+    font-[Alexandria] font-black
+    text-[16px] md:text-[18px]
+    rounded-[40px]
+    flex justify-center items-center
+    shadow-md
+    cursor-pointer
+    transition-transform duration-500
+    hover:opacity-90 hover:scale-105
+  "
         >
           تصفح الخدمات
-        </button>
+        </Link>
+
+
       </div>
 
       {/* Image */}

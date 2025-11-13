@@ -1,5 +1,6 @@
 import React from "react";
 import medicineimg from "../../assets/medecineimg.png";
+import { Link } from 'react-router-dom';
 
 const ServicesSection = () => {
   return (
@@ -71,15 +72,25 @@ const ServicesSection = () => {
             >
               اطلب أدويتك بسهولة مع خدمة التوصيل إلى المنزل. يمكنك رفع الروشتة أو إدخال اسم الدواء مباشرة، مع إمكانية التواصل مع صيدلي في حال احتجت استشارة أو بدائل
             </p>
-            <button
-              className="bg-[#0D6EFD] text-white font-[Alexandria] font-black text-[20px] leading-none rounded-[40px] 
-                         w-full lg:w-[476px] h-[64px] mt-[40px] transition-transform duration-500 ease-in-out
-                         hover:opacity-90 hover:scale-105 mx-auto lg:mx-0"
+            <Link
+              to="/pharmacy"
+              className=" bg-[#0D6EFD] text-white
+                          font-[Alexandria] font-black text-[20px] leading-none
+                          rounded-[40px]
+                          w-full lg:w-[476px] h-[64px]
+                          mt-[40px]
+                          flex justify-center items-center
+                          mx-auto lg:mx-0
+                          cursor-pointer
+                          transition-transform duration-500 ease-in-out
+                          hover:opacity-90 hover:scale-105
+                        "
               data-aos="fade-left"
               data-aos-delay="450"
             >
               اطلب الدواء الآن
-            </button>
+            </Link>
+
           </div>
         </div>
       </div>

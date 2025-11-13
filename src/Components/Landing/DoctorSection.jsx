@@ -1,5 +1,7 @@
 import React from "react";
-import doctorimg from "../../assets/Doctorsection.png"; 
+import doctorimg from "../../assets/Doctorsection.png";
+import { Link } from 'react-router-dom';
+
 const DoctorSection = () => {
   return (
     <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
@@ -32,19 +34,29 @@ const DoctorSection = () => {
             تصفّح التخصصات، شوف تقييمات المرضى، واختار الموعد اللي يناسبك بكل سهولة.
             كل الخدمات الطبية في مكان واحد — بسرعة وأمان.
           </p>
-
-          <button
-            className="bg-[#16BC88] text-white font-[Alexandria] font-black text-[18px] sm:text-[20px] leading-none 
-             rounded-[40px] w-full sm:w-[400px] lg:w-[495px] h-[56px] sm:h-[60px] lg:h-[64px] 
-             mt-[40px] lg:mt-[62px] transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] 
-             hover:opacity-95 hover:scale-[1.04] hover:shadow-lg"
+          <Link
+            to="/find_doctor"
+            className="
+    bg-[#16BC88] text-white
+    font-[Alexandria] font-black text-[18px] sm:text-[20px] leading-none
+    rounded-[40px]
+    w-full sm:w-[400px] lg:w-[495px]
+    h-[56px] sm:h-[60px] lg:h-[64px]
+    mt-[40px] lg:mt-[62px]
+    flex justify-center items-center
+    cursor-pointer
+    transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]
+    hover:opacity-95 hover:scale-[1.04] hover:shadow-lg
+    mx-auto
+  "
             data-aos="fade-left"
             data-aos-delay="250"
             data-aos-duration="750"
             data-aos-easing="ease-out-sine"
           >
             اعثر على دكتور الآن
-          </button>
+          </Link>
+
         </div>
 
         {/* Image */}

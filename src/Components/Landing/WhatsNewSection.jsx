@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 const WhatsNewSection = () => {
   const cards = [
@@ -7,18 +8,21 @@ const WhatsNewSection = () => {
       description:
         "شاهد أحدث المؤتمرات الطبية والجلسات التخصصية المسجّلة متى شئت. تابع آخر المستجدات والأبحاث والممارسات المهنية دون الحاجة للحضور المباشر.",
       button: "مشاهدة المحاضرات",
+      link: "/lectures"
     },
     {
       title: "المقالات والمحتوى الطبي",
       description:
         "تصفّح مقالات طبية موثوقة ومحتوى تعليمي مُعدّ بعناية للأطباء والممرضين والمستخدمين. استفد من مصادر مصنّفة حسب اهتماماتك ومستوى معرفتك.",
       button: "قراءة المقالات",
+      link: "/articles"
     },
     {
       title: "الفئات التعليمية",
       description:
         "استكشف المحتوى بحسب الفئة: أطباء، تمريض، أو مستخدمون. كل قسم يقدّم مواد مناسبة لتطوير المعرفة والدعم الصحي والتثقيف المستمر.",
       button: "استكشف الفئة الخاصة بك",
+      link: "/categories"
     },
   ];
 
@@ -57,13 +61,17 @@ const WhatsNewSection = () => {
                 {card.description}
               </p>
 
-              <button
+              <Link
+                // to={card.link}
+                to="/Articles"
                 className="w-[240px] h-[58px] bg-white text-[#54BD95] font-[Alexandria] font-black text-[15px] leading-[30px] rounded-[18px]
-                             transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-                             group-hover:bg-[#54BD95] group-hover:text-white group-focus:bg-[#54BD95] group-focus:text-white"
+                           flex justify-center items-center
+                           transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+                           group-hover:bg-[#54BD95] group-hover:text-white group-focus:bg-[#54BD95] group-focus:text-white
+                           cursor-pointer"
               >
                 {card.button}
-              </button>
+              </Link>
             </div>
           </div>
         ))}
