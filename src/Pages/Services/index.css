@@ -1,0 +1,122 @@
+/* Services page styles: sliders for doctors, nurses, pharmacies */
+
+/* .services-page { } */
+
+.max-width {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.section {
+  margin: 28px 0;
+}
+
+.section-title {
+  font-size: 20px;
+  margin: 0 0 12px;
+  color: #08304a;
+}
+
+.slider-row {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.slider-track {
+  display: flex;
+  gap: 14px;
+}
+
+.person-card {
+  min-width: 240px;
+  background: linear-gradient(180deg, #fff, #fbfdff);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(6, 58, 90, 0.06);
+  box-shadow: 0 8px 24px rgba(6, 40, 60, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.person-thumb {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  background: #eef7fb;
+}
+
+.person-body {
+  padding: 12px;
+}
+
+.person-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: #062a3a;
+}
+
+.person-sub {
+  color: #475569;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.person-meta {
+  color: #94a3b8;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+/* hide scrollbar visuals while keeping scroll behavior */
+.slider-row::-webkit-scrollbar {
+  height: 8px;
+}
+.slider-row::-webkit-scrollbar-thumb {
+  background: rgba(6, 58, 90, 0.08);
+  border-radius: 999px;
+}
+.slider-row {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.slider-row::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .person-card {
+    min-width: 200px;
+  }
+}
+
+/* Ensure Swiper pagination (dots) appear below the slider and centered */
+.section .swiper {
+  /* allow pagination below */
+  padding-bottom: 22px;
+}
+
+.section .swiper .swiper-pagination {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.section .swiper .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #cbd5e1;
+  opacity: 1;
+  margin: 0 6px !important;
+  border-radius: 999px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.section .swiper .swiper-pagination-bullet-active {
+  background: #036890;
+  transform: scale(1.15);
+}
