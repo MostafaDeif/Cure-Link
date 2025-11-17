@@ -1,50 +1,277 @@
-:root{
-  --brand:#1e40af;
-  --bg:#f9fafb;
-  --card-radius:15px;
-  --card-shadow: 0 6px 18px rgba(16,24,40,0.06);
-  --gap:1.5rem;
+:root {
+  --brand: #1e40af;
+  --bg: #f9fafb;
+  --card-radius: 15px;
+  --card-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+  --gap: 1.5rem;
 }
-body,html{height:100%;margin:0;padding:0;background:var(--bg);font-family:Inter,system-ui,Arial;color:#111827}
-.max-w-4xl{max-width:720px;margin-left:auto;margin-right:auto}
-.search-box{display:flex;align-items:center;gap:12px;background:#f3f4f6;padding:12px 16px;border-radius:9999px;box-shadow:inset 0 1px 0 rgba(0,0,0,0.02)}
-.search-box .icon{color:var(--brand)}
-.search-input{flex:1;border:0;outline:0;background:transparent;font-size:1rem;color:#111827;padding:6px 0}
-.prescription-banner{max-width:1100px;margin:0 auto 28px;background:var(--brand);border-radius:20px;padding:30px;color:white;text-align:center;box-shadow:0 10px 30px rgba(16,24,40,0.12)}
-.prescription-banner h2{font-size:1.375rem;margin:0 0 8px;font-weight:700}
-.prescription-banner p{margin:0 0 14px;opacity:0.95}
-.prescription-banner button{background:white;color:var(--brand);padding:10px 26px;border-radius:9999px;border:0;font-weight:600;box-shadow:0 6px 18px rgba(2,6,23,0.12);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
-.prescription-banner button:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(2,6,23,0.14)}
-.filters{display:flex;justify-content:center;gap:10px;margin:20px 0 28px}
-.filter-btn{padding:10px 18px;border-radius:9999px;border:1px solid #e6e9f2;background:white;cursor:pointer;font-weight:600;transition:all .18s ease}
-.filter-btn.active{background:var(--brand);color:white;box-shadow:0 8px 22px rgba(30,64,175,0.14)}
-.max-w-7xl{max-width:1220px;margin-left:auto;margin-right:auto}
-.section-title{font-size:1.25rem;font-weight:700;margin-bottom:1rem}
-.section-divider{height:1px;background:#e6e6e6;margin:40px auto;width:100%;max-width:1220px}
-.product-card{min-width:200px;background:white;border-radius:var(--card-radius);box-shadow:var(--card-shadow);display:flex;flex-direction:column;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease;margin-right:12px}
-.product-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.10)}
-.product-image{width:100%;height:120px;object-fit:contain;background:linear-gradient(180deg,#ffffff,#f8fafc);padding:12px}
-.product-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
-.product-name{font-weight:700;font-size:0.95rem;margin:0}
-.product-details{font-size:12px;color:#6b7280;margin:0}
-.product-footer{display:flex;align-items:center;justify-content:space-between;padding:12px;border-top:1px solid #f1f5f9;background:#fbfbfc;border-radius:0 0 15px 15px}
-.price{font-weight:800;font-size:1rem}
-.old-price{font-size:12px;color:#9ca3af;text-decoration:line-through}
-.add-btn{background:var(--brand);color:white;padding:6px;border-radius:9999px;cursor:pointer;border:0}
-.marquee-outer{width:100%;overflow:hidden;padding:6px 0}
-.marquee-track{display:flex;align-items:flex-start;gap:var(--gap);will-change:transform}
-@media (max-width:1024px){.product-image{height:110px}.marquee-track{gap:1.25rem}}
-@media (max-width:768px){.max-w-4xl{max-width:92%}.prescription-banner{padding:22px;border-radius:16px}.product-image{height:100px}.product-card{min-width:170px}}
-@media (max-width:420px){.product-card{min-width:150px}.prescription-banner h2{font-size:1.1rem}}
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  font-family: Inter, system-ui, Arial;
+  color: #111827;
+}
+.max-w-4xl {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f3f4f6;
+  padding: 12px 16px;
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.02);
+}
+.search-box .icon {
+  color: var(--brand);
+}
+.search-input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 1rem;
+  color: #111827;
+  padding: 6px 0;
+}
+.prescription-banner {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  background: var(--brand);
+  border-radius: 20px;
+  padding: 30px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.12);
+}
+.prescription-banner h2 {
+  font-size: 1.375rem;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+.prescription-banner p {
+  margin: 0 0 14px;
+  opacity: 0.95;
+}
+.prescription-banner button {
+  background: white;
+  color: var(--brand);
+  padding: 10px 26px;
+  border-radius: 9999px;
+  border: 0;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.12);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.prescription-banner button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.14);
+}
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0 28px;
+}
+.filter-btn {
+  padding: 10px 18px;
+  border-radius: 9999px;
+  border: 1px solid #e6e9f2;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.18s ease;
+}
+.filter-btn.active {
+  background: var(--brand);
+  color: white;
+  box-shadow: 0 8px 22px rgba(30, 64, 175, 0.14);
+}
+.max-w-7xl {
+  max-width: 1220px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.section-divider {
+  height: 1px;
+  background: #e6e6e6;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 1220px;
+}
+.product-card {
+  min-width: 200px;
+  background: white;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  margin-right: 12px;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.1);
+}
+.product-image {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  padding: 12px;
+}
+.product-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.product-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 0;
+}
+.product-details {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-top: 1px solid #f1f5f9;
+  background: #fbfbfc;
+  border-radius: 0 0 15px 15px;
+}
+.price {
+  font-weight: 800;
+  font-size: 1rem;
+}
+.old-price {
+  font-size: 12px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+.add-btn {
+  background: var(--brand);
+  color: white;
+  padding: 6px;
+  border-radius: 9999px;
+  cursor: pointer;
+  border: 0;
+}
+.marquee-outer {
+  width: 100%;
+  overflow: hidden;
+  padding: 6px 0;
+}
+.marquee-track {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap);
+  will-change: transform;
+}
+@media (max-width: 1024px) {
+  .product-image {
+    height: 110px;
+  }
+  .marquee-track {
+    gap: 1.25rem;
+  }
+}
+@media (max-width: 768px) {
+  .max-w-4xl {
+    max-width: 92%;
+  }
+  .prescription-banner {
+    padding: 22px;
+    border-radius: 16px;
+  }
+  .product-image {
+    height: 100px;
+  }
+  .product-card {
+    min-width: 170px;
+  }
+}
+@media (max-width: 420px) {
+  .product-card {
+    min-width: 150px;
+  }
+  .prescription-banner h2 {
+    font-size: 1.1rem;
+  }
+}
 
 /* modal results */
-.results-modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:60;padding:20px}
-.results-card{width:100%;max-width:980px;background:white;border-radius:14px;box-shadow:0 20px 50px rgba(2,6,23,0.25);padding:18px;max-height:80vh;overflow:auto}
-.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.close-btn{background:transparent;border:0;color:var(--brand);font-weight:700;cursor:pointer}
-.center-text{display:flex;align-items:center;justify-content:center}
+.results-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 20px;
+}
+.results-card {
+  width: 100%;
+  max-width: 980px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.25);
+  padding: 18px;
+  max-height: 80vh;
+  overflow: auto;
+}
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.close-btn {
+  background: transparent;
+  border: 0;
+  color: var(--brand);
+  font-weight: 700;
+  cursor: pointer;
+}
+.center-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* small helpers */
-.center-text{display:flex;align-items:center;justify-content:center}
-.filter-select{padding:6px 8px;border-radius:8px;border:1px solid #e6e9f2}
+.center-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filter-select {
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #e6e9f2;
+}

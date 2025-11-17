@@ -2,6 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { Search, Plus } from "lucide-react";
 import ".//pharmacy.css";
 
+// --- ADDED ---
+// Import react-slick styles
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+// --- END ADDED ---
+
 import medPanadol from "../../assets/med3.jpg";
 import medBodrex from "../../assets/med3.jpg";
 import medKonidin from "../../assets/med3.jpg";
@@ -10,6 +16,7 @@ import medOBH from "../../assets/med3.jpg";
 import medBetadine from "../../assets/med3.jpg";
 import medBodrexin from "../../assets/med3.jpg";
 import medAntangin from "../../assets/med3.jpg";
+import Slider from "react-slick"; // This was already here, which is correct
 
 const productsBase = [
   { id: 1, name: "Panadol", details: "20pcs", price: 15.99, category: "Painkiller", imageUrl: medPanadol },
@@ -46,51 +53,9 @@ const ProductCard = ({ product }) => {
   );
 };
 
-const SmoothSlider = ({ items, pause }) => {
-  const outerRef = useRef(null);
-  const trackRef = useRef(null);
-  const speed = 0.28;
-  const pos = useRef(0);
-  useEffect(() => {
-    const outer = outerRef.current;
-    const track = trackRef.current;
-    if (!outer || !track) return;
-    let trackWidth = track.scrollWidth / 2;
-    let lastTime = performance.now();
-    let mounted = true;
-    const loop = (t) => {
-      if (!mounted) return;
-      const delta = t - lastTime;
-      lastTime = t;
-      if (!pause) {
-        pos.current += (speed * delta) / 16;
-        if (pos.current >= trackWidth) pos.current = 0;
-        track.style.transform = `translateX(-${pos.current}px)`;
-      }
-      requestAnimationFrame(loop);
-    };
-    const raf = requestAnimationFrame(loop);
-    const ro = new ResizeObserver(() => {
-      pos.current = 0;
-      track.style.transform = `translateX(0px)`;
-      trackWidth = track.scrollWidth / 2;
-    });
-    ro.observe(outer);
-    return () => {
-      mounted = false;
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-    };
-  }, [pause, items.length]);
-  return (
-    <div className="marquee-outer" ref={outerRef}>
-      <div className="marquee-track" ref={trackRef}>
-        {items.map((it) => <ProductCard key={`a-${it.id}`} product={it} />)}
-        {items.map((it) => <ProductCard key={`b-${it.id}`} product={it} />)}
-      </div>
-    </div>
-  );
-};
+// --- REMOVED ---
+// The custom `SmoothSlider` component has been deleted.
+// --- END REMOVED ---
 
 export default function PharmacyWebPage() {
   const [searchRaw, setSearchRaw] = useState("");
@@ -122,6 +87,43 @@ export default function PharmacyWebPage() {
   const displayedSale = (activeFilter === "All" || activeFilter === "On Sale") ? filteredSale : [];
   const modalResults = searchText ? productsBase.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase()) || p.details.toLowerCase().includes(searchText.toLowerCase())) : [];
 
+  // --- ADDED ---
+  // Settings for the react-slick slider
+  const slickSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4, // Show 4 items on desktop
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          arrows: false,
+          slidesToShow: 3, // 3 items on tablets
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          slidesToShow: 2, // 2 items on mobile
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          slidesToShow: 1, // 1 item on small mobile
+        }
+      }
+    ]
+  };
+  // --- END ADDED ---
+
   return (
     <div className="page-root">
       <div className="max-w-4xl mx-auto mt-10 mb-6">
@@ -144,17 +146,17 @@ export default function PharmacyWebPage() {
       </div>
 
       <div className="filters">
-        <button className={`filter-btn ${activeFilter==="All"?"active":""}`} onClick={()=>setActiveFilter("All")}>All</button>
-        <button className={`filter-btn ${activeFilter==="Popular"?"active":""}`} onClick={()=>setActiveFilter("Popular")}>Popular</button>
-        <button className={`filter-btn ${activeFilter==="On Sale"?"active":""}`} onClick={()=>setActiveFilter("On Sale")}>On Sale</button>
+        <button className={`filter-btn ${activeFilter === "All" ? "active" : ""}`} onClick={() => setActiveFilter("All")}>All</button>
+        <button className={`filter-btn ${activeFilter === "Popular" ? "active" : ""}`} onClick={() => setActiveFilter("Popular")}>Popular</button>
+        <button className={`filter-btn ${activeFilter === "On Sale" ? "active" : ""}`} onClick={() => setActiveFilter("On Sale")}>On Sale</button>
       </div>
 
       <div className="max-w-7xl mx-auto px-4">
-        <div className="split-controls" style={{display:"flex",gap:16,justifyContent:"center",alignItems:"center",marginBottom:16}}>
+        <div className="split-controls" style={{ display: "flex", gap: 16, justifyContent: "center", alignItems: "center", marginBottom: 16 }}>
           <div className="center-text">
-            <label style={{marginRight:8}}>Category</label>
-            <select value={category} onChange={(e)=>setCategory(e.target.value)} className="filter-select">
-              {categories.map(c=> <option key={c} value={c}>{c}</option>)}
+            <label style={{ marginRight: 8 }}>Category</label>
+            <select value={category} onChange={(e) => setCategory(e.target.value)} className="filter-select">
+              {categories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
         </div>
@@ -164,7 +166,21 @@ export default function PharmacyWebPage() {
         <section className="max-w-7xl mx-auto mb-12">
           <h2 className="section-title">Popular Products</h2>
           <div>
-            <SmoothSlider items={displayedPopular} pause={!!searchText || showResultsModal} />
+            {/* --- REPLACED --- */}
+            <Slider
+              {...slickSettings}
+              autoplay={!searchText && !showResultsModal} // This handles the "pause" logic
+            >
+              {displayedPopular.map(product => (
+                <div key={product.id}>
+                  {/* Add padding here for gutters between cards */}
+                  <div style={{ padding: '0 8px' }}>
+                    <ProductCard product={product} />
+                  </div>
+                </div>
+              ))}
+            </Slider>
+            {/* --- END REPLACED --- */}
           </div>
         </section>
       )}
@@ -174,16 +190,30 @@ export default function PharmacyWebPage() {
       {displayedSale.length > 0 && (
         <section className="max-w-7xl mx-auto mb-24">
           <h2 className="section-title">Products on Sale</h2>
-          <SmoothSlider items={displayedSale} pause={!!searchText || showResultsModal} />
+          {/* --- REPLACED --- */}
+          <Slider
+            {...slickSettings}
+            autoplay={!searchText && !showResultsModal} // This handles the "pause" logic
+          >
+            {displayedSale.map(product => (
+              <div key={product.id}>
+                {/* Add padding here for gutters between cards */}
+                <div style={{ padding: '0 8px' }}>
+                  <ProductCard product={product} />
+                </div>
+              </div>
+            ))}
+          </Slider>
+          {/* --- END REPLACED --- */}
         </section>
       )}
 
       {showResultsModal && (
-        <div className="results-modal" role="dialog" aria-modal="true" onClick={()=>{ setShowResultsModal(false); setSearchRaw(""); setSearchText(""); }}>
-          <div className="results-card" onClick={(e)=>e.stopPropagation()}>
+        <div className="results-modal" role="dialog" aria-modal="true" onClick={() => { setShowResultsModal(false); setSearchRaw(""); setSearchText(""); }}>
+          <div className="results-card" onClick={(e) => e.stopPropagation()}>
             <div className="results-header">
               <h3>Search results for “{searchText}”</h3>
-              <button className="close-btn" onClick={()=>{ setShowResultsModal(false); setSearchRaw(""); setSearchText(""); }}>Close</button>
+              <button className="close-btn" onClick={() => { setShowResultsModal(false); setSearchRaw(""); setSearchText(""); }}>Close</button>
             </div>
             <div className="results-grid">
               {modalResults.length === 0 ? (
