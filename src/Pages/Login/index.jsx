@@ -40,23 +40,23 @@ export default function Login({ setAuth, setUser }) {
         email,
         password
       });
-
+      console.log( response.data.data.token);
       // Handle successful login
       if (response.data) {
         // Store token if provided
-        if (response.data.token) {
-          localStorage.setItem('token', response.data.token);
+        if (response.data.data.token) {
+          localStorage.setItem('token', response.data.data.token);
         }
 
         let userObj = null;
 
         // Prefer explicit user object from server
-        if (response.data.user) {
-          userObj = response.data.user;
+        if (response.data.data.user) {
+          userObj = response.data.data.user;
           localStorage.setItem('user', JSON.stringify(userObj));
-        } else if (response.data.token) {
+        } else if (response.data.data.token) {
           // Try to parse JWT token to extract user info (role/name/id)
-          const payload = parseJwt(response.data.token);
+          const payload = parseJwt(response.data.data.token);
           if (payload) {
             userObj = {
               id: payload.sub || payload.userId || payload.id,
@@ -67,22 +67,22 @@ export default function Login({ setAuth, setUser }) {
             // persist a minimal user object so other components can read it
             try {
               localStorage.setItem('user', JSON.stringify(userObj));
-            } catch (e) {}
+            } catch (e) { }
           }
         }
 
         // notify app about auth change (cross-tab + same-tab sync)
         if (userObj && setUser) setUser(userObj);
         if (setAuth) setAuth(true);
-        
+
         // Dispatch custom event for same-tab listeners
         window.dispatchEvent(new Event('auth-change'));
-        
+
         // Touch a temp key to trigger storage events in other tabs
         try {
           localStorage.setItem('__authTimestamp', String(Date.now()));
           localStorage.removeItem('__authTimestamp');
-        } catch {}
+        } catch { }
 
         // Navigate based on role
         const userRole = userObj?.role || 'customer';
@@ -99,7 +99,7 @@ export default function Login({ setAuth, setUser }) {
         }
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'Login failed. Please check your credentials.');
+      setError(error.response?.data?.data?.message || 'Login failed. Please check your credentials.');
       console.error('Login error:', error);
     } finally {
       setLoading(false);

@@ -208,11 +208,11 @@ export default function NurseRegister({ setUser }) {
       
       if (response.data) {
         // Store token if provided
-        if (response.data.token) {
-          localStorage.setItem('token', response.data.token);
+        if (response.data.data.token) {
+          localStorage.setItem('token', response.data.data.token);
         }
         
-        let userObj = response.data.user;
+        let userObj = response.data.data.user;
         if (userObj) {
           localStorage.setItem('user', JSON.stringify(userObj));
           if (setUser) setUser(userObj);
@@ -223,9 +223,9 @@ export default function NurseRegister({ setUser }) {
         navigate("/under-review");
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'Registration failed. Please try again.');
+      setError(error.response?.data?.data?.message || 'Registration failed. Please try again.');
       console.error('Signup error:', error);
-      alert(error.response?.data?.message || 'Registration failed. Please try again.');
+      alert(error.response?.data?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
