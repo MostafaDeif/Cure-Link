@@ -1,104 +1,81 @@
 import React from "react";
 import medicineimg from "../../assets/medecineimg.png";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const ServicesSection = () => {
   return (
-    <section className="w-full bg-[#F5F9FA] flex flex-col items-center pt-20 sm:pt-24 lg:pt-32">
-      {/* Title and Curve */}
-      <div className="text-center mb-16 w-full flex flex-col items-center max-w-[1445px]">
-        <h2
-          className="font-[Alexandria] font-black text-[64px] leading-[90px] text-[#0D6EFD] tracking-normal w-[265px] h-[90px]"
-          data-aos="fade-up"
-          data-aos-delay="50"
-        >
-          خدماتنا
-        </h2>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="380"
-          height="21"
-          viewBox="0 0 380 21"
-          fill="none"
-          className="mt-[14px]"
-          data-aos="fade-up"
-          data-aos-delay="150"
-        >
-          <path
-            d="M0 18 C95 0, 285 0, 380 18"
-            stroke="#0D6EFD"
-            strokeWidth="8"
-            fill="none"
-          />
-        </svg>
-      </div>
-
-      {/* White Section */}
-      <div className="bg-white w-full flex justify-center min-h-[537px]">
-        <div className="flex flex-col lg:flex-row items-start w-full max-w-[1445px] min-h-[537px] px-4 sm:px-8">
-
-          {/* Image */}
-          <div
-            className="flex justify-center lg:justify-start items-center  rounded-[30px] 
-                       w-full lg:w-[666px] min-h-[250px] sm:min-h-[300px] lg:min-h-[369px]
-                       mt-[53px]"
-            data-aos="fade-right"
+    <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
+      <div
+        className="flex flex-col lg:flex-row-reverse items-center lg:items-start justify-between max-w-[1262px] w-full gap-[60px] lg:gap-[89px] mx-auto"
+        data-aos="fade-up"
+        data-aos-duration="700"
+        data-aos-easing="ease-out-sine"
+      >
+        {/* Text Content */}
+        <div className="flex flex-col items-center lg:items-end text-center lg:text-right w-full lg:w-[507px]">
+          <h2
+            className="font-[Alexandria] font-bold text-[32px] sm:text-[40px] lg:text-[50px] leading-[61px] text-[#191E15] mt-[94px] lg:mt-[53px]"
+            data-aos="fade-left"
             data-aos-delay="200"
+            data-aos-duration="600"
+            data-aos-easing="ease-out-sine"
           >
-            <img
-              src={medicineimg}
-              alt="medicines"
-              className="w-full h-full object-cover rounded-[30px]
-                         transform transition-transform duration-[800ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]
-                         hover:scale-[1.05]"
-            />
-          </div>
+            الأدوية
+          </h2>
 
-          {/* Text Content */}
-          <div
-            className="flex flex-col justify-start w-full lg:w-[458px] text-center lg:text-right mt-[53px] lg:mt-[53px] lg:ml-[137px] lg:mr-[101px]"
+          <p
+            className="font-[Alexandria] font-normal text-[18px] sm:text-[20px] lg:text-[24px] leading-[32px] text-[#475373] mt-[40px] lg:mt-[62px] max-w-[511px]"
+            data-aos="fade-left"
+            data-aos-delay="300"
+            data-aos-duration="700"
+            data-aos-easing="ease-out-sine"
           >
-            <h3
-              className="font-[Alexandria] font-bold text-[50px] leading-[61px] text-black"
-              data-aos="fade-left"
-              data-aos-delay="250"
-            >
-              الأدوية
-            </h3>
-            <p
-              className="font-[Alexandria] font-normal text-[24px] leading-[32px] text-[#475373] mt-[40px]"
-              data-aos="fade-left"
-              data-aos-delay="350"
-            >
-              اطلب أدويتك بسهولة مع خدمة التوصيل إلى المنزل. يمكنك رفع الروشتة أو إدخال اسم الدواء مباشرة، مع إمكانية التواصل مع صيدلي في حال احتجت استشارة أو بدائل
-            </p>
-            <Link
-              to="/pharmacy"
-              className=" bg-[#0D6EFD] text-white
-                          font-[Alexandria] font-black text-[20px] leading-none
-                          rounded-[40px]
-                          w-full lg:w-[476px] h-[64px]
-                          mt-[40px]
-                          flex justify-center items-center
-                          mx-auto lg:mx-0
-                          cursor-pointer
-                          transition-transform duration-500 ease-in-out
-                          hover:opacity-90 hover:scale-105
-                        "
-              data-aos="fade-left"
-              data-aos-delay="450"
-            >
-              اطلب الدواء الآن
-            </Link>
+            اطلب أدويتك بسهولة مع خدمة التوصيل إلى المنزل. يمكنك رفع الروشتة
+            أو إدخال اسم الدواء مباشرة، مع إمكانية التواصل مع صيدلي في حال
+            احتجت استشارة أو بدائل
+          </p>
 
-          </div>
+          <Link
+            to="/pharmacy"
+            className="
+                        bg-[#0D6EFD] text-white
+                        font-[Alexandria] font-black text-[18px] sm:text-[20px] leading-none
+                        rounded-[40px]
+                        w-full sm:w-[400px] lg:w-[495px]
+                        h-[56px] sm:h-[60px] lg:h-[64px]
+                        mt-[40px] lg:mt-[62px]
+                        flex justify-center items-center
+                        cursor-pointer
+                        transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]
+                        hover:opacity-95 hover:scale-[1.04] hover:shadow-lg
+                        mx-auto
+                      "
+            data-aos="fade-left"
+            data-aos-delay="250"
+            data-aos-duration="750"
+            data-aos-easing="ease-out-sine"
+          >
+            اطلب الدواء الآن
+          </Link>
+        </div>
+
+        {/* Image */}
+        <div
+          className="flex justify-center lg:justify-start items-center rounded-[30px] w-full lg:w-[666px] min-h-[250px] sm:min-h-[300px] lg:min-h-[369px]"
+          data-aos="fade-right"
+          data-aos-delay="250"
+          data-aos-duration="750"
+          data-aos-easing="ease-out-sine"
+        >
+          <img
+            src={medicineimg}
+            alt="medicine img"
+            className="w-full h-full object-cover rounded-[30px]
+              transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+              hover:scale-[1.04] hover:-translate-x-[0.5%] hover:-translate-y-[0.5%]"
+          />
         </div>
       </div>
-
-      {/* Colored Spacer */}
-      <div
-        className="w-full bg-[#F5F9FA] mt-10 sm:mt-14 lg:mt-[60px] h-[40px] sm:h-[60px] md:h-[70px] lg:h-[80px]"
-      ></div>
     </section>
   );
 };

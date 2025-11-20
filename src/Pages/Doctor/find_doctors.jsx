@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { doctorsData } from "../Doctor/doctorsData";
 import {
-  Users, ArrowLeft, Search, Stethoscope, AirVent, Smile, Brain,
-  HeartPulse, MapPin, Star, ChevronRight, Bone, Eye, Ear,
-  Thermometer, Activity,
+  Users,
+  ArrowLeft,
+  Search,
+  Stethoscope,
+  AirVent,
+  Smile,
+  Brain,
+  HeartPulse,
+  MapPin,
+  Star,
+  ChevronRight,
+  Bone,
+  Eye,
+  Ear,
+  Thermometer,
+  Activity,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
 // Component for Category Icon
 const CategoryIcon = ({ icon: Icon, label, selected, onClick }) => (
   <div
@@ -24,6 +38,7 @@ const CategoryIcon = ({ icon: Icon, label, selected, onClick }) => (
     <span className="text-sm font-medium">{label}</span>
   </div>
 );
+
 // Component for Recommended Doctor Card
 const RecommendedDoctorCard = ({ name, specialty, rating, distance, imageUrl }) => {
   const navigate = useNavigate();
@@ -62,12 +77,12 @@ const RecommendedDoctorCard = ({ name, specialty, rating, distance, imageUrl }) 
     </div>
   );
 };
+
 // Component for Doctor Card
 const DoctorCard = ({ name, imageUrl, specialty, rating, distance }) => {
   const navigate = useNavigate();
   return (
     <div className="rounded-xl overflow-hidden shadow-md hover:shadow-lg transition transform hover:-translate-y-1 hover:scale-105 group relative bg-white">
-      {/* Doctor Image */}
       <img
         src={imageUrl}
         alt={name}
@@ -78,7 +93,6 @@ const DoctorCard = ({ name, imageUrl, specialty, rating, distance }) => {
             "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=160&h=160&q=80";
         }}
       />
-      {/* Overlay on Hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition flex flex-col justify-center items-center text-white px-4 bg-gradient-to-t from-black/50 via-black/25 to-transparent">
         <h3 className="text-lg font-bold">{name}</h3>
         <p className="text-sm">{specialty}</p>
@@ -92,7 +106,7 @@ const DoctorCard = ({ name, imageUrl, specialty, rating, distance }) => {
           View Profile
         </button>
       </div>
-      {/* Rating & Distance */}
+
       <div className="bg-white px-3 py-2 flex justify-between items-center">
         <div className="flex items-center space-x-1">
           <Star className="h-4 w-4 text-blue-600" fill="#3B82F6" />
@@ -106,11 +120,14 @@ const DoctorCard = ({ name, imageUrl, specialty, rating, distance }) => {
     </div>
   );
 };
+
 // Main Component
 export default function FindDoctors() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const scrollRef = useRef(null);
+
   const categories = [
     { label: "All", icon: Users },
     { label: "General", icon: Stethoscope },
@@ -125,6 +142,7 @@ export default function FindDoctors() {
     { label: "Neurologist", icon: Activity },
     { label: "Therapist", icon: Thermometer },
   ];
+
   const filteredDoctors =
     selectedCategory === "All"
       ? doctorsData.filter(
@@ -138,7 +156,25 @@ export default function FindDoctors() {
             (doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
               doc.specialty.toLowerCase().includes(searchTerm.toLowerCase()))
         );
+
   const filteredRecommended = filteredDoctors.slice(0, 3);
+
+  // Scroll by one item
+  const scrollByOne = (dir = "next") => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const firstItem = container.querySelector("[data-cat-item]");
+    if (!firstItem) return;
+
+    const computed = getComputedStyle(container);
+    const gap = parseFloat(computed.gap || computed.columnGap || 0) || 0;
+    const itemWidth = Math.ceil(firstItem.getBoundingClientRect().width + gap);
+
+    const left = dir === "next" ? itemWidth : -itemWidth;
+    container.scrollBy({ left, behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen w-full bg-gray-50 font-sans px-6 md:px-20 lg:px-32 py-8">
       {/* Header */}
@@ -154,6 +190,7 @@ export default function FindDoctors() {
         </h1>
         <div className="w-8"></div>
       </header>
+
       {/* Search */}
       <div className="relative mb-10">
         <input
@@ -165,13 +202,35 @@ export default function FindDoctors() {
         />
         <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
       </div>
+
       {/* Categories */}
-      <section className="mb-12">
-        <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">Categories</h2>
-        <div className="relative overflow-hidden">
-          <div className="flex gap-6 whitespace-nowrap animate-marquee">
-            {[...categories, ...categories].map((cat, index) => (
-              <div key={index} className="inline-block min-w-[120px]">
+      <section className="mb-12 relative">
+        <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">
+          Categories
+        </h2>
+
+        <div className="relative">
+          {/* Left Arrow */}
+          <button
+            onClick={() => scrollByOne("prev")}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white shadow-md p-2 rounded-full hover:bg-blue-50 transition"
+          >
+            <ChevronRight className="h-6 w-6 rotate-180 text-gray-700" />
+          </button>
+
+          {/* Scrollable Row */}
+          <div
+            ref={scrollRef}
+            className="flex gap-6 overflow-x-auto scroll-smooth px-12 scrollbar-hide"
+            style={{ scrollSnapType: "x mandatory" }}
+          >
+            {categories.map((cat, index) => (
+              <div
+                key={index}
+                data-cat-item
+                className="inline-block min-w-[120px]"
+                style={{ scrollSnapAlign: "start" }}
+              >
                 <CategoryIcon
                   icon={cat.icon}
                   label={cat.label}
@@ -181,106 +240,89 @@ export default function FindDoctors() {
               </div>
             ))}
           </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={() => scrollByOne("next")}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white shadow-md p-2 rounded-full hover:bg-blue-50 transition"
+          >
+            <ChevronRight className="h-6 w-6 text-gray-700" />
+          </button>
         </div>
-        <style>{`
-          @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-marquee {
-            display: inline-flex;
-            animation: marquee 15s linear infinite;
-          }
-          @media (min-width: 768px) {
-            .animate-marquee {
-              animation: marquee 20s linear infinite;
-            }
-          }
-        `}</style>
       </section>
+
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
+
       {/* Recommended Doctors */}
       <section className="mb-10">
-        <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">Recommended Doctors</h2>
+        <h2 className="mb-4 text-lg md:text-xl font-semibold text-gray-900">
+          Recommended Doctors
+        </h2>
         <div className="space-y-4">
           {filteredRecommended.map((doc) => (
             <RecommendedDoctorCard key={doc.name} {...doc} />
           ))}
         </div>
       </section>
-    {/* All Doctors */}
-<section className="mt-10">
-  <h2 className="mb-6 text-xl md:text-2xl font-semibold text-gray-900 text-center">
-    All Doctors
-  </h2>
 
-  {/* Limited Doctors Preview */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-    {filteredDoctors.slice(0, 4).map((doctor) => (
-      <div
-        key={doctor.name}
-        className="rounded-2xl bg-white shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-2 hover:scale-[1.02] overflow-hidden border border-gray-100"
-      >
-        <img
-          src={doctor.imageUrl}
-          alt={doctor.name}
-          className="h-48 w-full object-cover transition-transform duration-300 hover:scale-105"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src =
-              'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80';
-          }}
-        />
-        <div className="p-4 text-center">
-          <h3 className="text-lg font-bold text-gray-800">{doctor.name}</h3>
-          <p className="text-sm text-gray-500 mb-2">{doctor.specialty}</p>
-          <div className="flex justify-center items-center gap-3 text-sm text-gray-600">
-            <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-              <span>{doctor.rating}</span>
+      {/* All Doctors */}
+      <section className="mt-10">
+        <h2 className="mb-6 text-xl md:text-2xl font-semibold text-gray-900 text-center">
+          All Doctors
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {filteredDoctors.slice(0, 4).map((doctor) => (
+            <div
+              key={doctor.name}
+              className="rounded-2xl bg-white shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-2 hover:scale-[1.02] overflow-hidden border border-gray-100"
+            >
+              <img
+                src={doctor.imageUrl}
+                alt={doctor.name}
+                className="h-48 w-full object-cover transition-transform duration-300 hover:scale-105"
+              />
+              <div className="p-4 text-center">
+                <h3 className="text-lg font-bold text-gray-800">{doctor.name}</h3>
+                <p className="text-sm text-gray-500 mb-2">{doctor.specialty}</p>
+
+                <div className="flex justify-center items-center gap-3 text-sm text-gray-600">
+                  <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                    <span>{doctor.rating}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MapPin className="h-4 w-4 text-blue-500" />
+                    <span>{doctor.distance}</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => navigate(`/doctor-profile/${doctor.name}`)}
+                  className="mt-4 px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full hover:bg-blue-500 transition"
+                >
+                  View Profile
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-1">
-              <MapPin className="h-4 w-4 text-blue-500" />
-              <span>{doctor.distance}</span>
-            </div>
-          </div>
-          <button
-            onClick={() => navigate(`/doctor-profile/${doctor.name}`)}
-            className="mt-4 px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full hover:bg-blue-500 transition"
-          >
-            View Profile
-          </button>
+          ))}
         </div>
-      </div>
-    ))}
-  </div>
 
-  {/* Show More Button */}
-  {filteredDoctors.length > 4 && (
-    <div className="flex justify-center mt-10">
-      <button
-        onClick={() => navigate("/all-doctors")}
-        className="group flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:from-blue-500 hover:to-blue-300 transition-all duration-300"
-      >
-        Show More
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </button>
-    </div>
-  )}
-</section>
-
+        {filteredDoctors.length > 4 && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => navigate("/all-doctors")}
+              className="group flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:from-blue-500 hover:to-blue-300 transition-all duration-300"
+            >
+              Show More
+              <ChevronRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" />
+            </button>
+          </div>
+        )}
+      </section>
     </div>
   );
 }
