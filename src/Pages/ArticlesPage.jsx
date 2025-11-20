@@ -8,7 +8,7 @@ import { useRole } from "../Context/RoleContext";
 // Banner images with text - يمكن استبدالها بصور حقيقية
 const bannerData = [
   {
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1200&h=400&fit=crop",
+    image: "https://i.pinimg.com/1200x/7d/0f/70/7d0f701cb5fa74c8374de417455affa6.jpg",
     title: "كن جزءا من أكبر المؤتمرات الطبية العالمية",
     subtitle: "تابع الجديد أولا بأول مع Cure Link",
   },
@@ -18,7 +18,7 @@ const bannerData = [
     subtitle: "احصل على شهادات معتمدة من مؤسسات عالمية",
   },
   {
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=400&fit=crop",
+    image:" https://i.pinimg.com/736x/cf/cb/ec/cfcbec57b9cce056db5f294f33e7d599.jpg",
     title: "آخر أخبار الأدوية والابتكارات الصيدلانية",
     subtitle: "ابق على اطلاع بأحدث التحديثات الطبية",
   },
