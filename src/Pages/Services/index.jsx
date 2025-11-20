@@ -3,7 +3,6 @@ import "./index.css"
 import HealthcareCategorySelector from '../../Components/HealthcareCategorySelector'
 import { doctorsData } from '../Doctor/doctorsData'
 import nursesData from '../Nurse/nurseData'
-import { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'

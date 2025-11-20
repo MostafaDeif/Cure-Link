@@ -10,11 +10,16 @@ export default function HeaderDoctor({
     navigateProp,
     profilePath = "/doctor-profile",
     className = "",
-    IconMenuComponent = IconMenu,
-    IconSearchComponent = IconSearch,
-    IconUserCircleComponent = IconUserCircle,
+    IconMenuComponent,
+    IconSearchComponent,
+    IconUserCircleComponent,
 }) {
-    const navigate = navigateProp ?? useNavigate();
+    const navigateHook = useNavigate();
+    const navigate = navigateProp ?? navigateHook;
+    
+    const MenuIcon = IconMenuComponent || IconMenu;
+    const SearchIcon = IconSearchComponent || IconSearch;
+    const UserIcon = IconUserCircleComponent || IconUserCircle;
 
     return (
         <header className={`bg-white shadow-sm p-4 flex justify-between items-center sticky top-0 z-40 ${className}`}>
@@ -24,7 +29,7 @@ export default function HeaderDoctor({
                     className="text-gray-600 hover:text-gray-800 transition-transform hover:scale-110"
                     aria-label="Open sidebar"
                 >
-                    <IconMenuComponent />
+                    <MenuIcon />
                 </button>
             )}
 
@@ -34,7 +39,7 @@ export default function HeaderDoctor({
                     onClick={onSearchClick}
                     aria-label="Search"
                 >
-                    <IconSearchComponent />
+                    <SearchIcon />
                 </button>
 
                 <button
@@ -42,7 +47,7 @@ export default function HeaderDoctor({
                     onClick={() => navigate(profilePath)}
                     aria-label="Profile"
                 >
-                    <IconUserCircleComponent />
+                    <UserIcon />
                 </button>
             </div>
         </header>

@@ -44,12 +44,13 @@ export default function Nav() {
     return (
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
 
-            <Link to="/">
+            <Link to="/" className="flex items-center gap-3">
                 <img
                     src={logo}
                     alt="Logo"
                     className="h-10 w-auto object-contain cursor-pointer"
                 />
+                <span className="text-xl font-semibold text-[#426287]">CureLink</span>
             </Link>
 
             {/* Desktop Menu */}
@@ -58,6 +59,7 @@ export default function Nav() {
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
                 <Link to="/services">Services</Link>
+                <Link to="/articles">Articles</Link>
 
                 {user ? (
                     <Link to="/user" className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition">
@@ -94,6 +96,7 @@ export default function Nav() {
                 <Link to="/" className="block">Home</Link>
                 <Link to="/about" className="block">About</Link>
                 <Link to="/contact" className="block">Contact</Link>
+                <Link to="/articles" className="block">Articles</Link>
                 {user ? (
                     <Link to="/user" className="block px-3 py-2 rounded">{user.name || 'Profile'}</Link>
                 ) : (

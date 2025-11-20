@@ -62,8 +62,7 @@ const WhatsNewSection = () => {
               </p>
 
               <Link
-                // to={card.link}
-                to="/Articles"
+                to={card.link === "/articles" ? "/articles" : card.link}
                 className="w-[240px] h-[58px] bg-white text-[#54BD95] font-[Alexandria] font-black text-[15px] leading-[30px] rounded-[18px]
                            flex justify-center items-center
                            transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]

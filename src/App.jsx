@@ -10,7 +10,7 @@ import "./App.css";
 
 import ScrollToTop from "./Components/ScrollToTop";
 import ProtectedRoute from "./Components/ProtectedRoute";
-
+import ArticlesPage from "./Pages/ArticlesPage.jsx";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Error from "./Pages/Error";
@@ -58,7 +58,6 @@ import { doctorsData } from "./Pages/Doctor/doctorsData.js";
 import AllDoctors from "./Pages/Doctor/AllDoctors";
 
 import Footer from "./Components/Footer/Footer";
-import Articles from "./Pages/Articles/index.jsx";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -75,6 +74,7 @@ const Layout = ({ children }) => {
     "/services",
     "/find_doctor",
     "/find_nurse",
+    "/articles",
   ];
 
   const showFooterOn = [
@@ -116,7 +116,9 @@ const App = () => {
     try {
       if (user) localStorage.setItem("user", JSON.stringify(user));
       else localStorage.removeItem("user");
-    } catch {}
+    } catch {
+      // Ignore localStorage errors
+    }
   }, [user]);
 
   // Listen for auth-change events (same tab) and storage events (other tabs)
@@ -193,14 +195,14 @@ const App = () => {
             <Route path="nurse_patients" element={<NursePatients />} />
             <Route path="nurse_profile" element={<NurseProfile />} />
           </Route>
-
+          {/* Articles */}
+          <Route path="/articles" element={<ArticlesPage />} />
+          
           {/* Registration */}
           <Route path="/doctor-register" element={<DoctorRegister setUser={setUser} />} />
           <Route path="/nurse-register" element={<NurseRegister setUser={setUser} />} />
           <Route path="/pharmacy-register" element={<PharmacyRegister setUser={setUser} />} />
           <Route path="/client-register" element={<ClientRegister setUser={setUser} />} />
-
-          <Route path="/articles" element={<Articles />} />
           <Route path="/under-review" element={<UnderReview />} />
           <Route path="*" element={<Error />} />
         </Routes>

@@ -18,7 +18,7 @@ function parseJwt(token) {
         .join('')
     );
     return JSON.parse(jsonPayload);
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -67,7 +67,9 @@ export default function Login({ setAuth, setUser }) {
             // persist a minimal user object so other components can read it
             try {
               localStorage.setItem('user', JSON.stringify(userObj));
-            } catch (e) { }
+            } catch {
+              // Ignore localStorage errors
+            }
           }
         }
 
@@ -82,7 +84,9 @@ export default function Login({ setAuth, setUser }) {
         try {
           localStorage.setItem('__authTimestamp', String(Date.now()));
           localStorage.removeItem('__authTimestamp');
-        } catch { }
+        } catch {
+          // Ignore localStorage errors
+        }
 
         // Navigate based on role
         const userRole = userObj?.role || 'customer';

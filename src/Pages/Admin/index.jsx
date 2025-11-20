@@ -186,11 +186,11 @@ export default function Admin() {
 
     try {
       if (editingArticle) {
-        const response = await api.put(`/api/admin/articles/${editingArticle.id}`, articleForm);
+        await api.put(`/api/admin/articles/${editingArticle.id}`, articleForm);
         setArticles(articles.map((a) => (a.id === editingArticle.id ? { ...a, ...articleForm } : a)));
         setEditingArticle(null);
       } else {
-        const response = await api.post("/api/admin/articles", articleForm);
+        await api.post("/api/admin/articles", articleForm);
         const newArticle = { id: Date.now(), ...articleForm, date: new Date().toISOString().split("T")[0] };
         setArticles([newArticle, ...articles]);
       }

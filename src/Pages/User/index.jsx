@@ -424,7 +424,9 @@ function LogoutButton() {
     try {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-    } catch {}
+    } catch {
+      // Ignore localStorage errors
+    }
     
     // Dispatch custom event for same-tab listeners
     window.dispatchEvent(new Event('auth-change'));
@@ -433,7 +435,9 @@ function LogoutButton() {
     try {
       localStorage.setItem('__authTimestamp', String(Date.now()));
       localStorage.removeItem('__authTimestamp');
-    } catch {}
+    } catch {
+      // Ignore localStorage errors
+    }
     
     navigate('/');
   };
