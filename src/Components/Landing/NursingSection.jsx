@@ -1,7 +1,6 @@
 import React from "react";
 import nursingimg from "../../assets/nursingimg.png";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 const NursingSection = () => {
   return (
     <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
@@ -58,9 +57,7 @@ const NursingSection = () => {
           >
             احجز ممرض منزلي
           </Link>
-
         </div>
-
         {/* Image */}
         <div
           className="flex justify-center lg:justify-start items-center rounded-[30px] w-full lg:w-[666px] min-h-[250px] sm:min-h-[300px] lg:min-h-[369px]"
@@ -77,11 +74,8 @@ const NursingSection = () => {
               hover:scale-[1.04] hover:-translate-x-[0.5%] hover:-translate-y-[0.5%]"
           />
         </div>
-
       </div>
-
     </section>
-
   );
 };
 

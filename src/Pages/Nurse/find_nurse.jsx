@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import nursesData from "./nurseData";
+import nursepicture from "../../assets/nurse_p.png"
 
 const CategoryIcon = ({ label, Icon, selected, onClick }) => (
   <button
@@ -30,12 +31,12 @@ const CategoryIcon = ({ label, Icon, selected, onClick }) => (
 );
 
 const NurseCard = ({ name, specialty, gender, rating, imageUrl, onBook }) => (
-  <article className="rounded-3xl overflow-hidden bg-white/90 backdrop-blur-md shadow-md flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1">
+  <article className="rounded-3xl overflow-hidden bg-white/90 backdrop-blur-md shadow-md flex flex-col transition-transform duration-300 hover:shadow-2xl hover:-translate-y-1">
     <div className="h-44 w-full overflow-hidden rounded-t-3xl relative">
       <img
         src={imageUrl}
         alt={name}
-        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+        className="w-full h-full object-cover object-top transition-transform duration-500"
         onError={(e) => {
           e.target.onerror = null;
           e.target.src =
@@ -46,9 +47,7 @@ const NurseCard = ({ name, specialty, gender, rating, imageUrl, onBook }) => (
     </div>
     <div className="p-5 flex flex-col justify-between flex-1">
       <div>
-        <h3 className="font-semibold text-gray-900 text-lg md:text-xl">
-          {name}
-        </h3>
+        <h3 className="font-semibold text-gray-900 text-lg md:text-xl">{name}</h3>
         <p className="text-gray-600 text-sm mt-1">
           {specialty} • {gender}
         </p>
@@ -197,9 +196,9 @@ export default function FindNurse() {
           </div>
           <div className="md:flex-1">
             <img
-              src="https://previews.123rf.com/images/nanastudio/nanastudio2103/nanastudio210300674/166063893-portrait-of-a-friendly-muslim-doctor-or-nurse-woman-in-hijab-with-a-stethoscope-on-a-blue.jpg"
+              src={nursepicture}
               alt="highlight"
-              className="w-full h-64 object-cover rounded-3xl shadow-xl"
+              className="w-full h-64 object-cover object-top rounded-3xl"
             />
           </div>
         </section>

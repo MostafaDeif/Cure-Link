@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import landingimg from "../../assets/landingimg.png";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   useEffect(() => {
@@ -68,8 +68,6 @@ const HeroSection = () => {
         >
           تصفح الخدمات
         </Link>
-
-
       </div>
 
       {/* Image */}
