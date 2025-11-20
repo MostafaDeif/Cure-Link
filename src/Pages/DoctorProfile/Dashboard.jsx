@@ -3,23 +3,20 @@ import { useNavigate } from "react-router-dom";
 import HeaderDoctor from "../../Components/HeaderDoctor";
 import DoctorSidebar from "../../Components/DoctorSidebar";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
-
 // ===== STAT CARD =====
 const StatCard = ({ title, value }) => (
-  <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
-    <p className="text-sm text-gray-500">{title}</p>
-    <p className="text-3xl font-bold text-gray-800 mt-1">{value}</p>
+  <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col justify-center items-center">
+    <p className="text-sm text-gray-500 uppercase tracking-wide">{title}</p>
+    <p className="text-4xl font-extrabold text-gray-800 mt-2">{value}</p>
   </div>
 );
 // ===== UPCOMING APPOINTMENTS =====
@@ -31,38 +28,27 @@ const UpcomingAppointments = () => {
   ];
   const getStatusClass = (status) => {
     switch (status) {
-      case "Confirmed":
-        return "text-green-600 bg-green-100";
-      case "Pending":
-        return "text-yellow-600 bg-yellow-100";
-      default:
-        return "text-gray-600 bg-gray-100";
+      case "Confirmed": return "bg-green-100 text-green-700";
+      case "Pending": return "bg-yellow-100 text-yellow-700";
+      default: return "bg-gray-100 text-gray-600";
     }
   };
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-semibold">Upcoming Appointments</h3>
-        <a href="/doctor-appointments" className="text-sm text-[#006d77] hover:underline">
-          View All
-        </a>
+    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col gap-4 hover:shadow-xl transition-all duration-300">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-2xl font-semibold text-gray-800">Upcoming Appointments</h3>
+        <a href="/doctor-appointments" className="text-sm text-[#006d77] hover:underline">View All</a>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <tbody>
-            {appointments.map((appt, index) => (
-              <tr key={index} className="border-b last:border-b-0 hover:bg-gray-50">
-                <td className="py-4 pr-3 font-medium text-gray-800">{appt.name}</td>
-                <td className="py-4 px-3 text-gray-500">{appt.time}</td>
-                <td className="py-4 pl-3 text-right">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusClass(appt.status)}`}>
-                    {appt.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {appointments.map((appt, index) => (
+          <div key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+            <div>
+              <p className="font-medium text-gray-800 text-lg">{appt.name}</p>
+              <p className="text-sm text-gray-500">{appt.time}</p>
+            </div>
+            <span className={`px-4 py-1 rounded-full font-semibold text-sm ${getStatusClass(appt.status)}`}>{appt.status}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -71,26 +57,28 @@ const UpcomingAppointments = () => {
 const ClinicDetails = () => {
   const position = [30.0269, 31.2118];
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="h-[300px]">
+    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+      <h3 className="text-2xl font-semibold text-gray-800 mb-6">Clinic Details</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="h-64 md:h-48 rounded-xl overflow-hidden">
           <MapContainer center={position} zoom={15} style={{ height: "100%", width: "100%" }}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Marker position={position}>
-              <Popup>Cairo University Hospital </Popup>
+              <Popup>Cairo University Hospital</Popup>
             </Marker>
           </MapContainer>
         </div>
-        <div className="p-6">
-          <h3 className="text-xl font-semibold mb-4">Clinic Details</h3>
-          <p className="font-semibold text-gray-700">Hospital: Cairo University Hospital</p>
-          <p className="text-sm text-gray-600 mt-2">Address: Giza, Egypt</p>
-          <p className="text-sm text-gray-600 mt-1">Phone: (02) 35676105</p>
-          <p className="text-sm text-gray-600 mt-1">Email: info@cu-hospital.com</p>
-          <p className="text-sm text-gray-600 mt-4">Hours: Mon-Fri 9:00 AM - 5:00 PM</p>
+        <div className="flex flex-col justify-between">
+          <div>
+            <p className="font-semibold text-gray-800 text-lg">Cairo University Hospital</p>
+            <p className="text-sm text-gray-600 mt-1">Giza, Egypt</p>
+            <p className="text-sm text-gray-600 mt-1">(02) 35676105</p>
+            <p className="text-sm text-gray-600 mt-1">info@cu-hospital.com</p>
+          </div>
+          <p className="text-sm text-gray-500 mt-3">Hours: Mon-Fri 9:00 AM - 5:00 PM</p>
         </div>
       </div>
     </div>
@@ -100,46 +88,73 @@ const ClinicDetails = () => {
 const QuickActions = () => {
   const navigate = useNavigate();
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md flex flex-col gap-6">
-      <div>
-        <h3 className="text-xl font-semibold mb-4">Quick Actions</h3>
-        <button
-          onClick={() => navigate("/doctor-patients")}
-          className="w-full bg-[#006d77] text-white py-3 rounded-lg font-semibold hover:bg-[#004f52] transition-colors"
-        >
-          + Add Appointment
-        </button>
-        <button
-          onClick={() => navigate("/doctor-patients")}
-          className="w-full mt-3 bg-white text-gray-700 border border-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
-        >
-          View Patient Records
-        </button>
-      </div>
+    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col gap-4 hover:shadow-xl transition-all duration-300">
+      <h3 className="text-2xl font-semibold text-gray-800 mb-4">Quick Actions</h3>
+      <button onClick={() => navigate('/doctor-patients')} className="w-full py-3 rounded-full bg-[#006d77] text-white font-semibold hover:bg-[#004f52] transition-all duration-300">+ Add Appointment</button>
+      <button onClick={() => navigate('/doctor-patients')} className="w-full py-3 rounded-full border border-gray-300 bg-white text-gray-700 font-semibold hover:bg-gray-50 transition-all duration-300">View Patient Records</button>
+    </div>
+  );
+};
+// ==== DASHBOARD CHARTS =====
+const DashboardCharts = () => {
+  const data = [
+    { day: 'Mon', appointments: 10 },
+    { day: 'Tue', appointments: 14 },
+    { day: 'Wed', appointments: 12 },
+    { day: 'Thu', appointments: 18 },
+    { day: 'Fri', appointments: 8 },
+  ];
+  return (
+    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+      <h3 className="text-2xl font-semibold text-gray-800 mb-6">Appointments This Week</h3>
+      <ResponsiveContainer width="100%" height={200}>
+        <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="day" />
+          <YAxis />
+          <Tooltip />
+          <Line type="monotone" dataKey="appointments" stroke="#006d77" strokeWidth={3} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+// ==== RECENT PATIENTS =====
+const RecentPatients = () => {
+  const patients = [
+    { name: 'Ahmed Ali', date: 'Oct 20, 2025' },
+    { name: 'Sara Khaled', date: 'Oct 21, 2025' },
+    { name: 'Omar Hassan', date: 'Oct 22, 2025' },
+    { name: 'Mona Samir', date: 'Oct 23, 2025' },
+    { name: 'Youssef Adel', date: 'Oct 24, 2025' },
+  ];
+  return (
+    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+      <h3 className="text-2xl font-semibold text-gray-800 mb-6">Recent Patients</h3>
+      <ul className="flex flex-col gap-3">
+        {patients.map((patient, idx) => (
+          <li key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+            <span className="font-medium text-gray-800">{patient.name}</span>
+            <span className="text-sm text-gray-500">{patient.date}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 // ===== MAIN DASHBOARD =====
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const toggleSidebar = (value) => {
-    setSidebarOpen(value);
-  };
+  const toggleSidebar = (value) => setSidebarOpen(value);
   return (
-    <div className="flex bg-gray-100 min-h-screen transition-all duration-500">
+    <div className="flex min-h-screen bg-gray-100 transition-all">
       <DoctorSidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} activeName="Dashboard" />
-      <div
-        className={`flex-1 flex flex-col overflow-hidden transition-all duration-500 ${
-          sidebarOpen ? "ml-64" : "ml-0"
-        }`}
-      >
+      <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-500 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
         <HeaderDoctor toggleSidebar={() => toggleSidebar(true)} sidebarOpen={sidebarOpen} />
-        <main className="flex-1 overflow-y-auto bg-gray-100 p-4 md:p-8 transition-all duration-500">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            <StatCard title="Today's Appointments" value="14" />
-            <StatCard title="Total Patients" value="856" />
-            <StatCard title="Completed This Week" value="72" />
+        <main className="flex-1 overflow-y-auto p-6 md:p-10 transition-all">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <DashboardCharts />
+            <RecentPatients />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 flex flex-col gap-6">
@@ -155,4 +170,5 @@ const Dashboard = () => {
     </div>
   );
 };
+
 export default Dashboard;
