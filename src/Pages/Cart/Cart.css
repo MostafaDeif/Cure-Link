@@ -1,0 +1,220 @@
+/* Cart.css */
+
+/* Root variables */
+:root {
+  --primary-color: #2b6cb0;
+  --secondary-color: #eee;
+  --text-color: #333;
+  --text-muted: #666;
+  --border-radius: 8px;
+  --gap: 12px;
+  --padding: 16px;
+}
+
+/* Wrapper */
+.cart-page {
+  padding: var(--padding);
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  color: var(--text-color);
+}
+
+/* Cart heading */
+.cart-page h2 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+/* Empty cart message */
+.cart-page p {
+  margin-top: 24px;
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+/* Cart list */
+.cart-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* Each cart row */
+.cart-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: var(--padding);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  background: #fff;
+  transition: box-shadow 0.2s ease;
+}
+
+.cart-row:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Product image */
+.cart-row img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+}
+
+/* Product info */
+.cart-row div {
+  flex: 1;
+}
+
+.cart-row div > div:first-child {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.cart-row div > div:nth-child(2) {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Quantity controls */
+.cart-row button {
+  background: #f0f0f0;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.cart-row button:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Quantity number */
+.cart-row div:nth-child(3) div {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Price */
+.cart-row div:nth-child(4) {
+  width: 110px;
+  text-align: right;
+  font-weight: 600;
+}
+
+/* Remove button */
+.cart-row button:last-child {
+  color: red;
+  background: transparent;
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+/* Cart summary */
+.cart-summary {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  padding: var(--padding);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  background: #fff;
+}
+
+.cart-summary div:first-child {
+  font-size: 16px;
+}
+
+.cart-summary div:first-child div:last-child {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* Buttons */
+.cart-summary button {
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cart-summary button:hover {
+  opacity: 0.9;
+}
+
+.cart-summary button:first-child {
+  background: var(--secondary-color);
+}
+
+.cart-summary button:last-child {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Checkout form */
+.cart-page > .checkout-form {
+  margin-top: 32px;
+  padding: var(--padding);
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  background: #f9f9f9;
+}
+
+.cart-page > .checkout-form h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+
+.cart-page > .checkout-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Modal buttons */
+.cart-page > .checkout-form div button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cart-page > .checkout-form div button:hover {
+  opacity: 0.9;
+}
+
+.cart-page > .checkout-form div button:first-child {
+  background: var(--secondary-color);
+}
+
+.cart-page > .checkout-form div button:last-child {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Map container */
+.leaflet-container {
+  border-radius: var(--border-radius);
+  height: 250px;
+  width: 100%;
+  margin-bottom: 16px;
+}

@@ -1,132 +1,109 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Search, Plus } from "lucide-react";
-import ".//pharmacy.css";
+import "./pharmacy.css";
+// Slider removed as requested
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../Context/CartContext";
+import { productsBase } from "../data/products";
 
-// --- ADDED ---
-// Import react-slick styles
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-// --- END ADDED ---
-
-import medPanadol from "../../assets/med3.jpg";
-import medBodrex from "../../assets/med3.jpg";
-import medKonidin from "../../assets/med3.jpg";
-import medParacetamol from "../../assets/med3.jpg";
-import medOBH from "../../assets/med3.jpg";
-import medBetadine from "../../assets/med3.jpg";
-import medBodrexin from "../../assets/med3.jpg";
-import medAntangin from "../../assets/med3.jpg";
-import Slider from "react-slick"; // This was already here, which is correct
-
-const productsBase = [
-  { id: 1, name: "Panadol", details: "20pcs", price: 15.99, category: "Painkiller", imageUrl: medPanadol },
-  { id: 2, name: "Bodrex Herbal", details: "100ml", price: 7.99, category: "Cold & Flu", imageUrl: medBodrex },
-  { id: 3, name: "Konidin", details: "3pcs", price: 5.99, category: "Cold & Flu", imageUrl: medKonidin },
-  { id: 4, name: "Paracetamol", details: "50pcs", price: 12.5, category: "Painkiller", imageUrl: medParacetamol },
-  { id: 5, name: "OBH Combi", details: "75ml", price: 9.99, oldPrice: 10.99, category: "Cough", imageUrl: medOBH },
-  { id: 6, name: "Betadine", details: "50ml", price: 6.99, oldPrice: 8.99, category: "First Aid", imageUrl: medBetadine },
-  { id: 7, name: "Bodrexin", details: "75ml", price: 7.99, oldPrice: 9.99, category: "Cold & Flu", imageUrl: medBodrexin },
-  { id: 8, name: "Antangin JRG", details: "12pcs", price: 5.5, oldPrice: 6.5, category: "Herbal", imageUrl: medAntangin },
-];
-
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onAdd, onOpen }) => {
   const onError = (e) => {
     e.currentTarget.onerror = null;
     e.currentTarget.src = "/images/placeholder.png";
   };
 
+  const handleAddClick = (e) => {
+    e.stopPropagation();
+    onAdd(product);
+  };
+
+  const priceText = typeof product.price === "number" ? `$${product.price.toFixed(2)}` : "";
+  const oldPriceText = typeof product.oldPrice === "number" ? `$${product.oldPrice.toFixed(2)}` : null;
+
   return (
     <article className="product-card" role="article" aria-label={product.name}>
-      <img src={product.imageUrl} alt={product.name} loading="lazy" onError={onError} className="product-image" />
+      <button
+        className="card-click-area"
+        onClick={() => onOpen(product)}
+        aria-label={`View ${product.name} details`}
+        type="button"
+      >
+        <img
+          src={product.imageUrl || "/images/placeholder.png"}
+          alt={product.name || "Product image"}
+          loading="lazy"
+          onError={onError}
+          className="product-image"
+        />
+      </button>
+
       <div className="product-body">
         <p className="product-name">{product.name}</p>
         <p className="product-details">{product.details}</p>
-        <div className="product-footer">
-          <div>
-            <div className="price">${product.price.toFixed(2)}</div>
-            {product.oldPrice && <div className="old-price">${product.oldPrice.toFixed(2)}</div>}
-          </div>
-          <button className="add-btn" aria-label={`Add ${product.name}`}><Plus size={16} /></button>
+      </div>
+
+      <div className="product-footer">
+        <div className="price-group">
+          <div className="price">{priceText}</div>
+          {oldPriceText && <div className="old-price" aria-hidden="true">{oldPriceText}</div>}
         </div>
+        <button
+          className="add-btn"
+          aria-label={`Add ${product.name} to cart`}
+          onClick={handleAddClick}
+          type="button"
+        >
+          <Plus size={16} />
+        </button>
       </div>
     </article>
   );
 };
-
-// --- REMOVED ---
-// The custom `SmoothSlider` component has been deleted.
-// --- END REMOVED ---
 
 export default function PharmacyWebPage() {
   const [searchRaw, setSearchRaw] = useState("");
   const [searchText, setSearchText] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
   const [category, setCategory] = useState("All");
-  const [showResultsModal, setShowResultsModal] = useState(false);
+  const navigate = useNavigate();
+  const { addItem } = useCart();
 
+  // Debounced search logic
   useEffect(() => {
     const id = setTimeout(() => {
-      setSearchText(searchRaw.trim());
-      setShowResultsModal(searchRaw.trim().length > 0);
+      const trimmed = searchRaw.trim();
+      setSearchText(trimmed);
     }, 300);
     return () => clearTimeout(id);
   }, [searchRaw]);
 
-  const categories = ["All", ...Array.from(new Set(productsBase.map(p => p.category)))];
-
-  const baseFiltered = productsBase.filter(p => (category === "All" ? true : p.category === category));
+  // Data logic
+  const categories = useMemo(() => ["All", ...Array.from(new Set(productsBase.map(p => p.category)))], []);
+  const baseFiltered = useMemo(() => productsBase.filter(p => (category === "All" ? true : p.category === category)), [category]);
 
   const searchFiltered = (arr) => {
     if (!searchText) return arr;
-    return arr.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase()) || p.details.toLowerCase().includes(searchText.toLowerCase()));
+    const lower = searchText.toLowerCase();
+    return arr.filter(p => (p.name || "").toLowerCase().includes(lower) || (p.details || "").toLowerCase().includes(lower));
   };
 
-  const filteredPopular = searchFiltered(baseFiltered.filter(p => ["Painkiller", "Cold & Flu", "Herbal"].includes(p.category) || p.id <= 4));
+  // Popular & Sale lists (still available when not searching)
+  const filteredPopular = searchFiltered(baseFiltered.filter(p => ["Painkiller", "Cold & Flu", "Herbal"].includes(p.category) || (typeof p.id === "number" && p.id <= 4)));
   const filteredSale = searchFiltered(baseFiltered.filter(p => p.oldPrice));
-  const displayedPopular = (activeFilter === "All" || activeFilter === "Popular") ? filteredPopular : [];
-  const displayedSale = (activeFilter === "All" || activeFilter === "On Sale") ? filteredSale : [];
-  const modalResults = searchText ? productsBase.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase()) || p.details.toLowerCase().includes(searchText.toLowerCase())) : [];
 
-  // --- ADDED ---
-  // Settings for the react-slick slider
-  const slickSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4, // Show 4 items on desktop
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          arrows: false,
-          slidesToShow: 3, // 3 items on tablets
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          slidesToShow: 2, // 2 items on mobile
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          slidesToShow: 1, // 1 item on small mobile
-        }
-      }
-    ]
+  // When searching, show results across all products but respect category selection
+  const searchResults = searchText ? baseFiltered.filter(p => (p.name || "").toLowerCase().includes(searchText.toLowerCase()) || (p.details || "").toLowerCase().includes(searchText.toLowerCase())) : [];
+
+  const goToProduct = (product) => navigate(`/product/${product.id}`);
+  const handleAddToCart = (product) => {
+    addItem(product, 1);
+    // optional: show toast here
   };
-  // --- END ADDED ---
 
   return (
     <div className="page-root">
-      <div className="max-w-4xl mx-auto mt-10 mb-6">
+      {/* Search Bar Section */}
+      <div className="search-bar-container">
         <div className="search-box" role="search">
           <Search className="icon" size={20} />
           <input
@@ -134,94 +111,83 @@ export default function PharmacyWebPage() {
             placeholder="Search drugs, category..."
             value={searchRaw}
             onChange={(e) => setSearchRaw(e.target.value)}
-            onFocus={() => setShowResultsModal(searchRaw.trim().length > 0)}
+            aria-label="Search products"
           />
         </div>
       </div>
 
+      {/* Prescription Banner */}
       <div className="prescription-banner">
-        <h2>Order Quickly with Prescription</h2>
-        <p>Upload your prescription and get your medicine delivered fast and safely.</p>
-        <button>Upload Prescription</button>
-      </div>
-
-      <div className="filters">
-        <button className={`filter-btn ${activeFilter === "All" ? "active" : ""}`} onClick={() => setActiveFilter("All")}>All</button>
-        <button className={`filter-btn ${activeFilter === "Popular" ? "active" : ""}`} onClick={() => setActiveFilter("Popular")}>Popular</button>
-        <button className={`filter-btn ${activeFilter === "On Sale" ? "active" : ""}`} onClick={() => setActiveFilter("On Sale")}>On Sale</button>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="split-controls" style={{ display: "flex", gap: 16, justifyContent: "center", alignItems: "center", marginBottom: 16 }}>
-          <div className="center-text">
-            <label style={{ marginRight: 8 }}>Category</label>
-            <select value={category} onChange={(e) => setCategory(e.target.value)} className="filter-select">
-              {categories.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
-          </div>
+        <div className="banner-content">
+          <h2>Order Quickly with Prescription</h2>
+          <p>Upload your prescription and get your medicine delivered fast and safely.</p>
+          <button className="banner-upload-btn" type="button">Upload Prescription</button>
         </div>
       </div>
 
-      {displayedPopular.length > 0 && (
-        <section className="max-w-7xl mx-auto mb-12">
-          <h2 className="section-title">Popular Products</h2>
-          <div>
-            {/* --- REPLACED --- */}
-            <Slider
-              {...slickSettings}
-              autoplay={!searchText && !showResultsModal} // This handles the "pause" logic
-            >
-              {displayedPopular.map(product => (
-                <div key={product.id}>
-                  {/* Add padding here for gutters between cards */}
-                  <div style={{ padding: '0 8px' }}>
-                    <ProductCard product={product} />
+      {/* Main Filters */}
+      <div className="filters-container">
+        <div className="filters">
+          <button className={`filter-btn ${activeFilter === "All" ? "active" : ""}`} onClick={() => setActiveFilter("All")} type="button">All</button>
+          <button className={`filter-btn ${activeFilter === "Popular" ? "active" : ""}`} onClick={() => setActiveFilter("Popular")} type="button">Popular</button>
+          <button className={`filter-btn ${activeFilter === "On Sale" ? "active" : ""}`} onClick={() => setActiveFilter("On Sale")} type="button">On Sale</button>
+        </div>
+      </div>
+
+      {/* Category Filter Dropdown */}
+      <div className="category-control-container">
+        <div className="category-control">
+          <label className="category-label" htmlFor="category-select">Category</label>
+          <select id="category-select" value={category} onChange={(e) => setCategory(e.target.value)} className="filter-select" aria-label="Select category">
+            {categories.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+      </div>
+
+      {/* If searching -> show search results grid */}
+      {searchText ? (
+        <section className="product-section">
+          <h2 className="section-title">Search results for “{searchText}”</h2>
+          <div className="results-grid">
+            {searchResults.length === 0 ? (
+              <div className="empty-state">No results found for "{searchText}"</div>
+            ) : (
+              searchResults.map(p => <ProductCard key={`sr-${p.id}`} product={p} onAdd={handleAddToCart} onOpen={goToProduct} />)
+            )}
+          </div>
+        </section>
+      ) : (
+        <>
+          {/* Popular Products Grid */}
+          {filteredPopular.length > 0 && (activeFilter === "All" || activeFilter === "Popular") && (
+            <section className="product-section">
+              <h2 className="section-title">Popular Products</h2>
+              <div className="results-grid">
+                {filteredPopular.map(product => (
+                  <div key={product.id} className="slide-item">
+                    <ProductCard product={product} onAdd={handleAddToCart} onOpen={goToProduct} />
                   </div>
-                </div>
-              ))}
-            </Slider>
-            {/* --- END REPLACED --- */}
-          </div>
-        </section>
-      )}
-
-      <div className="section-divider"></div>
-
-      {displayedSale.length > 0 && (
-        <section className="max-w-7xl mx-auto mb-24">
-          <h2 className="section-title">Products on Sale</h2>
-          {/* --- REPLACED --- */}
-          <Slider
-            {...slickSettings}
-            autoplay={!searchText && !showResultsModal} // This handles the "pause" logic
-          >
-            {displayedSale.map(product => (
-              <div key={product.id}>
-                {/* Add padding here for gutters between cards */}
-                <div style={{ padding: '0 8px' }}>
-                  <ProductCard product={product} />
-                </div>
+                ))}
               </div>
-            ))}
-          </Slider>
-          {/* --- END REPLACED --- */}
-        </section>
-      )}
+            </section>
+          )}
 
-      {showResultsModal && (
-        <div className="results-modal" role="dialog" aria-modal="true" onClick={() => { setShowResultsModal(false); setSearchRaw(""); setSearchText(""); }}>
-          <div className="results-card" onClick={(e) => e.stopPropagation()}>
-            <div className="results-header">
-              <h3>Search results for “{searchText}”</h3>
-              <button className="close-btn" onClick={() => { setShowResultsModal(false); setSearchRaw(""); setSearchText(""); }}>Close</button>
-            </div>
-            <div className="results-grid">
-              {modalResults.length === 0 ? (
-                <div className="center-text">No results</div>
-              ) : modalResults.map(p => <ProductCard key={`res-${p.id}`} product={p} />)}
-            </div>
-          </div>
-        </div>
+          <div className="section-divider" />
+
+          {/* Products on Sale Grid */}
+          {filteredSale.length > 0 && (activeFilter === "All" || activeFilter === "On Sale") && (
+            <section className="product-section is-last">
+              <h2 className="section-title">Products on Sale</h2>
+              <div className="results-grid">
+                {filteredSale.map(product => (
+                  <div key={product.id} className="slide-item">
+                    <ProductCard product={product} onAdd={handleAddToCart} onOpen={goToProduct} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </>
       )}
     </div>
   );
