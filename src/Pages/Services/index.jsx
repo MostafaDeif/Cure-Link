@@ -8,18 +8,23 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import masrPharmacy from '../../assets/masrPharmacy.png'
+import maherPharmacy from '../../assets/maherPharmacy.png'
+import DwaPharmacy from '../../assets/DwaPharmacy.png'
+import ElezabyPharmacy from '../../assets/ElezabyPharmacy.png'
+import KhabiryPharmacy from '../../assets/KhabiryPharmacy.png'
 
 const pharmaciesData = [
-  { id: 1, name: 'City Pharmacy', image: 'https://via.placeholder.com/320x200?text=Pharmacy+1', location: 'Cairo', rating: '4.6' },
-  { id: 2, name: 'Wellness Drugstore', image: 'https://via.placeholder.com/320x200?text=Pharmacy+2', location: 'Alexandria', rating: '4.4' },
-  { id: 3, name: 'Family Pharmacy', image: 'https://via.placeholder.com/320x200?text=Pharmacy+3', location: 'Giza', rating: '4.5' },
-  { id: 4, name: 'HealthPlus', image: 'https://via.placeholder.com/320x200?text=Pharmacy+4', location: 'Tanta', rating: '4.3' },
-  { id: 5, name: 'CareMeds', image: 'https://via.placeholder.com/320x200?text=Pharmacy+5', location: 'Aswan', rating: '4.7' },
+  { id: 1, name: 'Misr Pharmacy', image: masrPharmacy, location: 'Cairo', rating: '4.6' },
+  { id: 2, name: 'Maher Pharmacy', image: maherPharmacy, location: 'Alexandria', rating: '4.4' },
+  { id: 3, name: 'El Khabiry', image: KhabiryPharmacy, location: 'Giza', rating: '4.5' },
+  { id: 4, name: 'Dawaa Misr', image: DwaPharmacy, location: 'Tanta', rating: '4.3' },
+  { id: 5, name: 'Elezaby', image: ElezabyPharmacy, location: 'Aswan', rating: '4.7' },
 ]
 
 const PersonCard = ({ name, image, subtitle, meta }) => (
   <div className="person-card" role="group" aria-label={name}>
-    <img src={image} alt={name} className="person-thumb" />
+    <img src={image} alt={name} className="person-thumb " />
     <div className="person-body">
       <div className="person-name">{name}</div>
       <div className="person-sub">{subtitle}</div>
