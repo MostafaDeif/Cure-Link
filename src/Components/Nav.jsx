@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/JustLogo.jpg'
 import Services from '../Pages/Services'
+import { useTranslation } from 'react-i18next'
+import { LanguageContext } from '../Context/LanguageContext.jsx'
 
 
 export default function Nav() {
@@ -41,6 +43,11 @@ export default function Nav() {
         }
     }, [])
 
+    const { t } = useTranslation()
+    const { language, setLanguage } = useContext(LanguageContext)
+
+    const toggleLang = () => setLanguage(language === 'en' ? 'ar' : 'en')
+
     return (
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
 
@@ -56,10 +63,14 @@ export default function Nav() {
             {/* Desktop Menu */}
             <div className="hidden sm:flex items-center gap-8">
 
-                <Link to="/">Home</Link>
-                <Link to="/about">About</Link>
-                <Link to="/services">Services</Link>
-                <Link to="/articles">Articles</Link>
+                <Link to="/">{t('nav.home')}</Link>
+                <Link to="/about">{t('nav.about')}</Link>
+                <Link to="/services">{t('nav.services')}</Link>
+                <Link to="/articles">{t('nav.articles')}</Link>
+
+                <button onClick={toggleLang} className="px-3 py-1 border rounded text-sm">
+                  {language === 'en' ? 'ع' : 'EN'}
+                </button>
 
                 {user ? (
                     <Link to="/user" className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition">
@@ -70,14 +81,14 @@ export default function Nav() {
                                 className="h-full w-full object-cover"
                             />
                         </span>
-                        <span className="font-medium text-gray-700">{user.name || 'Profile'}</span>
+                        <span className="font-medium text-gray-700">{user.name || t('nav.profile')}</span>
                     </Link>
                 ) : (
                     <Link
                         to="/login"
                         className="cursor-pointer px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full"
                     >
-                        Login
+                        {t('nav.login')}
                     </Link>
                 )}
             </div>
@@ -93,10 +104,11 @@ export default function Nav() {
 
             {/* Mobile Menu */}
             <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}>
-                <Link to="/" className="block">Home</Link>
-                <Link to="/about" className="block">About</Link>
+                <Link to="/" className="block">{t('nav.home')}</Link>
+                <Link to="/about" className="block">{t('nav.about')}</Link>
                 <Link to="/contact" className="block">Contact</Link>
-                <Link to="/articles" className="block">Articles</Link>
+                <Link to="/articles" className="block">{t('nav.articles')}</Link>
+                <button onClick={toggleLang} className="block px-3 py-2 text-sm border rounded mt-2">{language === 'en' ? 'ع' : 'EN'}</button>
                 {user ? (
                     <Link to="/user" className="block px-3 py-2 rounded">{user.name || 'Profile'}</Link>
                 ) : (
