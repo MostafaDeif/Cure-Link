@@ -1,30 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next'
 
 const WhatsNewSection = () => {
-  const cards = [
-    {
-      title: "المؤتمرات والمحاضرات المسجلة",
-      description:
-        "شاهد أحدث المؤتمرات الطبية والجلسات التخصصية المسجّلة متى شئت. تابع آخر المستجدات والأبحاث والممارسات المهنية دون الحاجة للحضور المباشر",
-      button: "مشاهدة المحاضرات",
-      link: "/Articles",
-    },
-    {
-      title: "المقالات والمحتوى الطبي",
-      description:
-        "تصفّح مقالات طبية موثوقة ومحتوى تعليمي مُعدّ بعناية للأطباء والممرضين والمستخدمين. استفد من مصادر مصنّفة حسب اهتماماتك ومستوى معرفتك",
-      button: "قراءة المقالات",
-      link: "/Articles",
-    },
-    {
-      title: "الفئات التعليمية",
-      description:
-        "استكشف المحتوى بحسب الفئة: أطباء، تمريض، أو مستخدمون. كل قسم يقدّم مواد مناسبة لتطوير المعرفة والدعم الصحي والتثقيف المستمر",
-      button: "استكشف الفئة الخاصة بك",
-      link: "/Articles",
-    },
-  ];
+  const { t } = useTranslation()
+  const cards = t('landing.whatsnew.cards', { returnObjects: true }) || []
 
   const delayOrder = [1, 0, 2];
 
@@ -35,7 +15,7 @@ const WhatsNewSection = () => {
         data-aos="fade-up"
         data-aos-duration="700"
       >
-        ما الجديد؟
+        {t('landing.whatsnew.title')}
       </h2>
 
       <div className="flex flex-col md:flex-row-reverse justify-center items-center gap-[40px] px-4">

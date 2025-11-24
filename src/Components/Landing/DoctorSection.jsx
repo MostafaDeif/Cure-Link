@@ -1,8 +1,10 @@
 import React from "react";
 import doctorimg from "../../assets/Doctorsection.png";
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
 
 const DoctorSection = () => {
+  const { t } = useTranslation()
   return (
     <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
       <div
@@ -20,7 +22,7 @@ const DoctorSection = () => {
             data-aos-duration="600"
             data-aos-easing="ease-out-sine"
           >
-            ابحث عن دكتورك بسهولة
+            {t('landing.doctorSection.title')}
           </h2>
 
           <p
@@ -30,9 +32,7 @@ const DoctorSection = () => {
             data-aos-duration="700"
             data-aos-easing="ease-out-sine"
           >
-            اكتشف أفضل الدكاترة القريبين منك واحجز موعدك في ثواني
-            تصفّح التخصصات، شوف تقييمات المرضى، واختار الموعد اللي يناسبك بكل سهولة.
-            كل الخدمات الطبية في مكان واحد — بسرعة وأمان.
+            {t('landing.doctorSection.paragraph')}
           </p>
           <Link
             to="/find_doctor"
@@ -54,7 +54,7 @@ const DoctorSection = () => {
             data-aos-duration="750"
             data-aos-easing="ease-out-sine"
           >
-            اعثر على دكتور الآن
+            {t('landing.doctorSection.button')}
           </Link>
 
         </div>

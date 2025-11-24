@@ -7,7 +7,10 @@ import logo2 from "../../assets/logo2.png";
 import logo3 from "../../assets/logo3.png";
 import logo4 from "../../assets/logo4.png";
 
+import { useTranslation } from 'react-i18next'
+
 const PharmacySection = () => {
+  const { t } = useTranslation()
   useEffect(() => {
     AOS.init({ duration: 1000, once: false });
   }, []);
@@ -19,7 +22,7 @@ const PharmacySection = () => {
       data-aos-delay="200"
     >
       <p className="font-[Alexandria] font-bold text-2xl sm:text-3xl lg:text-[36px] leading-snug text-[#10204D] max-w-[1200px]">
-        نتعاون مع أكثر من 1000 صيدلية لخدمة أكبر عدد من المستخدمين
+        {t('landing.pharmacy.partners')}
       </p>
 
       {/* logos && Slider */}

@@ -37,6 +37,62 @@ i18n
             orderNowPharmacy:
               "Order all your pharmacy needs easily; get your medicines from an online pharmacy in Egypt.",
           },
+          
+          landing: {
+            hero: {
+              title: "Your all-in-one medical platform in one place",
+              subtitle:
+                "Order medicines easily, get home nursing services, and access medical content including lectures, conferences and articles tailored for doctors, nurses and users.",
+              button: "Browse Services",
+            },
+            pharmacy: {
+              partners: "We partner with over 1000 pharmacies to serve more users",
+            },
+            servicesSection: {
+              title: "Medicines",
+              paragraph:
+                "Order your medicines easily with home delivery. Upload a prescription or enter the medicine name directly and consult a pharmacist when needed.",
+              button: "Order Medicine Now",
+            },
+            nursingSection: {
+              title: "Home Nursing",
+              paragraph:
+                "Get professional nursing care at home from certified specialists for post-op care, elderly care, injections, dressing changes and health monitoring.",
+              button: "Book A Nurse",
+            },
+            doctorSection: {
+              title: "Find Your Doctor Easily",
+              paragraph:
+                "Discover top nearby doctors and book appointments in seconds. Browse specialties, read reviews and choose the time that suits you.",
+              button: "Find A Doctor",
+            },
+            whatsnew: {
+              title: "What's New?",
+              cards: [
+                {
+                  title: "Recorded Conferences & Lectures",
+                  description:
+                    "Watch the latest medical conferences and specialty sessions on demand. Stay updated with research and professional practices without attending in person.",
+                  button: "Watch Lectures",
+                  link: "/Articles",
+                },
+                {
+                  title: "Articles & Medical Content",
+                  description:
+                    "Browse reliable medical articles and educational content prepared for doctors, nurses and users. Find resources based on your interests and level.",
+                  button: "Read Articles",
+                  link: "/Articles",
+                },
+                {
+                  title: "Educational Categories",
+                  description:
+                    "Explore content by category: Doctors, Nursing, or Users. Each section offers materials for knowledge development and continuous education.",
+                  button: "Explore Your Category",
+                  link: "/Articles",
+                },
+              ],
+            },
+          },
           days: {
             Friday: "Friday",
             Saturday: "Saturday",
@@ -70,6 +126,61 @@ i18n
             FrequentlyAskedQuestions: "الأسئلة الشائعة",
             orderNowPharmacy:
               "اطلب الآن جميع احتياجاتك من الصيدلية بسهولة، اطلب أدويتك من صيدلية أون لاين في مصر.",
+          },
+          landing: {
+            hero: {
+              title: "منصتك الطبية المتكاملة في مكان واحد",
+              subtitle:
+                "نوفر لك طلب الأدوية بسهولة، وخدمات التمريض المنزلي، إضافةً إلى محتوى طبي وتعليمي يشمل محاضرات، مؤتمرات ومقالات مخصّصة للأطباء والممرضين والمستخدمين.",
+              button: "تصفح الخدمات",
+            },
+            pharmacy: {
+              partners: "نتعاون مع أكثر من 1000 صيدلية لخدمة أكبر عدد من المستخدمين",
+            },
+            servicesSection: {
+              title: "الأدوية",
+              paragraph:
+                "اطلب أدويتك بسهولة مع خدمة التوصيل إلى المنزل. يمكنك رفع الروشتة أو إدخال اسم الدواء مباشرة، مع إمكانية التواصل مع صيدلي في حال احتجت استشارة أو بدائل",
+              button: "اطلب الدواء الآن",
+            },
+            nursingSection: {
+              title: "التمريض المنزلي",
+              paragraph:
+                "احصل على رعاية تمريضية مهنية في منزلك من مختصين معتمدين. سواء كنت بحاجة إلى متابعة ما بعد العمليات، رعاية كبار السن، الحقن، تغيير الضمادات أو المراقبة الصحية، نوفر زيارات آمنة وموثوقة حسب حالتك واحتياجك",
+              button: "احجز ممرض منزلي",
+            },
+            doctorSection: {
+              title: "ابحث عن دكتورك بسهولة",
+              paragraph:
+                "اكتشف أفضل الدكاترة القريبين منك واحجز موعدك في ثواني تصفّح التخصصات، شوف تقييمات المرضى، واختار الموعد اللي يناسبك بكل سهولة.",
+              button: "اعثر على دكتور الآن",
+            },
+            whatsnew: {
+              title: "ما الجديد؟",
+              cards: [
+                {
+                  title: "المؤتمرات والمحاضرات المسجلة",
+                  description:
+                    "شاهد أحدث المؤتمرات الطبية والجلسات التخصصية المسجّلة متى شئت. تابع آخر المستجدات والأبحاث والممارسات المهنية دون الحاجة للحضور المباشر",
+                  button: "مشاهدة المحاضرات",
+                  link: "/Articles",
+                },
+                {
+                  title: "المقالات والمحتوى الطبي",
+                  description:
+                    "تصفّح مقالات طبية موثوقة ومحتوى تعليمي مُعدّ بعناية للأطباء والممرضين والمستخدمين. استفد من مصادر مصنّفة حسب اهتماماتك ومستوى معرفتك",
+                  button: "قراءة المقالات",
+                  link: "/Articles",
+                },
+                {
+                  title: "الفئات التعليمية",
+                  description:
+                    "استكشف المحتوى بحسب الفئة: أطباء، تمريض، أو مستخدمون. كل قسم يقدّم مواد مناسبة لتطوير المعرفة والدعم الصحي والتثقيف المستمر",
+                  button: "استكشف الفئة الخاصة بك",
+                  link: "/Articles",
+                },
+              ],
+            }
           },
           days: {
             Friday: "الجمعة",

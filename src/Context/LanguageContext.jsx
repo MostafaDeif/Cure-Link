@@ -18,9 +18,8 @@ export const LanguageProvider = ({ children }) => {
     try {
       localStorage.setItem('i18nextLng', language);
     } catch {}
-    document.documentElement.lang = language;    
-    // Set text direction based on language
-    // document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    // set lang attribute for accessibility (do NOT change layout direction)
+    document.documentElement.lang = language;
   }, [language]);
 
   return (

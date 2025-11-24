@@ -1,7 +1,9 @@
 import React from "react";
 import nursingimg from "../../assets/nursingimg.png";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next'
 const NursingSection = () => {
+  const { t } = useTranslation()
   return (
     <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
       <div
@@ -19,7 +21,7 @@ const NursingSection = () => {
             data-aos-duration="600"
             data-aos-easing="ease-out-sine"
           >
-            التمريض المنزلي
+            {t('landing.nursingSection.title')}
           </h2>
 
           <p
@@ -29,10 +31,7 @@ const NursingSection = () => {
             data-aos-duration="700"
             data-aos-easing="ease-out-sine"
           >
-            احصل على رعاية تمريضية مهنية في منزلك من مختصين معتمدين. سواء كنت
-            بحاجة إلى متابعة ما بعد العمليات، رعاية كبار السن، الحقن، تغيير
-            الضمادات أو المراقبة الصحية، نوفر زيارات آمنة وموثوقة حسب حالتك
-            واحتياجك
+            {t('landing.nursingSection.paragraph')}
           </p>
 
           <Link
@@ -55,7 +54,7 @@ const NursingSection = () => {
             data-aos-duration="750"
             data-aos-easing="ease-out-sine"
           >
-            احجز ممرض منزلي
+            {t('landing.nursingSection.button')}
           </Link>
         </div>
         {/* Image */}

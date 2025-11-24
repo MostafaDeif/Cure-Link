@@ -3,11 +3,14 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import landingimg from "../../assets/landingimg.png";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next'
 
 const HeroSection = () => {
   useEffect(() => {
     AOS.init({ duration: 800, once: false });
   }, []);
+
+  const { t } = useTranslation()
 
   return (
     <section
@@ -23,7 +26,7 @@ const HeroSection = () => {
         data-aos-delay="100"
       >
         <h1 className="font-[Alexandria] font-black text-[36px] sm:text-[48px] md:text-[64px] lg:text-[80px] leading-[120%] text-[#0F172A]">
-          منصتك الطبية المتكاملة في مكان واحد
+          {t('landing.hero.title')}
         </h1>
 
         <svg
@@ -43,9 +46,7 @@ const HeroSection = () => {
         </svg>
 
         <p className="font-[Alexandria] font-medium text-[16px] sm:text-[18px] md:text-[20px] leading-[180%] text-[#334155] mt-[30px] md:mt-[51px] w-full md:w-[723px] h-[120px] px-2 md:px-0">
-          نوفر لك طلب الأدوية بسهولة، وخدمات التمريض المنزلي، إضافةً إلى محتوى
-          طبي وتعليمي يشمل محاضرات، مؤتمرات ومقالات مخصّصة للأطباء والممرضين
-          والمستخدمين. كل ما تحتاجه في مجال الرعاية الصحية بين يديك.
+          {t('landing.hero.subtitle')}
         </p>
 
         <Link
@@ -66,7 +67,7 @@ const HeroSection = () => {
     hover:opacity-90 hover:scale-105
   "
         >
-          تصفح الخدمات
+          {t('landing.hero.button')}
         </Link>
       </div>
 
