@@ -17,9 +17,10 @@ const PharmacySection = () => {
 
   return (
     <section
-      className="flex flex-col items-center text-center w-full px-4 lg:px-32 pt-24 overflow-hidden bg-[#f5f7fa]"
+      className="flex flex-col items-center text-center w-full px-4 lg:px-32 pt-24 overflow-hidden bg-[#f5f7fa] pb-16"
       data-aos="fade-up"
       data-aos-delay="200"
+      
     >
       <p className="font-[Alexandria] font-bold text-2xl sm:text-3xl lg:text-[36px] leading-snug text-[#10204D] max-w-[1200px]">
         {t('landing.pharmacy.partners')}
