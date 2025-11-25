@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../../Context/LanguageContext";
 
@@ -13,6 +14,7 @@ import './index.css';
 const Footer = () => {
   const { t } = useTranslation();
   const { language } = useContext(LanguageContext);
+  const year = new Date().getFullYear();
 
   return (
     <footer
@@ -25,9 +27,13 @@ const Footer = () => {
 
         {/* 1. شعار وتفاصيل */}
         <div>
-          <div className="flex items-center justify-between gap-3 mb-4">
+          <div className="flex items-center justify-start gap-2 mb-4">
             <span className="text-xl font-bold tracking-wide">CureLink</span>
-            <img src={LogoBadge} alt="CureLink logo" className="w-8 h-8 object-contain" />
+            <img
+              src={LogoBadge}
+              alt="CureLink logo"
+              className="w-10 h-10 object-contain opacity-90 mix-blend-screen"
+            />
           </div>
 
           <p className="text-sm opacity-90 mb-4 leading-relaxed max-w-[260px]">
@@ -62,10 +68,10 @@ const Footer = () => {
           </h4>
 
           <ul className="space-y-2 text-sm opacity-90">
-            <li><a href="#" className="hover:underline">{t("nav.services")}</a></li>
+            <li><Link to="/services" className="hover:underline">{t("nav.services")}</Link></li>
             <li><a href="#" className="hover:underline">{t("footer.healthcare")}</a></li>
-            <li><a href="#" className="hover:underline">{t("footer.conferences")}</a></li>
-            <li><a href="#" className="hover:underline">{t("nav.about")}</a></li>
+            <li><Link to="/articles" className="hover:underline">{t("footer.conferences")}</Link></li>
+            <li><Link to="/about" className="hover:underline">{t("nav.about")}</Link></li>
           </ul>
         </div>
 
@@ -99,9 +105,8 @@ const Footer = () => {
       {/* البار السفلي */}
       <div className="max-w-[1200px] mx-auto mt-10 pt-5 border-t border-white/30 flex flex-col md:flex-row justify-between items-center text-sm px-6 gap-y-3">
 
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 bg-white rounded-full inline-block"></span>
-          <span>{t("footer.rights")}</span>
+        <div className="text-sm md:text-base font-medium text-center md:text-start">
+          © {year} جميع الحقوق محفوظة لـ <span className="font-semibold">CureLink</span>
         </div>
 
         <div className="flex items-center gap-2">
