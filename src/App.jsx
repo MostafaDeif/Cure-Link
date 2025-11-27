@@ -187,12 +187,14 @@ const App = () => {
             <Route path="/nurse-book/:nurseName" element={<BookNurse nursesData={nursesData} />} />
             <Route path="/all-nurses" element={<AllNurses nursesData={nursesData} />} />
 
-            <Route path="/nursing" element={<ProtectedRoute requiredRole="nurse"><NurseLayout /></ProtectedRoute>}>
+            <Route path="/nursing" element={<NurseLayout />}>
+
               <Route index element={<NurseDashboard />} />
               <Route path="nurse_dashboard" element={<NurseDashboard />} />
               <Route path="nurse_appointments" element={<NurseAppointments />} />
               <Route path="nurse_patients" element={<NursePatients />} />
-              <Route path="nurse_profile" element={<NurseProfile />} />
+              <Route path="nurse_profile/:id" element={<NurseProfile />} />
+
             </Route>
 
             <Route path="/articles" element={<ArticlesPage />} />

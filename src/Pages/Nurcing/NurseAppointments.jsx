@@ -1,208 +1,228 @@
 import React, { useState } from "react";
-import { Star, Filter } from "lucide-react";
+import { Star, Clock, User, Activity, Pill, Phone } from "lucide-react";
 
 export default function NurseAppointments() {
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [filter, setFilter] = useState("all");
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
-  const eventsData = [
+  const appointments = [
     {
-      day: 2,
-      title: "Med Admin",
-      color: "green",
-      name: "Vitous Praditis",
-      visited: true,
-      rating: 4,
-      feedback: "Very professional and kind.",
+      id: 1,
+      date: "2025-11-27",
+      time: "09:00 AM",
+      patient: "Ahmed Ali",
+      phone: "01012345678",
+      task: "Vitals Check",
+      type: "Checkup",
+      status: "Completed",
+      notes: "BP slightly elevated.",
     },
     {
-      day: 4,
-      title: "Med Dist",
-      color: "blue",
-      name: "Jane Foster",
-      visited: false,
+      id: 2,
+      date: "2025-11-27",
+      time: "11:00 AM",
+      patient: "Sara Mohamed",
+      phone: "01087654321",
+      task: "Medication Admin",
+      type: "Medication",
+      status: "Upcoming",
     },
     {
-      day: 6,
-      title: "Vitals Check",
-      color: "green",
-      name: "Alice Johnson",
-      visited: true,
-      rating: 5,
-      feedback: "Excellent care!",
+      id: 3,
+      date: "2025-11-27",
+      time: "02:00 PM",
+      patient: "Omar Hassan",
+      phone: "01011223344",
+      task: "Dressing Change",
+      type: "Procedure",
+      status: "Upcoming",
     },
     {
-      day: 8,
-      title: "Patient Check",
-      color: "orange",
-      name: "Bob Smith",
-      visited: false,
+      id: 4,
+      date: "2025-11-28",
+      time: "08:30 AM",
+      patient: "Mona Adel",
+      phone: "01022334455",
+      task: "Blood Sugar Check",
+      type: "Checkup",
+      status: "Upcoming",
     },
     {
-      day: 10,
-      title: "Rounds",
-      color: "blue",
-      name: "David Kim",
-      visited: true,
-      rating: 3,
-      feedback: "Good but could improve timing.",
+      id: 5,
+      date: "2025-11-28",
+      time: "10:00 AM",
+      patient: "Ali Farouk",
+      phone: "01033445566",
+      task: "Vitals Check",
+      type: "Checkup",
+      status: "Completed",
+      notes: "Stable patient.",
     },
     {
-      day: 14,
-      title: "Med Admin",
-      color: "green",
-      name: "Grace Hall",
-      visited: false,
+      id: 6,
+      date: "2025-11-28",
+      time: "01:00 PM",
+      patient: "Laila Sami",
+      phone: "01044556677",
+      task: "Medication Admin",
+      type: "Medication",
+      status: "Upcoming",
     },
     {
-      day: 18,
-      title: "Vitals Check",
-      color: "orange",
-      name: "Eve Brown",
-      visited: true,
-      rating: 5,
-      feedback: "Amazing service!",
+      id: 7,
+      date: "2025-11-29",
+      time: "03:00 PM",
+      patient: "Hassan Omar",
+      phone: "01055667788",
+      task: "Therapy Review",
+      type: "Therapy",
+      status: "Upcoming",
+    },
+    {
+      id: 8,
+      date: "2025-11-29",
+      time: "09:30 AM",
+      patient: "Fatima Nasser",
+      phone: "01066778899",
+      task: "Vitals Check",
+      type: "Checkup",
+      status: "Completed",
+      notes: "BP normal.",
+    },
+    {
+      id: 9,
+      date: "2025-11-30",
+      time: "10:30 AM",
+      patient: "Youssef Taha",
+      phone: "01077889900",
+      task: "Medication Admin",
+      type: "Medication",
+      status: "Upcoming",
+    },
+    {
+      id: 10,
+      date: "2025-11-30",
+      time: "12:00 PM",
+      patient: "Sara Khaled",
+      phone: "01088990011",
+      task: "Blood Sugar Check",
+      type: "Checkup",
+      status: "Upcoming",
     },
   ];
 
-  const filteredEvents =
-    filter === "all"
-      ? eventsData
-      : filter === "visited"
-      ? eventsData.filter((e) => e.visited)
-      : eventsData.filter((e) => !e.visited);
+  const groupedByDate = appointments.reduce((acc, app) => {
+    if (!acc[app.date]) acc[app.date] = [];
+    acc[app.date].push(app);
+    return acc;
+  }, {});
 
-  const daysInMonth = 30;
-  const days = Array.from({ length: daysInMonth }, (_, i) => ({
-    day: i + 1,
-    events: filteredEvents.filter((ev) => ev.day === i + 1),
-  }));
+  const statusColors = {
+    Completed: "bg-green-50 border-green-200 hover:bg-green-50",
+    Upcoming: "bg-blue-50 border-blue-200 hover:bg-blue-50",
+    Missed: "bg-red-50 border-red-200 hover:bg-red-50",
+  };
+
+  const dailyCardColor = "bg-[#F5F7FA]";
+
+  const typeIcons = {
+    Checkup: <Activity size={16} className="text-blue-600" />,
+    Medication: <Pill size={16} className="text-purple-600" />,
+    Procedure: <User size={16} className="text-orange-600" />,
+    Therapy: <Star size={16} className="text-yellow-500" />,
+  };
 
   return (
-    <div className="flex-1 bg-[#F8FBFC] p-4 sm:p-8 font-sans min-h-screen">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
-          Nurse Schedule
-        </h1>
-        <p className="text-gray-500 mb-4 sm:mb-6 text-sm sm:text-base">
-          View upcoming and completed appointments
-        </p>
+    <div className="min-h-screen bg-[#F0F4F8] p-4 sm:p-8 font-sans w-full overflow-x-hidden">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
+        Nurse Schedule
+      </h1>
+      <p className="text-gray-600 mb-6 text-sm sm:text-base">
+        All upcoming and completed appointments for the month
+      </p>
 
-        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 bg-white border border-gray-200 rounded-xl p-2 sm:p-3 shadow-sm">
-          <Filter className="text-blue-600 w-4 h-4 sm:w-5 sm:h-5" />
-          <select
-            className="border border-gray-300 rounded-lg px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm text-gray-700 focus:ring-2 focus:ring-blue-400"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+      <div className="flex flex-col gap-4 w-full">
+        {Object.keys(groupedByDate).map((date) => (
+          <div
+            key={date}
+            className={`rounded-2xl shadow border border-gray-200 p-4 sm:p-6 transition transform hover:scale-102 hover:shadow-md ${dailyCardColor} w-full`}
           >
-            <option value="all">All Appointments</option>
-            <option value="visited">Visited</option>
-            <option value="upcoming">Upcoming</option>
-          </select>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-          <div className="grid grid-cols-7 text-center border-b border-gray-200 bg-gray-50 text-xs sm:text-sm font-semibold text-gray-700">
-            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-              <div key={d} className="py-2 sm:py-3">
-                {d}
-              </div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-7 text-xs sm:text-sm text-gray-700">
-            {days.map((d) => (
-              <div
-                key={d.day}
-                className="border border-gray-100 min-h-[100px] sm:min-h-[120px] p-1 sm:p-2 relative hover:bg-gray-50 transition break-words"
-              >
-                <div className="text-gray-400 font-medium mb-1 text-[10px] sm:text-[12px]">
-                  {d.day}
-                </div>
-                {d.events.map((ev, i) => (
-                  <div
-                    key={i}
-                    onClick={() => setSelectedEvent(ev)}
-                    className={`rounded-lg px-1 sm:px-2 py-1 mb-1 cursor-pointer transition break-words text-[10px] sm:text-[11px] ${
-                      ev.color === "green"
-                        ? "bg-green-50 border border-green-300 hover:bg-green-100"
-                        : ev.color === "blue"
-                        ? "bg-blue-50 border border-blue-300 hover:bg-blue-100"
-                        : "bg-orange-50 border border-orange-300 hover:bg-orange-100"
-                    }`}
-                  >
-                    <div className="font-semibold text-gray-800">
-                      {ev.title}
+            <h2 className="font-semibold text-gray-700 mb-3 text-sm sm:text-base">
+              {new Date(date).toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              })}
+            </h2>
+            <div className="flex flex-wrap gap-3 w-full">
+              {groupedByDate[date].map((ev) => (
+                <div
+                  key={ev.id}
+                  onClick={() => setSelectedAppointment(ev)}
+                  className={`flex-1 min-w-[150px] rounded-xl border p-3 cursor-pointer transition transform hover:scale-105 hover:shadow-lg flex flex-col gap-1 ${
+                    statusColors[ev.status]
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {typeIcons[ev.type]}
                     </div>
-                    <div className="text-gray-600">{ev.name}</div>
-                    {ev.visited ? (
-                      <div className="flex items-center gap-1 mt-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={10}
-                            className={
-                              i < ev.rating
-                                ? "fill-yellow-400 text-yellow-400"
-                                : "text-gray-300"
-                            }
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <span className="text-gray-500 mt-1 inline-block text-[9px] sm:text-[10px]">
-                        Pending
-                      </span>
-                    )}
+                    <span className="text-xs sm:text-sm font-medium">
+                      {ev.time}
+                    </span>
                   </div>
-                ))}
-              </div>
-            ))}
+                  <div className="font-semibold text-gray-800 text-sm sm:text-base">
+                    {ev.task}
+                  </div>
+                  <div className="text-gray-600 text-xs sm:text-sm">
+                    {ev.patient}
+                  </div>
+                  <div className="text-gray-500 text-xs sm:text-sm">
+                    Status: {ev.status}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        ))}
       </div>
 
-      {selectedEvent && (
-        <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 w-full max-w-sm sm:max-w-md border border-gray-200">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">
-              {selectedEvent.title}
+      {selectedAppointment && (
+        <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 space-y-3">
+            <h2 className="text-xl font-bold mb-2">
+              {selectedAppointment.task}
             </h2>
-            <p className="text-gray-600 mb-1 sm:mb-2 text-sm sm:text-base">
-              <strong>Patient:</strong> {selectedEvent.name}
+
+            <div className="flex items-center gap-2">
+              <User size={18} className="text-blue-600" />
+              <span className="font-medium">{selectedAppointment.patient}</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Phone size={18} className="text-green-600" />
+              <span>{selectedAppointment.phone || "N/A"}</span>
+            </div>
+
+            <p>
+              <strong>Time:</strong> {selectedAppointment.time}
             </p>
-            <p className="text-gray-600 mb-1 sm:mb-2 text-sm sm:text-base">
-              <strong>Status:</strong>{" "}
-              {selectedEvent.visited ? (
-                <span className="text-green-600 font-medium">Visited</span>
-              ) : (
-                <span className="text-orange-500 font-medium">Upcoming</span>
-              )}
+            <p>
+              <strong>Status:</strong> {selectedAppointment.status}
             </p>
-            {selectedEvent.visited && (
-              <>
-                <div className="flex items-center gap-1 my-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={12}
-                      className={
-                        i < selectedEvent.rating
-                          ? "fill-yellow-400 text-yellow-400"
-                          : "text-gray-300"
-                      }
-                    />
-                  ))}
-                </div>
-                <p className="text-gray-600 italic border-t pt-2 text-sm sm:text-base">
-                  “{selectedEvent.feedback}”
-                </p>
-              </>
+            <p>
+              <strong>Type:</strong> {selectedAppointment.type}
+            </p>
+
+            {selectedAppointment.notes && (
+              <p className="mt-2 italic text-gray-600 border-t pt-2">
+                "{selectedAppointment.notes}"
+              </p>
             )}
-            <div className="text-right mt-3 sm:mt-4">
+
+            <div className="text-right mt-4">
               <button
-                onClick={() => setSelectedEvent(null)}
-                className="px-4 py-2 text-sm sm:text-base rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+                onClick={() => setSelectedAppointment(null)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
               >
                 Close
               </button>

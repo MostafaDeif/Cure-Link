@@ -1,163 +1,256 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { nursesData } from "../Nurse/nurseData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LocalAvatar from "../../assets/doctor image.jpg";
+import {
+  FaHeartbeat,
+  FaCheckCircle,
+  FaClock,
+  FaHeart,
+  FaUserMd,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 
 export default function NurseProfile() {
-  const [form, setForm] = useState({
-    fullName: "Nurse David Lee",
-    email: "david.lee@example.com",
-    employeeId: "NL-1293",
-    phone: "(555) 123-4567",
-    unitId: "Unit 7B",
-    certifications: "BLS, ACLS",
-    password: "",
-    notificationPreferences: "Daily summary",
-    department: "Med-Surg",
-    demNote: "",
+  const { id } = useParams();
+  const nurse = nursesData.find((n) => n.id === Number(id));
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    specialty: "",
+    location: "",
+    email: "",
+    phone: "",
+    imageUrl: "",
   });
 
-  const [avatarPreview, setAvatarPreview] = useState(LocalAvatar);
-  const [saving, setSaving] = useState(false);
-
-  const fileRef = useRef(null);
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((s) => ({ ...s, [name]: value }));
-  }
-
-  function handleAvatarChange(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => setAvatarPreview(reader.result);
-    reader.readAsDataURL(file);
-  }
-
-  function handleRemoveAvatar() {
-    setAvatarPreview(LocalAvatar);
-    if (fileRef.current) fileRef.current.value = "";
-  }
-
-  function validate() {
-    const errors = [];
-    if (!form.fullName.trim()) errors.push("Full name is required.");
-    if (!form.email.includes("@")) errors.push("Valid email required.");
-    return errors;
-  }
-
-  async function handleSave(e) {
-    e.preventDefault();
-    const errors = validate();
-    if (errors.length) {
-      toast.error(errors.join(" "));
-      return;
+  useEffect(() => {
+    if (nurse) {
+      setFormData({
+        name: nurse.name || "",
+        specialty: nurse.specialty || "",
+        location: nurse.distance || "",
+        email: nurse.name
+          ? `${nurse.name.toLowerCase().replace(" ", ".")}@hospital.com`
+          : "",
+        phone: "(+20) 123-456-7890",
+        imageUrl: nurse.imageUrl || "",
+      });
+      setIsEditing(false);
     }
-    setSaving(true);
-    await new Promise((r) => setTimeout(r, 900));
-    setSaving(false);
-    toast.success("Profile saved successfully!");
-  }
+  }, [nurse?.id]);
 
-  function handleCancel() {
-    toast.info("Changes canceled.");
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+    toast.success("Profile updated successfully!");
+  };
+
+  const handleCancel = () => {
+    if (nurse) {
+      setFormData({
+        name: nurse.name || "",
+        specialty: nurse.specialty || "",
+        location: nurse.distance || "",
+        email: nurse.name
+          ? `${nurse.name.toLowerCase().replace(" ", ".")}@hospital.com`
+          : "",
+        phone: "(+20) 123-456-7890",
+        imageUrl: nurse.imageUrl || "",
+      });
+      setIsEditing(false);
+    }
+  };
+
+  if (!nurse) {
+    return <div className="p-8">Nurse not found</div>;
   }
 
   return (
-    <div className="flex-1 bg-gradient-to-b from-[#F5F9FA] to-[#E8F0F5] p-8 font-sans overflow-auto min-h-screen">
-      <div className="max-w-6xl mx-auto">
-        {/* Avatar Section */}
-        <div className="flex flex-col items-center mb-10">
-          <div className="relative">
-            <img
-              src={avatarPreview}
-              alt="avatar"
-              className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
-            />
-          </div>
-          <div className="flex gap-3 mt-4">
-            <button
-              onClick={() => fileRef.current && fileRef.current.click()}
-              className="bg-blue-600 text-white text-sm rounded-full px-4 py-2 hover:bg-blue-700 transition"
-            >
-              Change Photo
-            </button>
-            <button
-              onClick={handleRemoveAvatar}
-              className="bg-red-600 text-white text-sm rounded-full px-4 py-2 hover:bg-red-700 transition"
-            >
-              Remove
-            </button>
-          </div>
-          <input
-            type="file"
-            ref={fileRef}
-            accept="image/*"
-            onChange={handleAvatarChange}
-            className="hidden"
-          />
-        </div>
+    <div className="w-full bg-gray-50 min-h-screen p-4 sm:p-8 overflow-x-hidden">
+      <ToastContainer position="top-right" autoClose={3000} />
 
-        {/* Form Section */}
-        <div className="bg-white p-10 rounded-xl shadow-lg">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center md:text-left">
-            Edit Profile
-          </h1>
-
-          <form onSubmit={handleSave} className="space-y-6">
-            <h3 className="text-gray-800 font-semibold text-lg">
-              Personal Information
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                "fullName",
-                "phone",
-                "email",
-                "unitId",
-                "employeeId",
-                "certifications",
-                "password",
-                "department",
-                "notificationPreferences",
-                "demNote",
-              ].map((field) => (
-                <input
-                  key={field}
-                  name={field}
-                  value={form[field]}
-                  onChange={handleChange}
-                  type={field === "password" ? "password" : "text"}
-                  placeholder={field
-                    .replace(/([A-Z])/g, " $1")
-                    .replace(/^./, (str) => str.toUpperCase())}
-                  className="w-full border border-gray-200 rounded-md px-4 py-3 bg-gray-50 placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                />
-              ))}
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-3 mt-4 justify-center md:justify-start">
-              <button
-                type="submit"
-                disabled={saving}
-                className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition w-full md:w-auto"
-              >
-                {saving ? "Saving..." : "Save Changes"}
-              </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="border border-gray-300 px-4 py-2 rounded-full bg-white hover:bg-gray-50 w-full md:w-auto"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+      {/* Header */}
+      <div className="bg-blue-600 text-white px-4 sm:px-8 py-5 sm:py-6 rounded-xl mb-8 max-w-full overflow-hidden">
+        <h1 className="text-2xl font-semibold truncate">Profile</h1>
+        <p className="text-sm opacity-90 truncate">
+          Shift Performance & Information
+        </p>
       </div>
 
-      <ToastContainer position="top-right" autoClose={2500} hideProgressBar />
+      {/* Profile Card */}
+      <div className="bg-white shadow rounded-xl p-4 sm:p-6 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 overflow-hidden max-w-full flex-wrap">
+        <div className="flex items-center gap-4 sm:gap-6 flex-shrink-0 overflow-hidden">
+          {formData.imageUrl && (
+            <img
+              src={formData.imageUrl}
+              alt={formData.name}
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover flex-shrink-0"
+            />
+          )}
+          <div className="min-w-0 overflow-hidden">
+            <h2 className="text-xl font-semibold truncate break-words">
+              {formData.name}
+            </h2>
+            <p className="text-gray-500 truncate break-words">
+              {formData.specialty}
+            </p>
+            <span className="inline-block mt-1 px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded-full font-medium truncate break-words">
+              ON SHIFT
+            </span>
+          </div>
+        </div>
+
+        {!isEditing && (
+          <div className="mt-2 sm:mt-0 flex-shrink-0 w-full sm:w-auto">
+            <button
+              className="px-3 sm:px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors w-full sm:w-auto"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit Profile
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8 max-w-full overflow-hidden">
+        <StatCard
+          icon={<FaHeartbeat />}
+          value="52"
+          label="Today's Actions"
+          color="bg-blue-100 text-blue-600"
+        />
+        <StatCard
+          icon={<FaCheckCircle />}
+          value="38"
+          label="Tasks Completed"
+          color="bg-blue-200 text-blue-700"
+        />
+        <StatCard
+          icon={<FaClock />}
+          value="6.5h"
+          label="Hours Worked"
+          color="bg-blue-50 text-blue-500"
+        />
+        <StatCard
+          icon={<FaHeart />}
+          value="98%"
+          label="Satisfaction Rate"
+          color="bg-blue-100 text-blue-600"
+        />
+      </div>
+
+      {/* Personal Information */}
+      <div className="bg-white rounded-xl shadow p-4 sm:p-6 overflow-hidden max-w-full">
+        <h3 className="text-lg font-semibold mb-5">Personal Information</h3>
+
+        <InfoItem
+          icon={<FaUserMd />}
+          title="Department"
+          value={formData.specialty}
+          isEditing={isEditing}
+          name="specialty"
+          onChange={handleChange}
+        />
+        <InfoItem
+          icon={<FaEnvelope />}
+          title="Email"
+          value={formData.email}
+          isEditing={isEditing}
+          name="email"
+          onChange={handleChange}
+        />
+        <InfoItem
+          icon={<FaPhoneAlt />}
+          title="Phone"
+          value={formData.phone}
+          isEditing={isEditing}
+          name="phone"
+          onChange={handleChange}
+        />
+        <InfoItem
+          icon={<FaMapMarkerAlt />}
+          title="Location"
+          value={formData.location}
+          isEditing={isEditing}
+          name="location"
+          onChange={handleChange}
+        />
+
+        {isEditing && (
+          <div className="flex flex-col sm:flex-row gap-3 mt-4">
+            <button
+              onClick={handleSave}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors w-full sm:w-auto"
+            >
+              Save
+            </button>
+            <button
+              onClick={handleCancel}
+              className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors w-full sm:w-auto"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
+/* ===== Components ===== */
+const StatCard = ({ icon, value, label, color }) => (
+  <div className="bg-white rounded-xl shadow p-4 sm:p-5 flex items-center gap-4 hover:shadow-lg transition-shadow duration-200 overflow-hidden max-w-full">
+    <div
+      className={`w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 ${color}`}
+    >
+      {icon}
+    </div>
+    <div className="min-w-0 overflow-hidden">
+      <h3 className="text-xl font-semibold truncate break-words">{value}</h3>
+      <p className="text-sm text-gray-500 truncate break-words">{label}</p>
+    </div>
+  </div>
+);
+
+const InfoItem = ({
+  icon,
+  title,
+  value,
+  iconBg = "bg-blue-100 text-blue-600",
+  isEditing,
+  onChange,
+  name,
+}) => (
+  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 transition-all duration-300 transform hover:scale-105 overflow-hidden max-w-full">
+    <div
+      className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${iconBg}`}
+    >
+      {icon}
+    </div>
+    <div className="w-full min-w-0 overflow-hidden">
+      <p className="text-sm text-gray-500 truncate break-words">{title}</p>
+      {isEditing ? (
+        <input
+          type="text"
+          name={name}
+          value={value || ""}
+          onChange={onChange}
+          className="border rounded px-2 py-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      ) : (
+        <p className="font-medium text-gray-800 truncate break-words">
+          {value}
+        </p>
+      )}
+    </div>
+  </div>
+);

@@ -1,193 +1,172 @@
 import React from "react";
-import { User, CheckCircle, Clock, MessageCircle } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendarDay,
+  faNotesMedical,
+  faPills,
+  faStethoscope,
+} from "@fortawesome/free-solid-svg-icons";
 
-export default function NurseDashboardContent() {
-  const stats = [
+const NurseDashboard = () => {
+  const todaysAppointments = [
     {
-      title: "Patients Today",
-      value: 8,
-      icon: <User className="text-blue-600 w-6 h-6" />,
+      patient: "Ali Hassan",
+      issue: "Blood Pressure",
+      time: "9:00 AM",
+      type: "Consultation",
+      phone: "01012345678",
     },
     {
-      title: "Completed Visits",
-      value: 5,
-      icon: <CheckCircle className="text-green-500 w-6 h-6" />,
+      patient: "Sara Ahmed",
+      issue: "Diabetes Check",
+      time: "10:30 AM",
+      type: "Follow-up",
+      phone: "01087654321",
     },
     {
-      title: "Upcoming Appointments",
-      value: 3,
-      icon: <Clock className="text-orange-500 w-6 h-6" />,
+      patient: "Omar Saleh",
+      issue: "Physical Therapy",
+      time: "2:00 PM",
+      type: "Therapy",
+      phone: "01011223344",
+    },
+    {
+      patient: "Nour Khaled",
+      issue: "Routine Check",
+      time: "3:30 PM",
+      type: "Consultation",
+      phone: "01022334455",
     },
   ];
 
-  const appointments = [
-    {
-      id: 1,
-      patient: "Ahmed Ali",
-      service: "Wound Dressing",
-      time: "10:00 AM",
-      status: "Pending",
-    },
-    {
-      id: 2,
-      patient: "Sara Youssef",
-      service: "Injection",
-      time: "12:00 PM",
-      status: "Completed",
-    },
-    {
-      id: 3,
-      patient: "Omar Hassan",
-      service: "Blood Pressure Check",
-      time: "3:00 PM",
-      status: "Upcoming",
-    },
-  ];
-
-  const notifications = [
-    "New appointment request from Mona Khaled",
-    "You completed a visit for Ahmed Ali",
-    "Tomorrow’s schedule has 4 visits",
-  ];
-
-  const feedbacks = [
-    {
-      id: 1,
-      patient: "Ahmed Ali",
-      comment: "Thank you for your kindness and care!",
-      rating: 5,
-    },
-    {
-      id: 2,
-      patient: "Sara Youssef",
-      comment: "Very professional and punctual.",
-      rating: 4,
-    },
-    {
-      id: 3,
-      patient: "Omar Hassan",
-      comment: "Helpful, but came 10 minutes late.",
-      rating: 3,
-    },
+  const tasksOverview = [
+    { title: "Medication Rounds", completed: 8, total: 10, icon: faPills },
+    { title: "Patient Checkups", completed: 5, total: 6, icon: faStethoscope },
+    { title: "Follow-ups", completed: 3, total: 4, icon: faNotesMedical },
+    { title: "Daily Reports", completed: 4, total: 5, icon: faCalendarDay },
   ];
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Welcome Section */}
-      <h1 className="text-2xl font-semibold mb-2">Welcome back, Nurse Menna</h1>
-      <p className="text-gray-500 mb-6">
-        Here’s your schedule and updates for today.
-      </p>
+    <div className="min-h-screen bg-gray-50 p-6 w-full">
+      {/* Header */}
+      <header className="mb-6">
+        <h1 className="text-3xl font-semibold text-gray-800">
+          Welcome back, Nurse
+        </h1>
+        <p className="text-gray-500 mt-1">Here’s what’s happening today.</p>
+      </header>
 
-      {/* Stats Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        {stats.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-2xl shadow p-4 flex items-center justify-between"
-          >
-            <div>
-              <h3 className="text-gray-500 text-sm">{item.title}</h3>
-              <p className="text-2xl font-bold">{item.value}</p>
-            </div>
-            {item.icon}
-          </div>
-        ))}
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {/* Appointments Table */}
-        <div className="lg:col-span-2 bg-white rounded-2xl shadow overflow-hidden">
-          <div className="p-4 border-b">
-            <h2 className="text-lg font-semibold">Today's Appointments</h2>
-          </div>
-          <table className="w-full text-sm text-left">
-            <thead className="bg-blue-100">
-              <tr>
-                <th className="p-3">Patient</th>
-                <th className="p-3">Service</th>
-                <th className="p-3">Time</th>
-                <th className="p-3">Status</th>
-                <th className="p-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {appointments.map((appt) => (
-                <tr key={appt.id} className="border-b hover:bg-gray-50">
-                  <td className="p-3">{appt.patient}</td>
-                  <td className="p-3">{appt.service}</td>
-                  <td className="p-3">{appt.time}</td>
-                  <td className="p-3">
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        appt.status === "Completed"
-                          ? "bg-green-100 text-green-700"
-                          : appt.status === "Pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-blue-100 text-blue-700"
-                      }`}
-                    >
-                      {appt.status}
-                    </span>
-                  </td>
-                  <td className="p-3 space-x-2">
-                    <button className="text-blue-600 hover:underline text-sm">
-                      View
-                    </button>
-                    <button className="text-green-600 hover:underline text-sm">
-                      Mark Done
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Top Stats Cards */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 w-full">
+        <StatCard
+          title="Today's Appointments"
+          value={todaysAppointments.length}
+          icon={faCalendarDay}
+        />
+        <StatCard
+          title="Tasks Completed"
+          value={tasksOverview.reduce((acc, t) => acc + t.completed, 0)}
+          icon={faNotesMedical}
+        />
+        <StatCard
+          title="Active Treatments"
+          value={tasksOverview.reduce((acc, t) => acc + t.total, 0)}
+          icon={faStethoscope}
+        />
+        <StatCard
+          title="Pending Tasks"
+          value={tasksOverview.reduce(
+            (acc, t) => acc + (t.total - t.completed),
+            0
+          )}
+          icon={faPills}
+        />
+      </section>
 
-        {/* Notifications Section */}
-        <div className="bg-white rounded-2xl shadow p-4">
-          <h2 className="text-lg font-semibold mb-4">Notifications</h2>
-          <ul className="space-y-3">
-            {notifications.map((note, index) => (
-              <li
-                key={index}
-                className="bg-gray-50 p-3 rounded-lg border-l-4 border-blue-500 text-sm text-gray-700"
+      {/* Main content */}
+      <main className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+        {/* LEFT — Today's Schedule */}
+        <section className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            Today's Schedule
+          </h2>
+          <div className="divide-y">
+            {todaysAppointments.map((item, idx) => (
+              <div
+                key={idx}
+                className="py-4 flex items-center justify-between hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
               >
-                {note}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* 🩵 Recent Feedback Section */}
-      <div className="bg-white rounded-2xl shadow p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <MessageCircle className="text-blue-600 w-6 h-6" />
-          <h2 className="text-lg font-semibold">Recent Feedback</h2>
-        </div>
-        <div className="space-y-4">
-          {feedbacks.map((fb) => (
-            <div key={fb.id} className="border-b pb-3">
-              <div className="flex justify-between items-center">
-                <h3 className="font-semibold text-gray-800">{fb.patient}</h3>
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <span
-                      key={i}
-                      className={`text-yellow-400 ${
-                        i < fb.rating ? "opacity-100" : "opacity-30"
-                      }`}
-                    >
-                      ★
-                    </span>
-                  ))}
+                <div>
+                  <p className="font-medium text-gray-800">{item.patient}</p>
+                  <p className="text-sm text-gray-500">{item.issue}</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Phone: {item.phone}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="font-medium">{item.time}</p>
+                  <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">
+                    {item.type}
+                  </span>
                 </div>
               </div>
-              <p className="text-gray-600 text-sm mt-1">{fb.comment}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </section>
+
+        {/* RIGHT — Tasks Completion Overview */}
+        <aside className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all">
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">
+            Tasks Overview
+          </h3>
+          <div className="space-y-4">
+            {tasksOverview.map((task, idx) => {
+              const percent = (task.completed / task.total) * 100;
+              return (
+                <div key={idx}>
+                  <div className="flex justify-between items-center mb-1">
+                    <div className="flex items-center gap-2">
+                      <FontAwesomeIcon
+                        icon={task.icon}
+                        className="text-blue-600"
+                      />
+                      <span className="text-sm font-medium text-gray-700">
+                        {task.title}
+                      </span>
+                    </div>
+                    <span className="text-sm text-gray-500">
+                      {task.completed}/{task.total}
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-100 rounded-full h-2">
+                    <div
+                      className="h-2 rounded-full bg-blue-600"
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </aside>
+      </main>
+    </div>
+  );
+};
+
+export default NurseDashboard;
+
+/* ---------- Helper Component ---------- */
+const StatCard = ({ title, value, icon }) => {
+  return (
+    <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all flex items-start gap-4 border w-full">
+      <div className="p-3 rounded-lg bg-blue-50">
+        <FontAwesomeIcon icon={icon} className="text-blue-700 text-xl" />
+      </div>
+      <div className="flex-1">
+        <p className="text-sm text-gray-500">{title}</p>
+        <h4 className="text-2xl font-semibold text-gray-800 mt-1">{value}</h4>
       </div>
     </div>
   );
-}
+};
