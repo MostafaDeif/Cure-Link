@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { nursesData } from "../Nurse/nurseData";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDay,
@@ -7,105 +11,113 @@ import {
   faStethoscope,
 } from "@fortawesome/free-solid-svg-icons";
 
-const NurseDashboard = () => {
-  const todaysAppointments = [
-    {
-      patient: "Ali Hassan",
-      issue: "Blood Pressure",
-      time: "9:00 AM",
-      type: "Consultation",
-      phone: "01012345678",
-    },
-    {
-      patient: "Sara Ahmed",
-      issue: "Diabetes Check",
-      time: "10:30 AM",
-      type: "Follow-up",
-      phone: "01087654321",
-    },
-    {
-      patient: "Omar Saleh",
-      issue: "Physical Therapy",
-      time: "2:00 PM",
-      type: "Therapy",
-      phone: "01011223344",
-    },
-    {
-      patient: "Nour Khaled",
-      issue: "Routine Check",
-      time: "3:30 PM",
-      type: "Consultation",
-      phone: "01022334455",
-    },
-  ];
+export default function NurseDashboard() {
+  const { id } = useParams();
+  const nurse = nursesData.find((n) => n.id === Number(id));
 
-  const tasksOverview = [
-    { title: "Medication Rounds", completed: 8, total: 10, icon: faPills },
-    { title: "Patient Checkups", completed: 5, total: 6, icon: faStethoscope },
-    { title: "Follow-ups", completed: 3, total: 4, icon: faNotesMedical },
-    { title: "Daily Reports", completed: 4, total: 5, icon: faCalendarDay },
-  ];
+  const [dashboardData, setDashboardData] = useState({
+    todaysAppointments: [],
+    tasksOverview: [],
+  });
+
+  useEffect(() => {
+    if (nurse) {
+      const today = new Date().toISOString().split("T")[0];
+      const todaysAppointments = nurse.appointments
+        .filter((app) => app.date === today)
+        .map((app) => ({
+          patientName: `Patient ${app.patientId}`,
+          task: app.task,
+          time: app.time,
+          type: app.type,
+          status: app.status,
+        }));
+      const tasksOverview = [
+        {
+          title: "Tasks Completed",
+          completed: nurse.appointments.filter((a) => a.status === "Completed")
+            .length,
+          total: nurse.appointments.length,
+          icon: faNotesMedical,
+        },
+        {
+          title: "Active Treatments",
+          completed: nurse.appointments.filter((a) => a.status === "Upcoming")
+            .length,
+          total: nurse.appointments.length,
+          icon: faStethoscope,
+        },
+        {
+          title: "Pending Tasks",
+          completed: nurse.appointments.filter((a) => a.status === "Upcoming")
+            .length,
+          total: nurse.appointments.length,
+          icon: faPills,
+        },
+      ];
+      setDashboardData({ todaysAppointments, tasksOverview });
+    }
+  }, [nurse?.id]);
+  if (!nurse)
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-slate-100 text-slate-700">
+        Nurse not found
+      </div>
+    );
+  const { todaysAppointments, tasksOverview } = dashboardData;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 w-full">
+    <div className="w-full min-h-screen bg-slate-50 p-4 sm:p-8 text-slate-800">
+      <ToastContainer position="top-right" autoClose={3000} />
       {/* Header */}
-      <header className="mb-6">
-        <h1 className="text-3xl font-semibold text-gray-800">
-          Welcome back, Nurse
+      <div className="bg-white px-4 sm:px-8 py-5 sm:py-6 rounded-xl mb-8 shadow border border-slate-200">
+        <h1 className="text-2xl font-semibold text-slate-800 truncate hover:text-slate-700 transition">
+          {nurse.name}'s Dashboard
         </h1>
-        <p className="text-gray-500 mt-1">Here’s what’s happening today.</p>
-      </header>
-
-      {/* Top Stats Cards */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 w-full">
+        <p className="text-sm text-slate-500 truncate">Today's Overview</p>
+      </div>
+      {/* Stat Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard
           title="Today's Appointments"
           value={todaysAppointments.length}
           icon={faCalendarDay}
         />
-        <StatCard
-          title="Tasks Completed"
-          value={tasksOverview.reduce((acc, t) => acc + t.completed, 0)}
-          icon={faNotesMedical}
-        />
-        <StatCard
-          title="Active Treatments"
-          value={tasksOverview.reduce((acc, t) => acc + t.total, 0)}
-          icon={faStethoscope}
-        />
-        <StatCard
-          title="Pending Tasks"
-          value={tasksOverview.reduce(
-            (acc, t) => acc + (t.total - t.completed),
-            0
-          )}
-          icon={faPills}
-        />
-      </section>
-
-      {/* Main content */}
+        {tasksOverview.map((task, idx) => (
+          <StatCard
+            key={idx}
+            title={task.title}
+            value={task.completed}
+            icon={task.icon}
+          />
+        ))}
+      </div>
+      {/* Main Content */}
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-        {/* LEFT — Today's Schedule */}
-        <section className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            Today's Schedule
-          </h2>
-          <div className="divide-y">
+        {/* Today's Schedule */}
+        <section className="bg-white p-6 rounded-xl shadow border border-slate-200 hover:shadow-lg transition-all">
+          <h2 className="text-xl font-semibold mb-4">Today's Schedule</h2>
+          <div className="divide-y divide-slate-200">
+            {todaysAppointments.length === 0 && (
+              <p className="text-slate-500 text-sm">
+                No appointments for today.
+              </p>
+            )}
             {todaysAppointments.map((item, idx) => (
               <div
                 key={idx}
-                className="py-4 flex items-center justify-between hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
+                className="py-4 flex items-center justify-between hover:bg-slate-50 rounded-lg transition cursor-pointer px-2"
               >
                 <div>
-                  <p className="font-medium text-gray-800">{item.patient}</p>
-                  <p className="text-sm text-gray-500">{item.issue}</p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    Phone: {item.phone}
+                  <p className="font-medium">{item.patientName}</p>
+                  <p className="text-sm text-slate-600">{item.task}</p>
+                  <p className="text-xs mt-1 text-slate-500">
+                    Status: {item.status}
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="font-medium">{item.time}</p>
-                  <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">
+                  <span className="text-xs px-3 py-1 rounded-full bg-sky-100 text-sky-700">
                     {item.type}
                   </span>
                 </div>
@@ -114,11 +126,9 @@ const NurseDashboard = () => {
           </div>
         </section>
 
-        {/* RIGHT — Tasks Completion Overview */}
-        <aside className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">
-            Tasks Overview
-          </h3>
+        {/* Tasks Overview */}
+        <aside className="bg-white p-6 rounded-xl shadow border border-slate-200 hover:shadow-lg transition-all">
+          <h3 className="text-lg font-semibold mb-4">Tasks Overview</h3>
           <div className="space-y-4">
             {tasksOverview.map((task, idx) => {
               const percent = (task.completed / task.total) * 100;
@@ -128,19 +138,17 @@ const NurseDashboard = () => {
                     <div className="flex items-center gap-2">
                       <FontAwesomeIcon
                         icon={task.icon}
-                        className="text-blue-600"
+                        className="text-sky-600"
                       />
-                      <span className="text-sm font-medium text-gray-700">
-                        {task.title}
-                      </span>
+                      <span className="text-sm font-medium">{task.title}</span>
                     </div>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm">
                       {task.completed}/{task.total}
                     </span>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-2">
+                  <div className="w-full bg-slate-200 rounded-full h-2">
                     <div
-                      className="h-2 rounded-full bg-blue-600"
+                      className="h-2 rounded-full bg-sky-600"
                       style={{ width: `${percent}%` }}
                     />
                   </div>
@@ -152,21 +160,15 @@ const NurseDashboard = () => {
       </main>
     </div>
   );
-};
-
-export default NurseDashboard;
-
-/* ---------- Helper Component ---------- */
-const StatCard = ({ title, value, icon }) => {
-  return (
-    <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all flex items-start gap-4 border w-full">
-      <div className="p-3 rounded-lg bg-blue-50">
-        <FontAwesomeIcon icon={icon} className="text-blue-700 text-xl" />
-      </div>
-      <div className="flex-1">
-        <p className="text-sm text-gray-500">{title}</p>
-        <h4 className="text-2xl font-semibold text-gray-800 mt-1">{value}</h4>
-      </div>
+}
+const StatCard = ({ title, value, icon }) => (
+  <div className="bg-white rounded-xl shadow border border-slate-200 p-4 flex items-center gap-4 hover:shadow-lg transition-all">
+    <div className="p-3 rounded-lg bg-sky-100">
+      <FontAwesomeIcon icon={icon} className="text-sky-600 text-xl" />
     </div>
-  );
-};
+    <div className="flex-1">
+      <p className="text-sm text-slate-600">{title}</p>
+      <h4 className="text-2xl font-semibold mt-1">{value}</h4>
+    </div>
+  </div>
+);

@@ -1,228 +1,155 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { nursesData } from "../Nurse/nurseData";
 import { Star, Clock, User, Activity, Pill, Phone } from "lucide-react";
+import { FaCheckCircle, FaNotesMedical } from "react-icons/fa";
 
 export default function NurseAppointments() {
+  const { id } = useParams();
+  const nurse = nursesData.find((n) => n.id === Number(id));
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
-  const appointments = [
-    {
-      id: 1,
-      date: "2025-11-27",
-      time: "09:00 AM",
-      patient: "Ahmed Ali",
-      phone: "01012345678",
-      task: "Vitals Check",
-      type: "Checkup",
-      status: "Completed",
-      notes: "BP slightly elevated.",
-    },
-    {
-      id: 2,
-      date: "2025-11-27",
-      time: "11:00 AM",
-      patient: "Sara Mohamed",
-      phone: "01087654321",
-      task: "Medication Admin",
-      type: "Medication",
-      status: "Upcoming",
-    },
-    {
-      id: 3,
-      date: "2025-11-27",
-      time: "02:00 PM",
-      patient: "Omar Hassan",
-      phone: "01011223344",
-      task: "Dressing Change",
-      type: "Procedure",
-      status: "Upcoming",
-    },
-    {
-      id: 4,
-      date: "2025-11-28",
-      time: "08:30 AM",
-      patient: "Mona Adel",
-      phone: "01022334455",
-      task: "Blood Sugar Check",
-      type: "Checkup",
-      status: "Upcoming",
-    },
-    {
-      id: 5,
-      date: "2025-11-28",
-      time: "10:00 AM",
-      patient: "Ali Farouk",
-      phone: "01033445566",
-      task: "Vitals Check",
-      type: "Checkup",
-      status: "Completed",
-      notes: "Stable patient.",
-    },
-    {
-      id: 6,
-      date: "2025-11-28",
-      time: "01:00 PM",
-      patient: "Laila Sami",
-      phone: "01044556677",
-      task: "Medication Admin",
-      type: "Medication",
-      status: "Upcoming",
-    },
-    {
-      id: 7,
-      date: "2025-11-29",
-      time: "03:00 PM",
-      patient: "Hassan Omar",
-      phone: "01055667788",
-      task: "Therapy Review",
-      type: "Therapy",
-      status: "Upcoming",
-    },
-    {
-      id: 8,
-      date: "2025-11-29",
-      time: "09:30 AM",
-      patient: "Fatima Nasser",
-      phone: "01066778899",
-      task: "Vitals Check",
-      type: "Checkup",
-      status: "Completed",
-      notes: "BP normal.",
-    },
-    {
-      id: 9,
-      date: "2025-11-30",
-      time: "10:30 AM",
-      patient: "Youssef Taha",
-      phone: "01077889900",
-      task: "Medication Admin",
-      type: "Medication",
-      status: "Upcoming",
-    },
-    {
-      id: 10,
-      date: "2025-11-30",
-      time: "12:00 PM",
-      patient: "Sara Khaled",
-      phone: "01088990011",
-      task: "Blood Sugar Check",
-      type: "Checkup",
-      status: "Upcoming",
-    },
-  ];
-
+  if (!nurse) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-100">
+        <p className="text-rose-600 text-lg font-semibold">Nurse not found.</p>
+      </div>
+    );
+  }
+  const appointments = nurse?.appointments || [];
+  if (appointments.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-100">
+        <p className="text-slate-600 text-lg font-medium">
+          No appointments found for {nurse.name}.
+        </p>
+      </div>
+    );
+  }
   const groupedByDate = appointments.reduce((acc, app) => {
     if (!acc[app.date]) acc[app.date] = [];
     acc[app.date].push(app);
     return acc;
   }, {});
-
   const statusColors = {
-    Completed: "bg-green-50 border-green-200 hover:bg-green-50",
-    Upcoming: "bg-blue-50 border-blue-200 hover:bg-blue-50",
-    Missed: "bg-red-50 border-red-200 hover:bg-red-50",
+    Completed: "bg-emerald-50 border-emerald-200 hover:bg-emerald-100",
+    Upcoming: "bg-sky-50 border-sky-200 hover:bg-sky-100",
+    Missed: "bg-rose-50 border-rose-200 hover:bg-rose-100",
   };
-
-  const dailyCardColor = "bg-[#F5F7FA]";
-
+  const statusIconColors = {
+    Completed: "text-emerald-600",
+    Upcoming: "text-sky-600",
+    Missed: "text-rose-600",
+  };
   const typeIcons = {
-    Checkup: <Activity size={16} className="text-blue-600" />,
-    Medication: <Pill size={16} className="text-purple-600" />,
-    Procedure: <User size={16} className="text-orange-600" />,
-    Therapy: <Star size={16} className="text-yellow-500" />,
+    Checkup: <Activity size={16} className="text-sky-500" />,
+    Medication: <Pill size={16} className="text-indigo-500" />,
+    Procedure: <User size={16} className="text-amber-500" />,
+    Therapy: <Star size={16} className="text-emerald-500" />,
   };
-
   return (
-    <div className="min-h-screen bg-[#F0F4F8] p-4 sm:p-8 font-sans w-full overflow-x-hidden">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
+    <div className="min-h-screen bg-slate-50 p-4 sm:p-8 font-sans w-full overflow-x-hidden">
+      <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">
         Nurse Schedule
       </h1>
-      <p className="text-gray-600 mb-6 text-sm sm:text-base">
+      <p className="text-slate-600 mb-6 text-sm sm:text-base">
         All upcoming and completed appointments for the month
       </p>
-
       <div className="flex flex-col gap-4 w-full">
-        {Object.keys(groupedByDate).map((date) => (
-          <div
-            key={date}
-            className={`rounded-2xl shadow border border-gray-200 p-4 sm:p-6 transition transform hover:scale-102 hover:shadow-md ${dailyCardColor} w-full`}
-          >
-            <h2 className="font-semibold text-gray-700 mb-3 text-sm sm:text-base">
-              {new Date(date).toLocaleDateString("en-US", {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-              })}
-            </h2>
-            <div className="flex flex-wrap gap-3 w-full">
-              {groupedByDate[date].map((ev) => (
-                <div
-                  key={ev.id}
-                  onClick={() => setSelectedAppointment(ev)}
-                  className={`flex-1 min-w-[150px] rounded-xl border p-3 cursor-pointer transition transform hover:scale-105 hover:shadow-lg flex flex-col gap-1 ${
-                    statusColors[ev.status]
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      {typeIcons[ev.type]}
+        {Object.keys(groupedByDate)
+          .sort((a, b) => new Date(a) - new Date(b))
+          .map((date) => (
+            <div
+              key={date}
+              className="rounded-2xl bg-white shadow border border-slate-200 p-4 sm:p-6 transition-all duration-300 hover:shadow-lg w-full"
+            >
+              <h2 className="font-semibold text-slate-700 mb-3 text-sm sm:text-base">
+                {new Date(date).toLocaleDateString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </h2>
+              <div className="flex flex-wrap gap-3 w-full">
+                {groupedByDate[date].map((ev) => (
+                  <div
+                    key={ev.id}
+                    onClick={() => setSelectedAppointment(ev)}
+                    className={`flex-1 min-w-[150px] rounded-xl border p-3 cursor-pointer transition-all duration-300 hover:shadow-md flex flex-col gap-1 ${
+                      statusColors[ev.status]
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        {typeIcons[ev.type] || <Activity size={16} />}
+                      </div>
+                      <span className="text-xs sm:text-sm text-slate-500 font-medium">
+                        {ev.time}
+                      </span>
                     </div>
-                    <span className="text-xs sm:text-sm font-medium">
-                      {ev.time}
-                    </span>
+                    <div className="font-semibold text-slate-800 text-sm sm:text-base truncate">
+                      {ev.task}
+                    </div>
+                    <div className="text-slate-600 text-xs sm:text-sm">
+                      {ev.patientName || ev.patient}
+                    </div>
+                    <div className="text-slate-500 text-xs sm:text-sm">
+                      Status: {ev.status}
+                    </div>
                   </div>
-                  <div className="font-semibold text-gray-800 text-sm sm:text-base">
-                    {ev.task}
-                  </div>
-                  <div className="text-gray-600 text-xs sm:text-sm">
-                    {ev.patient}
-                  </div>
-                  <div className="text-gray-500 text-xs sm:text-sm">
-                    Status: {ev.status}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
-
       {selectedAppointment && (
-        <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 space-y-3">
-            <h2 className="text-xl font-bold mb-2">
-              {selectedAppointment.task}
-            </h2>
-
-            <div className="flex items-center gap-2">
-              <User size={18} className="text-blue-600" />
-              <span className="font-medium">{selectedAppointment.patient}</span>
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 space-y-4">
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-2">
+              {typeIcons[selectedAppointment.type] || (
+                <User size={20} className="text-sky-500" />
+              )}
+              <h2 className="text-xl font-bold text-slate-800 break-words">
+                {selectedAppointment.name ||
+                  selectedAppointment.patient ||
+                  "Unknown Patient"}
+              </h2>
             </div>
-
-            <div className="flex items-center gap-2">
-              <Phone size={18} className="text-green-600" />
-              <span>{selectedAppointment.phone || "N/A"}</span>
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-2">
+              <Phone size={20} className="text-sky-500" />
+              <span className="text-slate-700">
+                {selectedAppointment.phone ||
+                  selectedAppointment.patientPhone ||
+                  "N/A"}
+              </span>
             </div>
-
-            <p>
-              <strong>Time:</strong> {selectedAppointment.time}
-            </p>
-            <p>
-              <strong>Status:</strong> {selectedAppointment.status}
-            </p>
-            <p>
-              <strong>Type:</strong> {selectedAppointment.type}
-            </p>
-
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-2">
+              <Clock size={20} className="text-slate-500" />
+              <span>{selectedAppointment.time}</span>
+            </div>
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-2">
+              {typeIcons[selectedAppointment.type] || <Activity size={20} />}
+              <span>{selectedAppointment.type}</span>
+            </div>
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-2">
+              <FaCheckCircle
+                size={18}
+                className={statusIconColors[selectedAppointment.status]}
+              />
+              <span>{selectedAppointment.status}</span>
+            </div>
             {selectedAppointment.notes && (
-              <p className="mt-2 italic text-gray-600 border-t pt-2">
-                "{selectedAppointment.notes}"
-              </p>
+              <div className="flex items-start gap-3 border-t border-slate-200 pt-3 mt-3">
+                <FaNotesMedical className="text-amber-500 mt-1" />
+                <p className="italic text-slate-600 break-words">
+                  "{selectedAppointment.notes}"
+                </p>
+              </div>
             )}
-
             <div className="text-right mt-4">
               <button
                 onClick={() => setSelectedAppointment(null)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                className="px-4 py-2 bg-slate-700 text-white rounded-md hover:bg-slate-800 transition"
               >
                 Close
               </button>

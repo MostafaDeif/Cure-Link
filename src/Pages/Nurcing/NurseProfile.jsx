@@ -74,82 +74,82 @@ export default function NurseProfile() {
   }
 
   return (
-    <div className="w-full bg-gray-50 min-h-screen p-4 sm:p-8 overflow-x-hidden">
+    <div className="w-full bg-[#F5F7FA] min-h-screen p-4 sm:p-8 overflow-x-hidden">
       <ToastContainer position="top-right" autoClose={3000} />
 
       {/* Header */}
-      <div className="bg-blue-600 text-white px-4 sm:px-8 py-5 sm:py-6 rounded-xl mb-8 max-w-full overflow-hidden">
-        <h1 className="text-2xl font-semibold truncate">Profile</h1>
-        <p className="text-sm opacity-90 truncate">
-          Shift Performance & Information
-        </p>
+      <div className="bg-[#EDF2FF] text-blue-900 px-4 sm:px-8 py-5 sm:py-6 rounded-xl mb-8">
+        <h1 className="text-2xl font-semibold">Profile</h1>
+        <p className="text-sm opacity-90">Shift Performance & Information</p>
       </div>
 
       {/* Profile Card */}
-      <div className="bg-white shadow rounded-xl p-4 sm:p-6 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 overflow-hidden max-w-full flex-wrap">
-        <div className="flex items-center gap-4 sm:gap-6 flex-shrink-0 overflow-hidden">
+      <div
+        className="
+        bg-white shadow-md rounded-xl p-4 sm:p-6 mb-8
+        flex flex-col sm:flex-row sm:items-center sm:justify-between
+        gap-4 sm:gap-6
+        transition-all duration-300
+        hover:shadow-xl hover:-translate-y-1
+      "
+      >
+        <div className="flex items-center gap-4 sm:gap-6">
           {formData.imageUrl && (
             <img
               src={formData.imageUrl}
               alt={formData.name}
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover flex-shrink-0"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover"
             />
           )}
-          <div className="min-w-0 overflow-hidden">
-            <h2 className="text-xl font-semibold truncate break-words">
-              {formData.name}
-            </h2>
-            <p className="text-gray-500 truncate break-words">
-              {formData.specialty}
-            </p>
-            <span className="inline-block mt-1 px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded-full font-medium truncate break-words">
+          <div>
+            <h2 className="text-xl font-semibold">{formData.name}</h2>
+            <p className="text-gray-500">{formData.specialty}</p>
+            <span className="inline-block mt-1 px-2 py-1 bg-[#E0E7FF] text-[#4C6FFF] text-xs rounded-full font-medium">
               ON SHIFT
             </span>
           </div>
         </div>
 
         {!isEditing && (
-          <div className="mt-2 sm:mt-0 flex-shrink-0 w-full sm:w-auto">
-            <button
-              className="px-3 sm:px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors w-full sm:w-auto"
-              onClick={() => setIsEditing(true)}
-            >
-              Edit Profile
-            </button>
-          </div>
+          <button
+            className="px-4 py-2 bg-[#4C6FFF] text-white rounded hover:bg-[#3B50D5] transition-colors"
+            onClick={() => setIsEditing(true)}
+          >
+            Edit Profile
+          </button>
         )}
       </div>
 
-      {/* Stats Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8 max-w-full overflow-hidden">
+      {/* Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <StatCard
           icon={<FaHeartbeat />}
           value="52"
           label="Today's Actions"
-          color="bg-blue-100 text-blue-600"
+          color="bg-[#E0E7FF] text-[#4C6FFF]"
         />
         <StatCard
           icon={<FaCheckCircle />}
           value="38"
           label="Tasks Completed"
-          color="bg-blue-200 text-blue-700"
+          color="bg-[#D0DBFF] text-[#3B50D5]"
         />
         <StatCard
           icon={<FaClock />}
           value="6.5h"
           label="Hours Worked"
-          color="bg-blue-50 text-blue-500"
+          color="bg-[#F0F3FF] text-[#4C6FFF]"
         />
         <StatCard
           icon={<FaHeart />}
           value="98%"
           label="Satisfaction Rate"
-          color="bg-blue-100 text-blue-600"
+          color="bg-[#E0E7FF] text-[#4C6FFF]"
         />
       </div>
 
-      {/* Personal Information */}
-      <div className="bg-white rounded-xl shadow p-4 sm:p-6 overflow-hidden max-w-full">
+      {/* Personal Info */}
+      <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
         <h3 className="text-lg font-semibold mb-5">Personal Information</h3>
 
         <InfoItem
@@ -186,16 +186,16 @@ export default function NurseProfile() {
         />
 
         {isEditing && (
-          <div className="flex flex-col sm:flex-row gap-3 mt-4">
+          <div className="flex gap-3 mt-4">
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors w-full sm:w-auto"
+              className="px-4 py-2 bg-[#4C6FFF] text-white rounded-lg hover:bg-[#3B50D5]"
             >
               Save
             </button>
             <button
               onClick={handleCancel}
-              className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors w-full sm:w-auto"
+              className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
             >
               Cancel
             </button>
@@ -206,50 +206,52 @@ export default function NurseProfile() {
   );
 }
 
-/* ===== Components ===== */
+/*  Components */
+
 const StatCard = ({ icon, value, label, color }) => (
-  <div className="bg-white rounded-xl shadow p-4 sm:p-5 flex items-center gap-4 hover:shadow-lg transition-shadow duration-200 overflow-hidden max-w-full">
+  <div
+    className="
+    bg-white rounded-xl shadow-md p-5 flex items-center gap-4
+    transition-all duration-300
+    hover:shadow-xl hover:-translate-y-1
+  "
+  >
     <div
-      className={`w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 ${color}`}
+      className={`w-12 h-12 flex items-center justify-center rounded-lg ${color}`}
     >
       {icon}
     </div>
-    <div className="min-w-0 overflow-hidden">
-      <h3 className="text-xl font-semibold truncate break-words">{value}</h3>
-      <p className="text-sm text-gray-500 truncate break-words">{label}</p>
+    <div>
+      <h3 className="text-xl font-semibold">{value}</h3>
+      <p className="text-sm text-gray-500">{label}</p>
     </div>
   </div>
 );
 
-const InfoItem = ({
-  icon,
-  title,
-  value,
-  iconBg = "bg-blue-100 text-blue-600",
-  isEditing,
-  onChange,
-  name,
-}) => (
-  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 transition-all duration-300 transform hover:scale-105 overflow-hidden max-w-full">
-    <div
-      className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${iconBg}`}
-    >
+const InfoItem = ({ icon, title, value, isEditing, onChange, name }) => (
+  <div
+    className="
+    flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4
+    p-2 rounded-lg
+    transition-all duration-300
+    hover:bg-[#F0F3FF] hover:translate-x-1
+  "
+  >
+    <div className="w-10 h-10 rounded-lg bg-[#E0E7FF] text-[#4C6FFF] flex items-center justify-center">
       {icon}
     </div>
-    <div className="w-full min-w-0 overflow-hidden">
-      <p className="text-sm text-gray-500 truncate break-words">{title}</p>
+    <div className="w-full">
+      <p className="text-sm text-gray-500">{title}</p>
       {isEditing ? (
         <input
           type="text"
           name={name}
           value={value || ""}
           onChange={onChange}
-          className="border rounded px-2 py-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="border rounded px-2 py-1 w-full focus:ring-2 focus:ring-[#4C6FFF]"
         />
       ) : (
-        <p className="font-medium text-gray-800 truncate break-words">
-          {value}
-        </p>
+        <p className="font-medium text-gray-800">{value}</p>
       )}
     </div>
   </div>
