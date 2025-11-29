@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Search, Plus, ShoppingCart } from "lucide-react"; 
+import { Search, Plus } from "lucide-react";
 import "./pharmacy.css";
+// Slider removed as requested
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../Context/CartContext";
 import { productsBase } from "../data/products";
-
-// Notification Component
-const Notification = ({ message, show }) => {
-  return <div className={`notification ${show ? "show" : ""}`}>{message}</div>;
-};
 
 const ProductCard = ({ product, onAdd, onOpen }) => {
   const onError = (e) => {
@@ -69,8 +65,6 @@ export default function PharmacyWebPage() {
   const [searchText, setSearchText] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
   const [category, setCategory] = useState("All");
-  const [notification, setNotification] = useState({ show: false, message: "" });
-
   const navigate = useNavigate();
   const { addItem } = useCart();
 
@@ -90,122 +84,67 @@ export default function PharmacyWebPage() {
   const searchFiltered = (arr) => {
     if (!searchText) return arr;
     const lower = searchText.toLowerCase();
-    return arr.filter(
-      p => (p.name || "").toLowerCase().includes(lower) || (p.details || "").toLowerCase().includes(lower)
-    );
+    return arr.filter(p => (p.name || "").toLowerCase().includes(lower) || (p.details || "").toLowerCase().includes(lower));
   };
 
-  const filteredPopular = searchFiltered(
-    baseFiltered.filter(
-      p => ["Painkiller", "Cold & Flu", "Herbal"].includes(p.category) || (typeof p.id === "number" && p.id <= 4)
-    )
-  );
+  // Popular & Sale lists (still available when not searching)
+  const filteredPopular = searchFiltered(baseFiltered.filter(p => ["Painkiller", "Cold & Flu", "Herbal"].includes(p.category) || (typeof p.id === "number" && p.id <= 4)));
   const filteredSale = searchFiltered(baseFiltered.filter(p => p.oldPrice));
 
-  const searchResults = searchText
-    ? baseFiltered.filter(
-        p =>
-          (p.name || "").toLowerCase().includes(searchText.toLowerCase()) ||
-          (p.details || "").toLowerCase().includes(searchText.toLowerCase())
-      )
-    : [];
+  // When searching, show results across all products but respect category selection
+  const searchResults = searchText ? baseFiltered.filter(p => (p.name || "").toLowerCase().includes(searchText.toLowerCase()) || (p.details || "").toLowerCase().includes(searchText.toLowerCase())) : [];
 
   const goToProduct = (product) => navigate(`/product/${product.id}`);
-
   const handleAddToCart = (product) => {
     addItem(product, 1);
-    setNotification({ show: true, message: `${product.name} added to cart!` });
-    setTimeout(() => setNotification({ show: false, message: "" }), 2500); // Notification disappears after 2.5s
+    // optional: show toast here
   };
 
   return (
     <div className="page-root">
-      { }
-      <div className="top-bar">
-        <div className="search-bar-container">
-          <div className="search-box" role="search">
-            <Search className="icon" size={20} />
-            <input
-              className="search-input"
-              placeholder="Search drugs, category..."
-              value={searchRaw}
-              onChange={(e) => setSearchRaw(e.target.value)}
-              aria-label="Search products"
-            />
-          </div>
+      {/* Search Bar Section */}
+      <div className="search-bar-container">
+        <div className="search-box" role="search">
+          <Search className="icon" size={20} />
+          <input
+            className="search-input"
+            placeholder="Search drugs, category..."
+            value={searchRaw}
+            onChange={(e) => setSearchRaw(e.target.value)}
+            aria-label="Search products"
+          />
         </div>
-
-        <button 
-          className="cart-btn" 
-          onClick={() => navigate("/cart")}
-          aria-label="Go to Cart"
-          type="button"
-        >
-          <ShoppingCart size={24} />
-        </button>
       </div>
 
-      {/* Banner */}
+      {/* Prescription Banner */}
       <div className="prescription-banner">
         <div className="banner-content">
           <h2>Order Quickly with Prescription</h2>
           <p>Upload your prescription and get your medicine delivered fast and safely.</p>
-          <button className="banner-upload-btn" type="button">
-            Upload Prescription
-          </button>
+          <button className="banner-upload-btn" type="button">Upload Prescription</button>
         </div>
       </div>
 
-      {/* Filters */}
+      {/* Main Filters */}
       <div className="filters-container">
         <div className="filters">
-          <button
-            className={`filter-btn ${activeFilter === "All" ? "active" : ""}`}
-            onClick={() => setActiveFilter("All")}
-            type="button"
-          >
-            All
-          </button>
-          <button
-            className={`filter-btn ${activeFilter === "Popular" ? "active" : ""}`}
-            onClick={() => setActiveFilter("Popular")}
-            type="button"
-          >
-            Popular
-          </button>
-          <button
-            className={`filter-btn ${activeFilter === "On Sale" ? "active" : ""}`}
-            onClick={() => setActiveFilter("On Sale")}
-            type="button"
-          >
-            On Sale
-          </button>
+          <button className={`filter-btn ${activeFilter === "All" ? "active" : ""}`} onClick={() => setActiveFilter("All")} type="button">All</button>
+          <button className={`filter-btn ${activeFilter === "Popular" ? "active" : ""}`} onClick={() => setActiveFilter("Popular")} type="button">Popular</button>
+          <button className={`filter-btn ${activeFilter === "On Sale" ? "active" : ""}`} onClick={() => setActiveFilter("On Sale")} type="button">On Sale</button>
         </div>
       </div>
 
-      {/* Category select */}
+      {/* Category Filter Dropdown */}
       <div className="category-control-container">
         <div className="category-control">
-          <label className="category-label" htmlFor="category-select">
-            Category
-          </label>
-          <select
-            id="category-select"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="filter-select"
-            aria-label="Select category"
-          >
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
+          <label className="category-label" htmlFor="category-select">Category</label>
+          <select id="category-select" value={category} onChange={(e) => setCategory(e.target.value)} className="filter-select" aria-label="Select category">
+            {categories.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
       </div>
 
-      {/* Products */}
+      {/* If searching -> show search results grid */}
       {searchText ? (
         <section className="product-section">
           <h2 className="section-title">Search results for “{searchText}”</h2>
@@ -213,17 +152,18 @@ export default function PharmacyWebPage() {
             {searchResults.length === 0 ? (
               <div className="empty-state">No results found for "{searchText}"</div>
             ) : (
-              searchResults.map((p) => <ProductCard key={`sr-${p.id}`} product={p} onAdd={handleAddToCart} onOpen={goToProduct} />)
+              searchResults.map(p => <ProductCard key={`sr-${p.id}`} product={p} onAdd={handleAddToCart} onOpen={goToProduct} />)
             )}
           </div>
         </section>
       ) : (
         <>
+          {/* Popular Products Grid */}
           {filteredPopular.length > 0 && (activeFilter === "All" || activeFilter === "Popular") && (
             <section className="product-section">
               <h2 className="section-title">Popular Products</h2>
               <div className="results-grid">
-                {filteredPopular.map((product) => (
+                {filteredPopular.map(product => (
                   <div key={product.id} className="slide-item">
                     <ProductCard product={product} onAdd={handleAddToCart} onOpen={goToProduct} />
                   </div>
@@ -234,11 +174,12 @@ export default function PharmacyWebPage() {
 
           <div className="section-divider" />
 
+          {/* Products on Sale Grid */}
           {filteredSale.length > 0 && (activeFilter === "All" || activeFilter === "On Sale") && (
             <section className="product-section is-last">
               <h2 className="section-title">Products on Sale</h2>
               <div className="results-grid">
-                {filteredSale.map((product) => (
+                {filteredSale.map(product => (
                   <div key={product.id} className="slide-item">
                     <ProductCard product={product} onAdd={handleAddToCart} onOpen={goToProduct} />
                   </div>
@@ -248,9 +189,6 @@ export default function PharmacyWebPage() {
           )}
         </>
       )}
-
-      {/* Notification */}
-      <Notification message={notification.message} show={notification.show} />
     </div>
   );
 }

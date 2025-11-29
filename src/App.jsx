@@ -1,3 +1,4 @@
+// src/App.jsx
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,6 +16,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Error from "./Pages/Error";
 import Nav from "./Components/Nav";
+import PharmacyNav from "./Components/PharmacyNav"; // <-- new
 import Home from "./Pages/Home";
 import About from "./Pages/About/Index";
 import Medicine from "./Pages/Medicine";
@@ -93,9 +95,12 @@ const Layout = ({ children }) => {
   const showFooter = showFooterOn.includes(location.pathname);
   const showNavbar = showNavbarOn.includes(location.pathname);
 
+
+  const isPharmacyPath = location.pathname.startsWith("/pharmacy");
+
   return (
     <>
-      {showNavbar && <Nav />}
+      {showNavbar && (isPharmacyPath ? <PharmacyNav /> : <Nav />)}
       {children}
       {showFooter && <Footer />}
     </>
