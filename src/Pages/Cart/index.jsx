@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../Context/CartContext";
 
 // Leaflet
@@ -42,6 +43,7 @@ function MapClickHandler({ onSelect }) {
 }
 
 export default function Cart() {
+  const navigate = useNavigate();
   const { items, updateQuantity, removeItem, clearCart, getTotalItems, getTotalPrice } = useCart();
 
   const [showCheckout, setShowCheckout] = useState(false);
@@ -71,12 +73,30 @@ export default function Cart() {
   };
 
   return (
-    <div className="cart-page" style={{ padding: 24, maxWidth: 900, margin: "0 auto" }}>
+    <div className="cart-page" style={{ padding: 24, maxWidth: 900, margin: "0 auto", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      {/* Back arrow to pharmacy */}
+      <button
+        onClick={() => navigate("/pharmacy")}
+        aria-label="Back to Pharmacy"
+        style={{
+          border: "none",
+          background: "transparent",
+          fontSize: "1.2rem",
+          cursor: "pointer",
+          marginBottom: "12px",
+          color: "#2b6cb0",
+        }}
+      >
+        ← Back to Pharmacy
+      </button>
+
       <h2>Your Cart ({getTotalItems()} items)</h2>
 
       {/* EMPTY CART */}
       {!items.length ? (
-        <p style={{ marginTop: 24 }}>Your cart is empty.</p>
+        <div className="cart-empty-wrapper" style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <p>Your cart is empty.</p>
+        </div>
       ) : (
         <>
           {/* CART LIST */}
@@ -199,10 +219,7 @@ export default function Cart() {
               />
 
               <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 16 }}>
-                <button
-                  onClick={() => setShowCheckout(false)}
-                  style={{ padding: "8px 12px" }}
-                >
+                <button onClick={() => setShowCheckout(false)} style={{ padding: "8px 12px" }}>
                   Cancel
                 </button>
 
