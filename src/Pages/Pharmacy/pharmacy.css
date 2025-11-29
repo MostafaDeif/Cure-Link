@@ -460,6 +460,71 @@ html, body{
 .slick-prev:hover, .slick-next:hover {
   transform: translateY(-2px);
 }
+/* ===========================
+   Notification (toast)
+   =========================== */
+.notification {
+  position: fixed;
+  bottom: 22px;                
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--brand);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(16,24,40,0.18);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  font-weight: 600;
+}
+
+/* when visible */
+.notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* small responsive tweak so toast doesn't collide with mobile nav */
+@media (max-width: 480px) {
+  .notification { bottom: 14px; padding: 10px 14px; font-size: 0.95rem; }
+}
+
+/* ===========================
+   Cart icon (if you're using top-bar)
+   =========================== */
+/* If you used .top-bar + .cart-btn in JSX, add these to make it look good */
+.top-bar {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  max-width:750px;
+  margin:2rem auto 1.5rem;
+  gap:16px;
+  padding:0 1.25rem;
+}
+
+.cart-btn{
+  background: var(--brand);
+  border:none;
+  border-radius: var(--radius-full);
+  padding:10px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: var(--transition-fast);
+  color:white;
+  box-shadow: var(--shadow-sm);
+}
+
+.cart-btn:hover{
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg);
+}
+
 
 /* =========================================================
    Responsive

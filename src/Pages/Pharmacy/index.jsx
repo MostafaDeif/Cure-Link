@@ -6,6 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../Context/CartContext";
 import { productsBase } from "../data/products";
 
+/* Notification component (simple toast) */
+const Notification = ({ message, show }) => {
+  return (
+    <div className={`notification ${show ? "show" : ""}`} role="status" aria-live="polite">
+      {message}
+    </div>
+  );
+};
+
 const ProductCard = ({ product, onAdd, onOpen }) => {
   const onError = (e) => {
     e.currentTarget.onerror = null;
@@ -65,6 +74,12 @@ export default function PharmacyWebPage() {
   const [searchText, setSearchText] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
   const [category, setCategory] = useState("All");
+
+  // notification state
+  const [notification, setNotification] = useState({ show: false, message: "" });
+  // keep timeout id to clear if needed
+  const [notifTimeout, setNotifTimeout] = useState(null);
+
   const navigate = useNavigate();
   const { addItem } = useCart();
 
@@ -76,6 +91,21 @@ export default function PharmacyWebPage() {
     }, 300);
     return () => clearTimeout(id);
   }, [searchRaw]);
+
+  // show toast helper
+  const showNotification = (msg, ms = 1800) => {
+    // clear previous timeout if any
+    if (notifTimeout) {
+      clearTimeout(notifTimeout);
+      setNotifTimeout(null);
+    }
+    setNotification({ show: true, message: msg });
+    const t = setTimeout(() => {
+      setNotification({ show: false, message: "" });
+      setNotifTimeout(null);
+    }, ms);
+    setNotifTimeout(t);
+  };
 
   // Data logic
   const categories = useMemo(() => ["All", ...Array.from(new Set(productsBase.map(p => p.category)))], []);
@@ -97,7 +127,8 @@ export default function PharmacyWebPage() {
   const goToProduct = (product) => navigate(`/product/${product.id}`);
   const handleAddToCart = (product) => {
     addItem(product, 1);
-    // optional: show toast here
+    // show notification
+    showNotification(`${product.name} added to cart`);
   };
 
   return (
@@ -189,6 +220,9 @@ export default function PharmacyWebPage() {
           )}
         </>
       )}
+
+      {/* Notification */}
+      <Notification message={notification.message} show={notification.show} />
     </div>
   );
 }
