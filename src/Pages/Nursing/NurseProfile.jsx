@@ -7,6 +7,7 @@ import {
   FaHeartbeat,
   FaCheckCircle,
   FaClock,
+  FaStethoscope,
   FaHeart,
   FaUserMd,
   FaEnvelope,
@@ -70,29 +71,23 @@ export default function NurseProfile() {
   };
 
   if (!nurse) {
-    return <div className="p-8">Nurse not found</div>;
+    return <div className="p-8 text-slate-700">Nurse not found</div>;
   }
 
   return (
-    <div className="w-full bg-[#F5F7FA] min-h-screen p-4 sm:p-8 overflow-x-hidden">
+    <div className="w-full bg-gradient-to-b from-blue-50/70 to-teal-50/70 min-h-screen p-4 sm:p-8 overflow-x-hidden text-slate-800">
       <ToastContainer position="top-right" autoClose={3000} />
 
       {/* Header */}
-      <div className="bg-[#EDF2FF] text-blue-900 px-4 sm:px-8 py-5 sm:py-6 rounded-xl mb-8">
-        <h1 className="text-2xl font-semibold">Profile</h1>
-        <p className="text-sm opacity-90">Shift Performance & Information</p>
+      <div className="bg-white px-4 sm:px-8 py-5 sm:py-6 rounded-xl mb-8 shadow border border-blue-100">
+        <h1 className="text-2xl font-semibold text-slate-800">Profile</h1>
+        <p className="text-sm text-slate-600 opacity-90">
+          Shift Performance & Information
+        </p>
       </div>
 
       {/* Profile Card */}
-      <div
-        className="
-        bg-white shadow-md rounded-xl p-4 sm:p-6 mb-8
-        flex flex-col sm:flex-row sm:items-center sm:justify-between
-        gap-4 sm:gap-6
-        transition-all duration-300
-        hover:shadow-xl hover:-translate-y-1
-      "
-      >
+      <div className="bg-white shadow-md rounded-xl p-4 sm:p-6 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
         <div className="flex items-center gap-4 sm:gap-6">
           {formData.imageUrl && (
             <img
@@ -102,9 +97,11 @@ export default function NurseProfile() {
             />
           )}
           <div>
-            <h2 className="text-xl font-semibold">{formData.name}</h2>
-            <p className="text-gray-500">{formData.specialty}</p>
-            <span className="inline-block mt-1 px-2 py-1 bg-[#E0E7FF] text-[#4C6FFF] text-xs rounded-full font-medium">
+            <h2 className="text-xl font-semibold text-slate-800">
+              {formData.name}
+            </h2>
+            <p className="text-slate-600">{formData.specialty}</p>
+            <span className="inline-block mt-1 px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full font-medium">
               ON SHIFT
             </span>
           </div>
@@ -112,7 +109,7 @@ export default function NurseProfile() {
 
         {!isEditing && (
           <button
-            className="px-4 py-2 bg-[#4C6FFF] text-white rounded hover:bg-[#3B50D5] transition-colors"
+            className="px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-900 transition-colors"
             onClick={() => setIsEditing(true)}
           >
             Edit Profile
@@ -126,31 +123,33 @@ export default function NurseProfile() {
           icon={<FaHeartbeat />}
           value="52"
           label="Today's Actions"
-          color="bg-[#E0E7FF] text-[#4C6FFF]"
+          color="bg-slate-100 text-slate-700"
         />
         <StatCard
           icon={<FaCheckCircle />}
           value="38"
           label="Tasks Completed"
-          color="bg-[#D0DBFF] text-[#3B50D5]"
+          color="bg-slate-200 text-slate-600"
         />
         <StatCard
           icon={<FaClock />}
           value="6.5h"
           label="Hours Worked"
-          color="bg-[#F0F3FF] text-[#4C6FFF]"
+          color="bg-slate-50 text-slate-700"
         />
         <StatCard
           icon={<FaHeart />}
           value="98%"
           label="Satisfaction Rate"
-          color="bg-[#E0E7FF] text-[#4C6FFF]"
+          color="bg-slate-100 text-slate-700"
         />
       </div>
 
       {/* Personal Info */}
       <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-        <h3 className="text-lg font-semibold mb-5">Personal Information</h3>
+        <h3 className="text-lg font-semibold mb-5 text-slate-800">
+          Personal Information
+        </h3>
 
         <InfoItem
           icon={<FaUserMd />}
@@ -189,7 +188,7 @@ export default function NurseProfile() {
           <div className="flex gap-3 mt-4">
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-[#4C6FFF] text-white rounded-lg hover:bg-[#3B50D5]"
+              className="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-900"
             >
               Save
             </button>
@@ -206,52 +205,39 @@ export default function NurseProfile() {
   );
 }
 
-/*  Components */
+/* Components */
 
 const StatCard = ({ icon, value, label, color }) => (
-  <div
-    className="
-    bg-white rounded-xl shadow-md p-5 flex items-center gap-4
-    transition-all duration-300
-    hover:shadow-xl hover:-translate-y-1
-  "
-  >
+  <div className="bg-white rounded-xl shadow-md p-5 flex items-center gap-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
     <div
       className={`w-12 h-12 flex items-center justify-center rounded-lg ${color}`}
     >
       {icon}
     </div>
     <div>
-      <h3 className="text-xl font-semibold">{value}</h3>
-      <p className="text-sm text-gray-500">{label}</p>
+      <h3 className="text-xl font-semibold text-slate-800">{value}</h3>
+      <p className="text-sm text-slate-600">{label}</p>
     </div>
   </div>
 );
 
 const InfoItem = ({ icon, title, value, isEditing, onChange, name }) => (
-  <div
-    className="
-    flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4
-    p-2 rounded-lg
-    transition-all duration-300
-    hover:bg-[#F0F3FF] hover:translate-x-1
-  "
-  >
-    <div className="w-10 h-10 rounded-lg bg-[#E0E7FF] text-[#4C6FFF] flex items-center justify-center">
+  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 p-2 rounded-lg transition-all duration-300 hover:bg-slate-50 hover:translate-x-1">
+    <div className="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
       {icon}
     </div>
     <div className="w-full">
-      <p className="text-sm text-gray-500">{title}</p>
+      <p className="text-sm text-slate-600">{title}</p>
       {isEditing ? (
         <input
           type="text"
           name={name}
           value={value || ""}
           onChange={onChange}
-          className="border rounded px-2 py-1 w-full focus:ring-2 focus:ring-[#4C6FFF]"
+          className="border rounded px-2 py-1 w-full focus:ring-2 focus:ring-slate-600"
         />
       ) : (
-        <p className="font-medium text-gray-800">{value}</p>
+        <p className="font-medium text-slate-800">{value}</p>
       )}
     </div>
   </div>

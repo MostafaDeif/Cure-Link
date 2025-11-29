@@ -18,7 +18,7 @@ import Nav from "./Components/Nav";
 import Home from "./Pages/Home";
 import About from "./Pages/About/Index";
 import Medicine from "./Pages/Medicine";
-import Nursing from "./Pages/Nurcing";
+import Nursing from "./Pages/Nursing/index.jsx";
 import User from "./Pages/User";
 import Admin from "./Pages/Admin";
 import Cart from "./Pages/Cart";
@@ -40,16 +40,16 @@ import Appoinment from "./Pages/DoctorProfile/Appoinment";
 import Patients from "./Pages/DoctorProfile/Patients";
 import Profile from "./Pages/DoctorProfile/Profile";
 
-import NurseLayout from "./Pages/Nurcing/NurseLayout";
-import NurseDashboard from "./Pages/Nurcing/NurseDashboard";
-import NursePatients from "./Pages/Nurcing/NursePatients";
-import NurseProfile from "./Pages/Nurcing/NurseProfile";
-import NurseAppointments from "./Pages/Nurcing/NurseAppointments";
+import NurseLayout from "./Pages/Nursing/NurseLayout.jsx";
+import NurseDashboard from "./Pages/Nursing/NurseDashboard.jsx";
+import NursePatients from "./Pages/Nursing/NursePatients.jsx";
+import NurseProfile from "./Pages/Nursing/NurseProfile.jsx";
+import NurseAppointments from "./Pages/Nursing/NurseAppointments.jsx";
 
-import FindNurse from "./Pages/Nurse/find_nurse";
+import FindNurse from "./Pages/Nurse/FindNurse.jsx";
 import nursesData from "./Pages/Nurse/nurseData";
 import BookNurse from "./Pages/Nurse/BookNurse";
-import AllNurses from "./Pages/Nurse/allNurses";
+import AllNurses from "./Pages/Nurse/AllNurses.jsx";
 
 import FindDoctors from "./Pages/Doctor/find_doctors";
 import DoctorProfile from "./Pages/Doctor/DoctorProfile";

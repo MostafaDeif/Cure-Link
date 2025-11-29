@@ -60,21 +60,21 @@ export default function NurseDashboard() {
   }, [nurse?.id]);
   if (!nurse)
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-slate-100 text-slate-700">
+      <div className="w-full h-screen flex items-center justify-center bg-blue-50 text-slate-800">
         Nurse not found
       </div>
     );
   const { todaysAppointments, tasksOverview } = dashboardData;
 
   return (
-    <div className="w-full min-h-screen bg-slate-50 p-4 sm:p-8 text-slate-800">
+    <div className="w-full min-h-screen bg-gradient-to-b from-blue-50/70 to-teal-50/70 p-4 sm:p-8 text-slate-800">
       <ToastContainer position="top-right" autoClose={3000} />
       {/* Header */}
-      <div className="bg-white px-4 sm:px-8 py-5 sm:py-6 rounded-xl mb-8 shadow border border-slate-200">
+      <div className="bg-white px-4 sm:px-8 py-5 sm:py-6 rounded-xl mb-8 shadow border border-blue-100">
         <h1 className="text-2xl font-semibold text-slate-800 truncate hover:text-slate-700 transition">
           {nurse.name}'s Dashboard
         </h1>
-        <p className="text-sm text-slate-500 truncate">Today's Overview</p>
+        <p className="text-sm text-slate-600 truncate">Today's Overview</p>
       </div>
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -95,29 +95,31 @@ export default function NurseDashboard() {
       {/* Main Content */}
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
         {/* Today's Schedule */}
-        <section className="bg-white p-6 rounded-xl shadow border border-slate-200 hover:shadow-lg transition-all">
-          <h2 className="text-xl font-semibold mb-4">Today's Schedule</h2>
-          <div className="divide-y divide-slate-200">
+        <section className="bg-white p-6 rounded-xl shadow border border-blue-100 hover:shadow-lg transition-all">
+          <h2 className="text-xl font-semibold mb-4 text-slate-800">
+            Today's Schedule
+          </h2>
+          <div className="divide-y divide-blue-100">
             {todaysAppointments.length === 0 && (
-              <p className="text-slate-500 text-sm">
+              <p className="text-slate-600 text-sm">
                 No appointments for today.
               </p>
             )}
             {todaysAppointments.map((item, idx) => (
               <div
                 key={idx}
-                className="py-4 flex items-center justify-between hover:bg-slate-50 rounded-lg transition cursor-pointer px-2"
+                className="py-4 flex items-center justify-between hover:bg-blue-50 rounded-lg transition cursor-pointer px-2"
               >
                 <div>
                   <p className="font-medium">{item.patientName}</p>
                   <p className="text-sm text-slate-600">{item.task}</p>
-                  <p className="text-xs mt-1 text-slate-500">
+                  <p className="text-xs mt-1 text-slate-400">
                     Status: {item.status}
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="font-medium">{item.time}</p>
-                  <span className="text-xs px-3 py-1 rounded-full bg-sky-100 text-sky-700">
+                  <span className="text-xs px-3 py-1 rounded-full bg-blue-100 text-slate-700">
                     {item.type}
                   </span>
                 </div>
@@ -127,8 +129,10 @@ export default function NurseDashboard() {
         </section>
 
         {/* Tasks Overview */}
-        <aside className="bg-white p-6 rounded-xl shadow border border-slate-200 hover:shadow-lg transition-all">
-          <h3 className="text-lg font-semibold mb-4">Tasks Overview</h3>
+        <aside className="bg-white p-6 rounded-xl shadow border border-blue-100 hover:shadow-lg transition-all">
+          <h3 className="text-lg font-semibold mb-4 text-slate-800">
+            Tasks Overview
+          </h3>
           <div className="space-y-4">
             {tasksOverview.map((task, idx) => {
               const percent = (task.completed / task.total) * 100;
@@ -138,17 +142,17 @@ export default function NurseDashboard() {
                     <div className="flex items-center gap-2">
                       <FontAwesomeIcon
                         icon={task.icon}
-                        className="text-sky-600"
+                        className="text-slate-600"
                       />
                       <span className="text-sm font-medium">{task.title}</span>
                     </div>
-                    <span className="text-sm">
+                    <span className="text-sm text-slate-700">
                       {task.completed}/{task.total}
                     </span>
                   </div>
-                  <div className="w-full bg-slate-200 rounded-full h-2">
+                  <div className="w-full bg-blue-100 rounded-full h-2">
                     <div
-                      className="h-2 rounded-full bg-sky-600"
+                      className="h-2 rounded-full bg-slate-600"
                       style={{ width: `${percent}%` }}
                     />
                   </div>
@@ -161,14 +165,15 @@ export default function NurseDashboard() {
     </div>
   );
 }
+
 const StatCard = ({ title, value, icon }) => (
-  <div className="bg-white rounded-xl shadow border border-slate-200 p-4 flex items-center gap-4 hover:shadow-lg transition-all">
-    <div className="p-3 rounded-lg bg-sky-100">
-      <FontAwesomeIcon icon={icon} className="text-sky-600 text-xl" />
+  <div className="bg-white rounded-xl shadow border border-blue-100 p-4 flex items-center gap-4 hover:shadow-lg transition-all">
+    <div className="p-3 rounded-lg bg-blue-100">
+      <FontAwesomeIcon icon={icon} className="text-slate-600 text-xl" />
     </div>
     <div className="flex-1">
       <p className="text-sm text-slate-600">{title}</p>
-      <h4 className="text-2xl font-semibold mt-1">{value}</h4>
+      <h4 className="text-2xl font-semibold mt-1 text-slate-800">{value}</h4>
     </div>
   </div>
 );

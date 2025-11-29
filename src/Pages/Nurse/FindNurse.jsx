@@ -5,14 +5,14 @@ import {
   Stethoscope,
   Thermometer,
   Smile,
-  Activity,
   Clipboard,
 } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import nursesData from "./nurseData";
-import nursepicture from "../../assets/nurse_p.png"
+import nursepicture from "../../assets/nurse_p.png";
+import "./FindNurse.css";
 
 const CategoryIcon = ({ label, Icon, selected, onClick }) => (
   <button
@@ -47,7 +47,9 @@ const NurseCard = ({ name, specialty, gender, rating, imageUrl, onBook }) => (
     </div>
     <div className="p-5 flex flex-col justify-between flex-1">
       <div>
-        <h3 className="font-semibold text-gray-900 text-lg md:text-xl">{name}</h3>
+        <h3 className="font-semibold text-gray-900 text-lg md:text-xl">
+          {name}
+        </h3>
         <p className="text-gray-600 text-sm mt-1">
           {specialty} • {gender}
         </p>
@@ -82,7 +84,6 @@ export default function FindNurse() {
     { label: "Postnatal Care", Icon: Smile },
     { label: "Elderly Care", Icon: Users },
     { label: "Wound Dressing", Icon: Clipboard },
-    { label: "BP & Temp", Icon: Activity },
   ];
 
   const genders = [
@@ -113,8 +114,7 @@ export default function FindNurse() {
       selectedGender === "All" || n.gender === selectedGender;
     const matchesCategory =
       selectedCategory === "All" ||
-      n.specialty.toLowerCase().includes(selectedCategory.toLowerCase()) ||
-      selectedCategory.toLowerCase().includes(n.specialty.toLowerCase());
+      n.specialty.toLowerCase().includes(selectedCategory.toLowerCase());
     return matchesSearch && matchesGender && matchesCategory;
   });
 
@@ -123,8 +123,8 @@ export default function FindNurse() {
     .slice(0, 5);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 via-gray-50 to-gray-100">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14">
+    <div className="min-h-screen w-full bg-blue-50">
+      <div className="w-full px-4 lg:px-10 py-14">
         <header className="mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 text-center md:text-left mb-4">
             Your <span className="text-blue-600">Trusted Nurses</span>
@@ -132,16 +132,16 @@ export default function FindNurse() {
         </header>
 
         {/* Search + Gender Buttons */}
-        <div className="bg-white/90 rounded-3xl shadow-lg p-6 mb-12 backdrop-blur-sm">
+        <div className="bg-white/90 rounded-3xl shadow-lg p-6 mb-12 backdrop-blur-sm w-full">
           <div className="flex flex-col gap-4">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search nurses by name, specialty or city..."
+              placeholder="Search nurses by name, city..."
               className="rounded-2xl border border-gray-300 p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 transition shadow-sm w-full bg-white"
             />
-            <div className="flex justify-between gap-2 flex-wrap">
+            <div className="flex justify-between gap-2 flex-wrap w-full">
               {genders.map((g) => {
                 const Icon = g.icon;
                 const isFn = typeof Icon === "function";
@@ -170,8 +170,8 @@ export default function FindNurse() {
         </div>
 
         {/* Categories */}
-        <section className="mb-12">
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-6">
+        <section className="mb-12 w-full">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 w-full">
             {categories.map((cat) => (
               <CategoryIcon
                 key={cat.label}
@@ -185,27 +185,28 @@ export default function FindNurse() {
         </section>
 
         {/* Highlight Section */}
-        <section className="mb-16 bg-blue-50/70 rounded-3xl p-8 shadow-lg flex flex-col md:flex-row items-center gap-6">
-          <div className="md:flex-1 text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Early Protection for Your Family Health
-            </h2>
-            <p className="text-gray-700 mt-4 text-lg">
-              Book a nurse now for quick and trusted care at home.
-            </p>
+        <section className="mb-16 bg-blue-50/70 rounded-3xl p-8 shadow-lg w-full flex flex-wrap items-center gap-6">
+          <div className="flex-1 min-w-[200px] flex justify-center sm:justify-start">
+            <div className="flex flex-col justify-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                Early Protection for Your Family Health
+              </h2>
+              <p className="text-gray-700 mt-4 text-lg">
+                Book a nurse now for quick and trusted care at home.
+              </p>
+            </div>
           </div>
-          <div className="md:flex-1">
+          <div className="flex-1 min-w-[200px] max-w-[400px] flex justify-center sm:justify-end">
             <img
               src={nursepicture}
               alt="highlight"
-              className="w-full h-64 object-cover object-top rounded-3xl"
+              className="w-full h-auto object-cover rounded-3xl"
             />
           </div>
         </section>
-
         {/* Top Nurses Slider */}
-        <section className="mb-16">
-          <div className="flex items-center justify-between mb-6">
+        <section className="mb-16 w-full">
+          <div className="flex items-center justify-between mb-6 w-full">
             <h2 className="text-3xl font-semibold text-gray-900">Top Nurses</h2>
             <button
               onClick={() => navigate("/all-nurses")}
@@ -214,8 +215,7 @@ export default function FindNurse() {
               Show All
             </button>
           </div>
-
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden w-full">
             <div className="flex gap-6 whitespace-nowrap animate-slide">
               {[...topNurses, ...topNurses].map((n, index) => (
                 <div
@@ -232,21 +232,6 @@ export default function FindNurse() {
               ))}
             </div>
           </div>
-
-          <style>{`
-            @keyframes slide {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
-            }
-            .animate-slide {
-              animation: slide 10s linear infinite;
-            }
-            @media (min-width: 768px) {
-              .animate-slide {
-                animation: slide 12s linear infinite;
-              }
-            }
-          `}</style>
         </section>
       </div>
     </div>

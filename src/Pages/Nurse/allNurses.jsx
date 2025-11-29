@@ -14,7 +14,7 @@ const NurseCard = ({ nurse, onClick }) => (
       <img
         src={nurse.imageUrl}
         alt={nurse.name}
-        className="w-full h-full object-cover rounded-lg shadow-md ring-1 ring-blue-100"
+        className="w-full h-44 sm:h-48 md:h-44 lg:h-auto object-cover object-top rounded-lg shadow-md ring-1 ring-blue-100"
         onError={(e) => {
           e.target.onerror = null;
           e.target.src =

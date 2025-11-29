@@ -25,9 +25,10 @@ export default function NurseLayout() {
       {/* Main content */}
       <main
         className={`
-          flex-1 transition-transform duration-300 min-h-screen px-4 sm:px-8
-          ${open ? "translate-x-64" : "translate-x-0"}
-        `}
+    flex-1 transition-transform duration-300 min-h-screen px-4 sm:px-8
+    ${open ? "translate-x-64" : "translate-x-0"}
+    bg-gradient-to-b from-blue-50/70 to-teal-50/70 text-blue-800
+  `}
       >
         {/* Open Sidebar Button */}
         {!open && (
