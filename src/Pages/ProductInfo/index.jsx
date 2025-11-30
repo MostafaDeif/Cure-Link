@@ -44,11 +44,18 @@ export default function ProductInfo() {
 
   return (
     <div className="pi-wrapper">
+      {/* ✅ زر الرجوع */}
+      <button className="pi-back-btn" onClick={() => navigate("/pharmacy")}>
+        ← Back
+      </button>
+
       <div className="pi-card">
+        {/* LEFT SIDE */}
         <div className="pi-left">
           <div className="pi-main-img">
             <img src={mainImg} alt={product.name} />
           </div>
+
           <div className="pi-thumbs">
             {(product.images || imagesFallback).map((img, index) => (
               <button
@@ -62,6 +69,7 @@ export default function ProductInfo() {
           </div>
         </div>
 
+        {/* RIGHT SIDE */}
         <div className="pi-right">
           <div className="pi-header">
             <h4 className="category">{product.category}</h4>
@@ -100,7 +108,10 @@ export default function ProductInfo() {
 
           <div className="description">
             <h3>Description</h3>
-            <p>{product.description || `Details: ${product.details}. Price: $${product.price}`}</p>
+            <p>
+              {product.description ||
+                `Details: ${product.details}. Price: $${product.price}`}
+            </p>
           </div>
 
           <div className="cta-row">

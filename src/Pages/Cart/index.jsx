@@ -49,9 +49,28 @@ export default function Cart() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [address, setAddress] = useState("");
   const [coords, setCoords] = useState([30.0444, 31.2357]); // Default Cairo
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // New state for custom remove confirmation modal
+  const [confirmRemove, setConfirmRemove] = useState({ show: false, itemId: null, itemName: "" });
 
   const increase = (id, qty) => updateQuantity(id, qty + 1);
   const decrease = (id, qty) => updateQuantity(id, Math.max(1, qty - 1));
+
+  // Trigger modal instead of window.confirm
+  const handleRemove = (id, name) => {
+    setConfirmRemove({ show: true, itemId: id, itemName: name });
+  };
+
+  const confirmRemoveItem = () => {
+    removeItem(confirmRemove.itemId);
+    setConfirmRemove({ show: false, itemId: null, itemName: "" });
+  };
+
+  const cancelRemove = () => {
+    setConfirmRemove({ show: false, itemId: null, itemName: "" });
+  };
 
   const onCheckout = () => {
     if (!items.length) return;
@@ -59,8 +78,8 @@ export default function Cart() {
   };
 
   const confirmOrder = () => {
-    if (!address || !coords) {
-      alert("Please choose your delivery location");
+    if (!name || !phone || !address || !coords) {
+      alert("Please fill in all required fields");
       return;
     }
 
@@ -68,6 +87,8 @@ export default function Cart() {
     setShowCheckout(false);
     setAddress("");
     setCoords([30.0444, 31.2357]);
+    setName("");
+    setPhone("");
 
     alert("Order placed successfully!");
   };
@@ -136,7 +157,11 @@ export default function Cart() {
                   ${(it.qty * Number(it.price)).toFixed(2)}
                 </div>
 
-                <button onClick={() => removeItem(it.id)} style={{ color: "red" }}>
+                {/* REMOVE BUTTON */}
+                <button
+                  onClick={() => handleRemove(it.id, it.name)}
+                  style={{ color: "red" }}
+                >
                   Remove
                 </button>
               </div>
@@ -197,6 +222,32 @@ export default function Cart() {
               <h3>Checkout — Delivery Details</h3>
 
               <input
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: 8,
+                  marginBottom: 12,
+                  borderRadius: 4,
+                  border: "1px solid #ccc",
+                }}
+              />
+
+              <input
+                placeholder="Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: 8,
+                  marginBottom: 12,
+                  borderRadius: 4,
+                  border: "1px solid #ccc",
+                }}
+              />
+
+              <input
                 placeholder="Type your address..."
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -233,6 +284,54 @@ export default function Cart() {
             </div>
           )}
         </>
+      )}
+
+      {/* CUSTOM REMOVE CONFIRMATION MODAL */}
+      {confirmRemove.show && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              padding: 24,
+              borderRadius: 8,
+              textAlign: "center",
+              width: "90%",
+              maxWidth: 400,
+              boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+            }}
+          >
+            <p style={{ marginBottom: 16 }}>
+              Are you sure you want to remove "{confirmRemove.itemName}" from the cart?
+            </p>
+            <div style={{ display: "flex", justifyContent: "space-around", gap: 12 }}>
+              <button
+                onClick={cancelRemove}
+                style={{ padding: "8px 16px", borderRadius: 4, border: "1px solid #ccc" }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmRemoveItem}
+                style={{ padding: "8px 16px", borderRadius: 4, background: "red", color: "#fff" }}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
