@@ -44,8 +44,8 @@ export default function ProductInfo() {
 
   return (
     <div className="pi-wrapper">
-      {/* ✅ زر الرجوع */}
-      <button className="pi-back-btn" onClick={() => navigate("/pharmacy")}>
+      {/*  زر الرجوع */}
+      <button className="pi-back-btn" onClick={() => navigate(-1)}>
         ← Back
       </button>
 

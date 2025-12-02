@@ -16,7 +16,6 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Error from "./Pages/Error";
 import Nav from "./Components/Nav";
-import PharmacyNav from "./Components/PharmacyNav"; // <-- new
 import Home from "./Pages/Home";
 import About from "./Pages/About/Index";
 import Medicine from "./Pages/Medicine";
@@ -60,8 +59,7 @@ import AllDoctors from "./Pages/Doctor/AllDoctors";
 
 import Footer from "./Components/Footer/Footer";
 
-//Cart Context
-import { CartProvider } from "./Context/CartContext";
+
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -96,11 +94,11 @@ const Layout = ({ children }) => {
   const showNavbar = showNavbarOn.includes(location.pathname);
 
 
-  const isPharmacyPath = location.pathname.startsWith("/pharmacy");
+  // const isPharmacyPath = location.pathname.startsWith("/pharmacy");
 
   return (
     <>
-      {showNavbar && (isPharmacyPath ? <PharmacyNav /> : <Nav />)}
+      {showNavbar &&  <Nav />}
       {children}
       {showFooter && <Footer />}
     </>
@@ -155,7 +153,7 @@ const App = () => {
 
   return (
     <Router>
-      <CartProvider>
+      
         <ScrollToTop />
         <Layout>
           <Routes>
@@ -287,7 +285,7 @@ const App = () => {
             <Route path="*" element={<Error />} />
           </Routes>
         </Layout>
-      </CartProvider>
+      
     </Router>
   );
 };
