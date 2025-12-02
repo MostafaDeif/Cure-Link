@@ -21,7 +21,7 @@ import Home from "./Pages/Home";
 import About from "./Pages/About/Index";
 import Medicine from "./Pages/Medicine";
 import Nursing from "./Pages/Nursing/index.jsx";
-import User from "./Pages/User";
+import User from "./Pages/User/Userprofile.jsx";
 import Admin from "./Pages/Admin";
 import Cart from "./Pages/Cart";
 import ProductInfo from "./Pages/ProductInfo";
@@ -60,7 +60,7 @@ import AllDoctors from "./Pages/Doctor/AllDoctors";
 
 import Footer from "./Components/Footer/Footer";
 
-// ⭐ استيراد الـ Cart Context
+//Cart Context
 import { CartProvider } from "./Context/CartContext";
 
 const Layout = ({ children }) => {
@@ -166,7 +166,7 @@ const App = () => {
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/register" element={<Register />} />
 
-            {/* ⭐ صفحة المنتج دايناميك */}
+            {/*  صفحة المنتج دايناميك */}
             <Route path="/product/:id" element={<ProductInfo />} />
 
             <Route path="/cart" element={<Cart />} />
@@ -178,9 +178,9 @@ const App = () => {
             <Route
               path="/user"
               element={
-                <ProtectedRoute>
+               
                   <User />
-                </ProtectedRoute>
+               
               }
             />
             <Route
