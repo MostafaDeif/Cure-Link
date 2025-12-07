@@ -4,6 +4,7 @@ import logo from "../assets/JustLogo.jpg";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../Context/LanguageContext.jsx";
 import { ShoppingCart } from "lucide-react";
+import { useCart } from "../Context/CartContext"; // ← تم إضافة هذا
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -15,6 +16,10 @@ export default function Nav() {
       return null;
     }
   });
+
+  // Cart items count
+  const { getTotalItems } = useCart(); // ← تم إضافة هذا
+  const totalItems = getTotalItems(); // ← تم إضافة هذا
 
   useEffect(() => {
     const onStorage = (e) => {
@@ -101,39 +106,38 @@ export default function Nav() {
         )}
 
         {/* Cart icon on desktop */}
-        <button
-          onClick={() => navigate("/cart")}
-          aria-label="Go to cart"
-          className="ml-2 p-2 rounded-full hover:bg-gray-100 transition"
-          type="button"
-        >
-          <ShoppingCart size={20} />
-        </button>
+        {totalItems > 0 && (
+          <button
+            onClick={() => navigate("/cart")}
+            aria-label="Go to cart"
+            className="ml-2 p-2 rounded-full hover:bg-gray-100 transition"
+            type="button"
+          >
+            <ShoppingCart size={20} />
+          </button>
+        )}
       </div>
 
       {/* Mobile Menu Button */}
       <div className="flex items-center gap-3 sm:hidden">
-        <button
-          onClick={() => navigate("/cart")}
-          aria-label="Go to cart"
-          className="p-2 rounded-full hover:bg-gray-100 transition"
-          type="button"
-        >
-          <ShoppingCart size={18} />
-        </button>
+
+        {totalItems > 0 && (
+          <button
+            onClick={() => navigate("/cart")}
+            aria-label="Go to cart"
+            className="p-2 rounded-full hover:bg-gray-100 transition"
+            type="button"
+          >
+            <ShoppingCart size={18} />
+          </button>
+        )}
 
         <button
           onClick={() => setOpen(!open)}
           aria-label="Menu"
           className="p-2"
         >
-          <svg
-            width="21"
-            height="15"
-            viewBox="0 0 21 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg width="21" height="15" viewBox="0 0 21 15" fill="none">
             <rect width="21" height="1.5" rx=".75" fill="#426287" />
             <rect x="8" y="6" width="13" height="1.5" rx=".75" fill="#426287" />
             <rect x="6" y="13" width="15" height="1.5" rx=".75" fill="#426287" />
@@ -147,21 +151,10 @@ export default function Nav() {
           open ? "flex" : "hidden"
         } absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden z-[9999]`}
       >
-        <Link to="/" className="block" onClick={() => setOpen(false)}>
-          {t("nav.home")}
-        </Link>
-
-        <Link to="/about" className="block" onClick={() => setOpen(false)}>
-          {t("nav.about")}
-        </Link>
-
-        <Link to="/services" className="block" onClick={() => setOpen(false)}>
-          {t("nav.services")}
-        </Link>
-
-        <Link to="/articles" className="block" onClick={() => setOpen(false)}>
-          {t("nav.articles")}
-        </Link>
+        <Link to="/" onClick={() => setOpen(false)}>{t("nav.home")}</Link>
+        <Link to="/about" onClick={() => setOpen(false)}>{t("nav.about")}</Link>
+        <Link to="/services" onClick={() => setOpen(false)}>{t("nav.services")}</Link>
+        <Link to="/articles" onClick={() => setOpen(false)}>{t("nav.articles")}</Link>
 
         <div className="w-full flex items-center justify-between mt-2">
           <button
@@ -174,20 +167,22 @@ export default function Nav() {
             {language === "en" ? "ع" : "EN"}
           </button>
 
-          <button
-            onClick={() => {
-              setOpen(false);
-              navigate("/cart");
-            }}
-            aria-label="Go to cart"
-            className="px-3 py-2 rounded-md hover:bg-gray-100 transition"
-            type="button"
-          >
-            <span className="inline-flex items-center gap-2">
-              <ShoppingCart size={16} />
-              <span>Cart</span>
-            </span>
-          </button>
+          {totalItems > 0 && (
+            <button
+              onClick={() => {
+                setOpen(false);
+                navigate("/cart");
+              }}
+              aria-label="Go to cart"
+              className="px-3 py-2 rounded-md hover:bg-gray-100 transition"
+              type="button"
+            >
+              <span className="inline-flex items-center gap-2">
+                <ShoppingCart size={16} />
+                <span>Cart</span>
+              </span>
+            </button>
+          )}
         </div>
 
         {user ? (
