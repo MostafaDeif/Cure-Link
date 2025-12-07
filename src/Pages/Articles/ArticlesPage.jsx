@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import DoctorArticles from "../Components/articles/DoctorArticles";
-import PharmacistArticles from "../Components/articles/PharmacistArticles";
-import ClientArticles from "../Components/articles/ClientArticles";
-import { useRole } from "../Context/RoleContext";
+import DoctorArticles from "../../Components/articles/DoctorArticles";
+import PharmacistArticles from "../../Components/articles/PharmacistArticles";
+import ClientArticles from "../../Components/articles/ClientArticles";
+import { useRole } from "../../Context/RoleContext";
 
 // Banner images with text - يمكن استبدالها بصور حقيقية
 const bannerData = [

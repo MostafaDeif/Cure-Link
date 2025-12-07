@@ -1,4 +1,3 @@
-// src/Components/PharmacyNav.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/JustLogo.jpg";
@@ -50,7 +49,7 @@ export default function Nav() {
   const toggleLang = () => setLanguage(language === "en" ? "ar" : "en");
 
   return (
-    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
+    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all z-[9999]">
       <Link to="/" className="flex items-center gap-3">
         <img
           src={logo}
@@ -114,7 +113,6 @@ export default function Nav() {
 
       {/* Mobile Menu Button */}
       <div className="flex items-center gap-3 sm:hidden">
-        {/* cart icon on mobile header */}
         <button
           onClick={() => navigate("/cart")}
           aria-label="Go to cart"
@@ -125,11 +123,10 @@ export default function Nav() {
         </button>
 
         <button
-          onClick={() => (open ? setOpen(false) : setOpen(true))}
+          onClick={() => setOpen(!open)}
           aria-label="Menu"
           className="p-2"
         >
-          {/* Menu Icon SVG */}
           <svg
             width="21"
             height="15"
@@ -148,30 +145,35 @@ export default function Nav() {
       <div
         className={`${
           open ? "flex" : "hidden"
-        } absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
+        } absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden z-[9999]`}
       >
-        <Link to="/" className="block">
+        <Link to="/" className="block" onClick={() => setOpen(false)}>
           {t("nav.home")}
         </Link>
-        <Link to="/about" className="block">
+
+        <Link to="/about" className="block" onClick={() => setOpen(false)}>
           {t("nav.about")}
         </Link>
-        <Link to="/services" className="block">
+
+        <Link to="/services" className="block" onClick={() => setOpen(false)}>
           {t("nav.services")}
         </Link>
-        <Link to="/articles" className="block">
+
+        <Link to="/articles" className="block" onClick={() => setOpen(false)}>
           {t("nav.articles")}
         </Link>
 
         <div className="w-full flex items-center justify-between mt-2">
           <button
-            onClick={toggleLang}
+            onClick={() => {
+              toggleLang();
+              setOpen(false);
+            }}
             className="px-3 py-2 text-sm border rounded"
           >
             {language === "en" ? "ع" : "EN"}
           </button>
 
-          {/* small cart button inside mobile dropdown too */}
           <button
             onClick={() => {
               setOpen(false);
@@ -189,13 +191,18 @@ export default function Nav() {
         </div>
 
         {user ? (
-          <Link to="/user" className="block px-3 py-2 rounded">
+          <Link
+            to="/user"
+            className="block px-3 py-2 rounded"
+            onClick={() => setOpen(false)}
+          >
             {user.name || "Profile"}
           </Link>
         ) : (
           <Link
             to="/login"
             className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm"
+            onClick={() => setOpen(false)}
           >
             Login
           </Link>

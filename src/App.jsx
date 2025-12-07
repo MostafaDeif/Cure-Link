@@ -11,7 +11,7 @@ import "./App.css";
 
 import ScrollToTop from "./Components/ScrollToTop";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import ArticlesPage from "./Pages/ArticlesPage.jsx";
+import ArticlesPage from "./Pages/Articles/ArticlesPage.jsx";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Error from "./Pages/Error";
