@@ -1,0 +1,20 @@
+/* الحركة الأساسية */
+.animate-slide {
+  display: flex;
+  animation: slide 12s linear infinite;
+}
+
+/* وقّف الحركة عند الـ hover */
+.animate-slide:hover {
+  animation-play-state: paused;
+}
+
+/* Keyframes لو مش موجودة */
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
