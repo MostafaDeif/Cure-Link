@@ -19,7 +19,8 @@ const bookingSchema = z.object({
 export default function NurseProfileUser({ nursesData }) {
   const navigate = useNavigate();
   const { nurseName } = useParams();
-  const nurse = nursesData.find((n) => n.name === nurseName);
+  const decodedName = nurseName ? decodeURIComponent(nurseName) : nurseName;
+  const nurse = nursesData.find((n) => n.nameEn === decodedName || n.name === decodedName);
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
