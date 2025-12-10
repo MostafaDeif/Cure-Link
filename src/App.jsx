@@ -76,6 +76,7 @@ const Layout = ({ children }) => {
     "/find_doctor",
     "/find_nurse",
     "/articles",
+    "/Articles",
   ];
 
   const showFooterOn = [
