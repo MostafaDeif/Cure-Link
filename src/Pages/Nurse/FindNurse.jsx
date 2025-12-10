@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../../Context/LanguageContext.jsx";
 import "./index.css";
 import {
   Users,
@@ -18,26 +20,26 @@ import "./FindNurse.css";
 const CategoryIcon = ({ label, Icon, selected, onClick }) => (
   <button
     onClick={onClick}
-    className={`flex flex-col items-center gap-2 p-3 rounded-2xl transition-all duration-300 text-xs font-medium
+    className={`flex flex-col items-center gap-1 sm:gap-2 p-2 sm:p-3 rounded-lg sm:rounded-2xl transition-all duration-300 text-xs font-medium
       ${
         selected
-          ? "bg-blue-200 text-blue-800 shadow-lg scale-105"
-          : "bg-white/90 text-gray-700 hover:bg-blue-100 hover:text-blue-700 hover:scale-105"
+          ? "bg-blue-200 text-blue-800 shadow-lg"
+          : "bg-white/90 text-gray-700 hover:bg-blue-100 hover:text-blue-700"
       } w-full`}
     aria-pressed={selected}
   >
-    {Icon && <Icon className="h-8 w-8 transition-colors duration-200" />}
-    <span className="truncate">{label}</span>
+    {Icon && <Icon className="h-5 sm:h-8 w-5 sm:w-8 transition-colors duration-200" />}
+    <span className="truncate text-xs sm:text-xs">{label}</span>
   </button>
 );
 
-const NurseCard = ({ name, specialty, gender, rating, imageUrl, onBook }) => (
+const NurseCard = ({ name, nameEn, specialty, specialtyAr, gender, rating, imageUrl, onBook, t, language }) => (
   <article className="rounded-3xl overflow-hidden bg-white/90 backdrop-blur-md shadow-md flex flex-col transition-transform duration-300 hover:shadow-2xl hover:-translate-y-1">
-    <div className="h-44 w-full overflow-hidden rounded-t-3xl relative">
+    <div className="h-60 w-full overflow-hidden rounded-t-3xl relative">
       <img
         src={imageUrl}
-        alt={name}
-        className="w-full h-full object-cover object-top transition-transform duration-500"
+        alt={language === 'ar' ? name : nameEn}
+        className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
         onError={(e) => {
           e.target.onerror = null;
           e.target.src =
@@ -49,24 +51,24 @@ const NurseCard = ({ name, specialty, gender, rating, imageUrl, onBook }) => (
     <div className="p-5 flex flex-col justify-between flex-1">
       <div>
         <h3 className="font-semibold text-gray-900 text-lg md:text-xl">
-          {name}
+          {language === 'ar' ? name : nameEn}
         </h3>
         <p className="text-gray-600 text-sm mt-1">
-          {specialty} • {gender}
+          {language === 'ar' ? specialtyAr : specialty} • {gender}
         </p>
         <div className="mt-3 text-yellow-500 font-medium flex items-center gap-1 cursor-pointer transition transform hover:scale-110">
           <FontAwesomeIcon
             icon={faStar}
             className="text-yellow-400 transition-colors duration-300 hover:text-yellow-500"
           />{" "}
-          {rating}
+          <span>{rating}</span>
         </div>
       </div>
       <button
         onClick={onBook}
         className="mt-4 w-full text-sm md:text-base px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 transition transform duration-200 shadow-md"
       >
-        Book
+        {t("findNurse.bookButton")}
       </button>
     </div>
   </article>
@@ -74,23 +76,33 @@ const NurseCard = ({ name, specialty, gender, rating, imageUrl, onBook }) => (
 
 export default function FindNurse() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { language } = useContext(LanguageContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedGender, setSelectedGender] = useState("All");
 
+  // Reset filters to "All" when language changes
+  useEffect(() => {
+    setSelectedCategory("All");
+    setSelectedGender("All");
+    setSearchTerm("");
+  }, [language]);
+
   const categories = [
-    { label: "All", Icon: Users },
-    { label: "Home Injection", Icon: Stethoscope },
-    { label: "Blood Pressure", Icon: Thermometer },
-    { label: "Postnatal Care", Icon: Smile },
-    { label: "Elderly Care", Icon: Users },
-    { label: "Wound Dressing", Icon: Clipboard },
+    { label: t("findNurse.categories.all"), key: "All", Icon: Users },
+    { label: t("findNurse.categories.homeInjection"), key: "Home Injection", Icon: Stethoscope },
+    { label: t("findNurse.categories.bloodPressure"), key: "Blood Pressure", Icon: Thermometer },
+    { label: t("findNurse.categories.postnatalCare"), key: "Postnatal Care", Icon: Smile },
+    { label: t("findNurse.categories.elderlyCare"), key: "Elderly Care", Icon: Users },
+    { label: t("findNurse.categories.woundDressing"), key: "Wound Dressing", Icon: Clipboard },
   ];
 
   const genders = [
-    { label: "All", icon: Users },
+    { label: t("findNurse.allGender"), key: "All", icon: Users },
     {
-      label: "Male",
+      label: t("findNurse.male"),
+      key: "Male",
       icon: () => (
         <FontAwesomeIcon
           icon={faUserDoctor}
@@ -99,7 +111,8 @@ export default function FindNurse() {
       ),
     },
     {
-      label: "Female",
+      label: t("findNurse.female"),
+      key: "Female",
       icon: () => (
         <FontAwesomeIcon icon={faUserNurse} className="w-5 h-5 text-gray-700" />
       ),
@@ -109,7 +122,7 @@ export default function FindNurse() {
   const filteredNurses = nursesData.filter((n) => {
     const term = searchTerm.trim().toLowerCase();
     const matchesSearch =
-      n.name.toLowerCase().includes(term) ||
+      n.nameEn.toLowerCase().includes(term) ||
       n.distance.toLowerCase().includes(term);
     const matchesGender =
       selectedGender === "All" || n.gender === selectedGender;
@@ -119,28 +132,24 @@ export default function FindNurse() {
     return matchesSearch && matchesGender && matchesCategory;
   });
 
-  const topNurses = [...filteredNurses]
-    .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
-    .slice(0, 5);
-
   return (
-    <div className="min-h-screen w-full bg-blue-50">
-      <div className="w-full px-4 lg:px-10 py-14">
-        <header className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 text-center md:text-left mb-4">
-            Your <span className="text-blue-600">Trusted Nurses</span>
+    <div className="min-h-screen w-full bg-blue-50" dir={language === "ar" ? "rtl" : "ltr"}>
+      <div className="w-full px-4 sm:px-6 lg:px-10 py-8 sm:py-12 lg:py-14">
+        <header className="mb-8 sm:mb-10 lg:mb-12">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 text-center md:text-left mb-2 sm:mb-4">
+            {t("findNurse.title")}
           </h1>
         </header>
 
         {/* Search + Gender Buttons */}
-        <div className="bg-white/90 rounded-3xl shadow-lg p-6 mb-12 backdrop-blur-sm w-full">
-          <div className="flex flex-col gap-4">
+        <div className="bg-white/90 rounded-2xl sm:rounded-3xl shadow-lg p-4 sm:p-6 mb-8 sm:mb-10 lg:mb-12 backdrop-blur-sm w-full">
+          <div className="flex flex-col gap-3 sm:gap-4">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search nurses by name, city..."
-              className="rounded-2xl border border-gray-300 p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 transition shadow-sm w-full bg-white"
+              placeholder={t("findNurse.searchPlaceholder")}
+              className="rounded-xl sm:rounded-2xl border border-gray-300 p-3 sm:p-4 focus:outline-none focus:ring-2 focus:ring-blue-400 transition shadow-sm w-full bg-white text-sm sm:text-base"
             />
             <div className="flex justify-between gap-2 flex-wrap w-full">
               {genders.map((g) => {
@@ -148,19 +157,19 @@ export default function FindNurse() {
                 const isFn = typeof Icon === "function";
                 return (
                   <button
-                    key={g.label}
-                    onClick={() => setSelectedGender(g.label)}
-                    className={`flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-2xl transition text-sm font-medium
+                    key={g.key}
+                    onClick={() => setSelectedGender(g.key)}
+                    className={`flex-1 min-w-fit flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 rounded-lg sm:rounded-2xl transition text-xs sm:text-sm font-medium
                       ${
-                        selectedGender === g.label
-                          ? "bg-blue-200 text-blue-800 shadow-lg scale-105"
-                          : "bg-white/90 text-gray-700 border border-transparent hover:bg-blue-100 hover:text-blue-700 hover:scale-105"
+                        selectedGender === g.key
+                          ? "bg-blue-200 text-blue-800 shadow-lg"
+                          : "bg-white/90 text-gray-700 border border-transparent hover:bg-blue-100 hover:text-blue-700"
                       }`}
                   >
                     {isFn ? (
                       <Icon />
                     ) : (
-                      <Icon className="w-5 h-5 text-gray-600" />
+                      <Icon className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
                     )}
                     <span>{g.label}</span>
                   </button>
@@ -171,68 +180,74 @@ export default function FindNurse() {
         </div>
 
         {/* Categories */}
-        <section className="mb-12 w-full">
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 w-full">
+        <section className="mb-8 sm:mb-10 lg:mb-12 w-full">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 md:gap-6 w-full">
             {categories.map((cat) => (
               <CategoryIcon
-                key={cat.label}
+                key={cat.key}
                 label={cat.label}
                 Icon={cat.Icon}
-                selected={selectedCategory === cat.label}
-                onClick={() => setSelectedCategory(cat.label)}
+                selected={selectedCategory === cat.key}
+                onClick={() => setSelectedCategory(cat.key)}
               />
             ))}
           </div>
         </section>
 
         {/* Highlight Section */}
-        <section className="mb-16 bg-blue-50/70 rounded-3xl p-8 shadow-lg w-full flex flex-wrap items-center gap-6">
-          <div className="flex-1 min-w-[200px] flex justify-center sm:justify-start">
+        <section className="mb-8 sm:mb-12 lg:mb-16 bg-blue-50/70 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-lg w-full flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+          <div className="flex-1 min-w-[200px] flex justify-center sm:justify-start order-2 sm:order-1">
             <div className="flex flex-col justify-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                Early Protection for Your Family Health
+              <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+                {t("findNurse.highlight")}
               </h2>
-              <p className="text-gray-700 mt-4 text-lg">
-                Book a nurse now for quick and trusted care at home.
+              <p className="text-gray-700 mt-2 sm:mt-4 text-base sm:text-lg">
+                {t("findNurse.highlightDesc")}
               </p>
             </div>
           </div>
-          <div className="flex-1 min-w-[200px] max-w-[400px] flex justify-center sm:justify-end">
+          <div className="flex-1 min-w-[200px] max-w-[300px] sm:max-w-[400px] flex justify-center order-1 sm:order-2">
             <img
               src={nursepicture}
               alt="highlight"
-              className="w-full h-auto object-cover rounded-3xl"
+              className="w-full h-auto object-cover rounded-xl sm:rounded-3xl"
             />
           </div>
         </section>
-        {/* Top Nurses Slider */}
-        <section className="mb-16 w-full">
-          <div className="flex items-center justify-between mb-6 w-full">
-            <h2 className="text-3xl font-semibold text-gray-900">Top Nurses</h2>
-            <button
-              onClick={() => navigate("/all-nurses")}
-              className="px-4 py-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 hover:scale-105 transition transform duration-200 shadow-md text-sm"
-            >
-              Show All
-            </button>
+        {/* All Nurses Grid */}
+        <section className="mb-8 sm:mb-12 lg:mb-16 w-full">
+          <div className="flex items-center justify-between mb-6 sm:mb-8 w-full">
+            <h2 className="text-xl sm:text-3xl font-semibold text-gray-900">
+              {filteredNurses.length > 0 ? t("findNurse.topNurses") : t("findNurse.noResults")}
+            </h2>
+            {filteredNurses.length > 0 && (
+              <button
+                onClick={() => navigate("/all-nurses")}
+                className="px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg sm:rounded-2xl hover:bg-blue-700 transition transform duration-200 shadow-md text-xs sm:text-sm"
+              >
+                {t("findNurse.showAll")}
+              </button>
+            )}
           </div>
-          <div className="relative overflow-hidden w-full">
-            <div className="flex gap-6 whitespace-nowrap animate-slide">
-              {[...topNurses, ...topNurses].map((n, index) => (
-                <div
-                  key={index}
-                  className="inline-block min-w-[240px] w-[240px]"
-                >
-                  <NurseCard
-                    {...n}
-                    onBook={() =>
-                      navigate(`/nurse-book/${encodeURIComponent(n.name)}`)
-                    }
-                  />
-                </div>
+          {filteredNurses.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
+              {filteredNurses.map((n) => (
+                <NurseCard
+                  key={n.id || n.nameEn}
+                  {...n}
+                  t={t}
+                  language={language}
+                  onBook={() =>
+                    navigate(`/nurse-book/${encodeURIComponent(n.nameEn)}`)
+                  }
+                />
               ))}
             </div>
-          </div>
+          ) : (
+            <div className="text-center py-12 text-gray-500">
+              {t("findNurse.noResults")}
+            </div>
+          )}
         </section>
       </div>
     </div>

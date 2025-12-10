@@ -1,12 +1,15 @@
 export const nursesData = [
   {
     id: 1,
-    name: "Nurse Sara",
+    name: "الممرضة سارة",
+    nameEn: "Nurse Sara",
     imageUrl:
       "https://img.freepik.com/premium-photo/arabic-female-nurse-with-hijab-working-hospital_952161-131473.jpg",
     specialty: "Home Injection",
+    specialtyAr: "حقن منزلية",
     rating: "4.7",
     distance: "Cairo",
+    distanceAr: "القاهرة",
     gender: "Female",
     patients: [1, 2, 3, 4, 5, 6],
     appointments: [
@@ -86,12 +89,15 @@ export const nursesData = [
   },
   {
     id: 2,
-    name: "Nurse Omar",
+    name: "الممرض عمر",
+    nameEn: "Nurse Omar",
     imageUrl:
       "https://media.istockphoto.com/id/1783744987/photo/medical-arms-crossed-doctor-with-portrait-of-man-for-healthcare-surgery-and-happy-smile.jpg?s=612x612&w=0&k=20&c=AHHdkbG8P4il6oxSdl6qm00pg4aBJBCWjs0QVMti_F4=",
     specialty: "Blood Pressure & Sugar Measurement",
+    specialtyAr: "قياس ضغط الدم والسكر",
     rating: "4.9",
     distance: "Alexandria",
+    distanceAr: "الإسكندرية",
     gender: "Male",
     patients: [7, 8, 9, 10, 11, 12],
     appointments: [
@@ -171,12 +177,15 @@ export const nursesData = [
   },
   {
     id: 3,
-    name: "Nurse Hania",
+    name: "الممرضة هانية",
+    nameEn: "Nurse Hania",
     imageUrl:
       "https://img.freepik.com/premium-photo/portrait-young-muslim-woman-doctor-standing-hall-hospital-dressed-hijab_1145931-46540.jpg",
     specialty: "Postnatal Care",
+    specialtyAr: "رعاية ما بعد الولادة",
     rating: "4.8",
     distance: "Giza",
+    distanceAr: "الجيزة",
     gender: "Female",
     patients: [13, 14, 15, 16, 17, 18],
     appointments: [
@@ -256,12 +265,15 @@ export const nursesData = [
   },
   {
     id: 4,
-    name: "Nurse Yara",
+    name: "الممرضة يارا",
+    nameEn: "Nurse Yara",
     imageUrl:
       "https://thumbs.dreamstime.com/b/portrait-friendly-muslim-doctor-nurse-wearing-hijab-medical-face-mask-gloves-gray-background-195201052.jpg",
     specialty: "Elderly Care",
+    specialtyAr: "رعاية المسنين",
     rating: "4.6",
     distance: "Mansoura",
+    distanceAr: "المنصورة",
     gender: "Female",
     patients: [19, 20, 21, 22, 23, 24],
     appointments: [
@@ -342,12 +354,15 @@ export const nursesData = [
 
   {
     id: 5,
-    name: "Nurse Ali",
+    name: "الممرض علي",
+    nameEn: "Nurse Ali",
     imageUrl:
       "https://media.istockphoto.com/id/1186255987/photo/male-nurse-with-stethoscope-standing-at-clinic-he-is-smiling-and-looking-at-the-camera.jpg?s=612x612&w=0&k=20&c=M6B_hIl0x5sfJ_ODc9m2E1ZGlfJap4cLDHvT6SY3IwM=",
     specialty: "Wound Dressing",
+    specialtyAr: "تضميد الجروح",
     rating: "4.5",
     distance: "Tanta",
+    distanceAr: "طنطا",
     gender: "Male",
     patients: [25, 26, 27, 28, 29, 30],
     appointments: [
@@ -427,12 +442,15 @@ export const nursesData = [
   },
   {
     id: 6,
-    name: "Nurse Laila",
+    name: "الممرضة ليلى",
+    nameEn: "Nurse Laila",
     imageUrl:
       "https://static.vecteezy.com/system/resources/thumbnails/028/139/476/small/muslim-nurse-hijab-generate-ai-photo.jpg",
     specialty: "Blood Pressure & Temperature Measurement",
+    specialtyAr: "قياس ضغط الدم ودرجة الحرارة",
     rating: "4.8",
     distance: "Aswan",
+    distanceAr: "أسوان",
     gender: "Female",
     patients: [31, 32, 33, 34, 35, 36],
     appointments: [
@@ -510,99 +528,18 @@ export const nursesData = [
       pendingTasks: 2,
     },
   },
-  {
-    id: 7,
-    name: "Nurse Omar H.",
-    imageUrl:
-      "https://us.images.westend61.de/0001035624pw/portrait-of-smiling-young-male-nurse-in-blue-scrubs-standing-with-arms-crossed-against-wall-at-hospital-MASF09216.jpg",
-    specialty: "Blood Pressure & Sugar Measurement",
-    rating: "4.9",
-    distance: "Cairo",
-    gender: "Male",
-    patients: [37, 38, 39, 40, 41, 42],
-    appointments: [
-      {
-        id: 37,
-        name: "sara samy",
-        phone: "(+20) 123-456-7890",
-        date: "2025-11-27",
-        time: "09:00 AM",
-        patientId: 37,
-        task: "Blood Pressure Check",
-        type: "Checkup",
-        status: "Upcoming",
-      },
-      {
-        id: 38,
-        name: "hanaa ashraf",
-        phone: "(+20) 123-456-7890",
-        date: "2025-11-27",
-        time: "10:30 AM",
-        patientId: 38,
-        task: "Sugar Check",
-        type: "Checkup",
-        status: "Completed",
-      },
-      {
-        id: 39,
-        name: "Tamer sami",
-        phone: "(+20) 123-456-7890",
-        date: "2025-11-27",
-        time: "12:00 PM",
-        patientId: 39,
-        task: "Medication Admin",
-        type: "Medication",
-        status: "Upcoming",
-      },
-      {
-        id: 40,
-        name: "kamar sami",
-        phone: "(+20) 123-456-7890",
-        date: "2025-11-28",
-        time: "09:30 AM",
-        patientId: 40,
-        task: "Vitals Check",
-        type: "Checkup",
-        status: "Upcoming",
-      },
-      {
-        id: 41,
-        name: "Romaysaa sami",
-        phone: "(+20) 123-456-7890",
-        date: "2025-11-28",
-        time: "11:00 AM",
-        patientId: 41,
-        task: "Blood Pressure Check",
-        type: "Checkup",
-        status: "Completed",
-      },
-      {
-        id: 42,
-        name: "Noura samy",
-        phone: "(+20) 123-456-7890",
-        date: "2025-11-28",
-        time: "01:00 PM",
-        patientId: 42,
-        task: "Medication Admin",
-        type: "Medication",
-        status: "Upcoming",
-      },
-    ],
-    dashboardStats: {
-      todayAppointments: 6,
-      tasksComplete: 44,
-      activeTreatment: 2,
-      pendingTasks: 2,
-    },
-  },
+
   {
     id: 8,
-    name: "Nurse Dina",
+    name: "الممرضة دينا",
+    nameEn: "Nurse Dina",
     imageUrl:
       "https://img.freepik.com/premium-photo/islamic-female-nurse-with-hidjab-wearing-blue_1198745-356.jpg",
     specialty: "Postnatal Care",
+    specialtyAr: "رعاية ما بعد الولادة",
     rating: "4.7",
     distance: "Alexandria",
+    distanceAr: "الإسكندرية",
     gender: "Female",
     patients: [43, 44, 45, 46, 47, 48],
     appointments: [
@@ -682,12 +619,15 @@ export const nursesData = [
   },
   {
     id: 9,
-    name: "Nurse Karim",
+    name: "الممرض كريم",
+    nameEn: "Nurse Karim",
     imageUrl:
       "https://www.eurekahomehealthcare.com/wp-content/uploads/2024/08/healthcare-workers-medicine-covid-19-pandemic-self-quarantine-concept-cheerful-smiling-hispanic-male-nurse-doctor-er-wearing-scrubs-glasses-talking-patient-clinic-scaled.jpg",
     specialty: "Home Injection",
+    specialtyAr: "حقن منزلية",
     rating: "4.6",
     distance: "Giza",
+    distanceAr: "الجيزة",
     gender: "Male",
     patients: [49, 50, 51, 52, 53, 54],
     appointments: [
@@ -767,12 +707,15 @@ export const nursesData = [
   },
   {
     id: 10,
-    name: "Nurse Huda",
+    name: "الممرضة هدى",
+    nameEn: "Nurse Huda",
     imageUrl:
       "https://thumbs.dreamstime.com/b/muslim-doctor-nurse-woman-hijab-stethoscope-white-coat-shows-her-hand-to-space-text-blue-portrait-194509292.jpg",
     specialty: "Wound Dressing",
+    specialtyAr: "تضميد الجروح",
     rating: "4.8",
     distance: "Mansoura",
+    distanceAr: "المنصورة",
     gender: "Female",
     patients: [55, 56, 57, 58, 59, 60],
     appointments: [
@@ -852,12 +795,15 @@ export const nursesData = [
   },
   {
     id: 11,
-    name: "Nurse Sami",
+    name: "الممرض سامي",
+    nameEn: "Nurse Sami",
     imageUrl:
       "https://thumbs.dreamstime.com/b/young-doctor-holding-file-standing-front-his-team-396399313.jpg",
     specialty: "Elderly Care",
+    specialtyAr: "رعاية المسنين",
     rating: "4.7",
     distance: "Tanta",
+    distanceAr: "طنطا",
     gender: "Male",
     patients: [61, 62, 63, 64, 65, 66],
     appointments: [
@@ -937,12 +883,15 @@ export const nursesData = [
   },
   {
     id: 12,
-    name: "Nurse Reem",
+    name: "الممرضة ريم",
+    nameEn: "Nurse Reem",
     imageUrl:
       "https://img.freepik.com/premium-photo/portrait-muslim-female-doctor-with-stethoscope-white-coat-holding-medical-document_368093-6542.jpg?semt=ais_hybrid&w=740&q=80",
     specialty: "Postnatal Care",
+    specialtyAr: "رعاية ما بعد الولادة",
     rating: "4.9",
     distance: "Aswan",
+    distanceAr: "أسوان",
     gender: "Female",
     patients: [67, 68, 69, 70, 71, 72],
     appointments: [
