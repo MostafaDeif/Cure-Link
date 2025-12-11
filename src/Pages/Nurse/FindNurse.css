@@ -1,16 +1,35 @@
-@keyframes slide {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
 .animate-slide {
-  animation: slide 10s linear infinite;
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation-name: slide-ltr;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
-@media (min-width: 768px) {
-  .animate-slide {
-    animation: slide 12s linear infinite;
+
+.rtl-slide {
+  animation-name: slide-rtl;
+}
+
+@keyframes slide-ltr {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes slide-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+.inline-block {
+  min-width: 240px;
+  width: 240px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .inline-block {
+    min-width: 200px;
+    width: 200px;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../../Context/LanguageContext.jsx";
@@ -28,17 +28,30 @@ const CategoryIcon = ({ label, Icon, selected, onClick }) => (
       } w-full`}
     aria-pressed={selected}
   >
-    {Icon && <Icon className="h-5 sm:h-8 w-5 sm:w-8 transition-colors duration-200" />}
+    {Icon && (
+      <Icon className="h-5 sm:h-8 w-5 sm:w-8 transition-colors duration-200" />
+    )}
     <span className="truncate text-xs sm:text-xs">{label}</span>
   </button>
 );
 
-const NurseCard = ({ name, nameEn, specialty, specialtyAr, gender, rating, imageUrl, onBook, t, language }) => (
+const NurseCard = ({
+  name,
+  nameEn,
+  specialty,
+  specialtyAr,
+  gender,
+  rating,
+  imageUrl,
+  onBook,
+  t,
+  language,
+}) => (
   <article className="rounded-3xl overflow-hidden bg-white/90 backdrop-blur-md shadow-md flex flex-col transition-transform duration-300 hover:shadow-2xl hover:-translate-y-1">
     <div className="h-60 w-full overflow-hidden rounded-t-3xl relative">
       <img
         src={imageUrl}
-        alt={language === 'ar' ? name : nameEn}
+        alt={language === "ar" ? name : nameEn}
         className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
         onError={(e) => {
           e.target.onerror = null;
@@ -51,10 +64,10 @@ const NurseCard = ({ name, nameEn, specialty, specialtyAr, gender, rating, image
     <div className="p-5 flex flex-col justify-between flex-1">
       <div>
         <h3 className="font-semibold text-gray-900 text-lg md:text-xl">
-          {language === 'ar' ? name : nameEn}
+          {language === "ar" ? name : nameEn}
         </h3>
         <p className="text-gray-600 text-sm mt-1">
-          {language === 'ar' ? specialtyAr : specialty} • {gender}
+          {language === "ar" ? specialtyAr : specialty} • {gender}
         </p>
         <div className="mt-3 text-yellow-500 font-medium flex items-center gap-1 cursor-pointer transition transform hover:scale-110">
           <FontAwesomeIcon
@@ -82,7 +95,6 @@ export default function FindNurse() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedGender, setSelectedGender] = useState("All");
 
-  // Reset filters to "All" when language changes
   useEffect(() => {
     setSelectedCategory("All");
     setSelectedGender("All");
@@ -91,11 +103,31 @@ export default function FindNurse() {
 
   const categories = [
     { label: t("findNurse.categories.all"), key: "All", Icon: Users },
-    { label: t("findNurse.categories.homeInjection"), key: "Home Injection", Icon: Stethoscope },
-    { label: t("findNurse.categories.bloodPressure"), key: "Blood Pressure", Icon: Thermometer },
-    { label: t("findNurse.categories.postnatalCare"), key: "Postnatal Care", Icon: Smile },
-    { label: t("findNurse.categories.elderlyCare"), key: "Elderly Care", Icon: Users },
-    { label: t("findNurse.categories.woundDressing"), key: "Wound Dressing", Icon: Clipboard },
+    {
+      label: t("findNurse.categories.homeInjection"),
+      key: "Home Injection",
+      Icon: Stethoscope,
+    },
+    {
+      label: t("findNurse.categories.bloodPressure"),
+      key: "Blood Pressure",
+      Icon: Thermometer,
+    },
+    {
+      label: t("findNurse.categories.postnatalCare"),
+      key: "Postnatal Care",
+      Icon: Smile,
+    },
+    {
+      label: t("findNurse.categories.elderlyCare"),
+      key: "Elderly Care",
+      Icon: Users,
+    },
+    {
+      label: t("findNurse.categories.woundDressing"),
+      key: "Wound Dressing",
+      Icon: Clipboard,
+    },
   ];
 
   const genders = [
@@ -119,21 +151,38 @@ export default function FindNurse() {
     },
   ];
 
-  const filteredNurses = nursesData.filter((n) => {
-    const term = searchTerm.trim().toLowerCase();
-    const matchesSearch =
-      n.nameEn.toLowerCase().includes(term) ||
-      n.distance.toLowerCase().includes(term);
-    const matchesGender =
-      selectedGender === "All" || n.gender === selectedGender;
-    const matchesCategory =
-      selectedCategory === "All" ||
-      n.specialty.toLowerCase().includes(selectedCategory.toLowerCase());
-    return matchesSearch && matchesGender && matchesCategory;
-  });
+  const filteredNurses = useMemo(
+    () =>
+      nursesData.filter((n) => {
+        const term = searchTerm.trim().toLowerCase();
+        const matchesSearch =
+          n.nameEn.toLowerCase().includes(term) ||
+          n.distance.toLowerCase().includes(term);
+        const matchesGender =
+          selectedGender === "All" || n.gender === selectedGender;
+        const matchesCategory =
+          selectedCategory === "All" ||
+          n.specialty.toLowerCase().includes(selectedCategory.toLowerCase());
+        return matchesSearch && matchesGender && matchesCategory;
+      }),
+    [searchTerm, selectedGender, selectedCategory]
+  );
+
+  // إعداد السلايدر محسّن للتكرار ودعم اللغة
+  const repeatedNurses = useMemo(() => {
+    const top = filteredNurses.slice(0, 5);
+    const repeated = [];
+    for (let i = 0; i < 10; i++) {
+      repeated.push(...top);
+    }
+    return repeated;
+  }, [filteredNurses]);
 
   return (
-    <div className="min-h-screen w-full bg-blue-50" dir={language === "ar" ? "rtl" : "ltr"}>
+    <div
+      className="min-h-screen w-full bg-blue-50"
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
       <div className="w-full px-4 sm:px-6 lg:px-10 py-8 sm:py-12 lg:py-14">
         <header className="mb-8 sm:mb-10 lg:mb-12">
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 text-center md:text-left mb-2 sm:mb-4">
@@ -195,7 +244,10 @@ export default function FindNurse() {
         </section>
 
         {/* Highlight Section */}
-        <section className="mb-8 sm:mb-12 lg:mb-16 bg-blue-50/70 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-lg w-full flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+        <section
+          className="mb-8 sm:mb-12 lg:mb-16 bg-blue-50/70 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 w-full flex flex-col sm:flex-row items-center gap-4 sm:gap-6
+  shadow-[0_-8px_16px_-4px_rgba(0,0,0,0.1),0_8px_16px_-4px_rgba(0,0,0,0.1)]"
+        >
           <div className="flex-1 min-w-[200px] flex justify-center sm:justify-start order-2 sm:order-1">
             <div className="flex flex-col justify-center">
               <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-gray-900">
@@ -214,11 +266,14 @@ export default function FindNurse() {
             />
           </div>
         </section>
-        {/* All Nurses Grid */}
+
+        {/* All Nurses Slider */}
         <section className="mb-8 sm:mb-12 lg:mb-16 w-full">
           <div className="flex items-center justify-between mb-6 sm:mb-8 w-full">
             <h2 className="text-xl sm:text-3xl font-semibold text-gray-900">
-              {filteredNurses.length > 0 ? t("findNurse.topNurses") : t("findNurse.noResults")}
+              {filteredNurses.length > 0
+                ? t("findNurse.topNurses")
+                : t("findNurse.noResults")}
             </h2>
             {filteredNurses.length > 0 && (
               <button
@@ -229,19 +284,35 @@ export default function FindNurse() {
               </button>
             )}
           </div>
+
           {filteredNurses.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
-              {filteredNurses.map((n) => (
-                <NurseCard
-                  key={n.id || n.nameEn}
-                  {...n}
-                  t={t}
-                  language={language}
-                  onBook={() =>
-                    navigate(`/nurse-book/${encodeURIComponent(n.nameEn)}`)
-                  }
-                />
-              ))}
+            <div className="relative overflow-hidden w-full">
+           <div
+  className={`flex gap-6 whitespace-nowrap animate-slide ${
+    language === "ar" ? "rtl-slide" : ""
+  }`}
+  style={{ animationDuration: `${repeatedNurses.length * 1.5}s` }}
+>
+                {repeatedNurses.map((n, index) => (
+                  <div
+                    key={index}
+                    className="inline-block min-w-[240px] w-[240px] flex-shrink-0"
+                  >
+                    <NurseCard
+                      {...n}
+                      t={t}
+                      language={language}
+                      onBook={() =>
+                        navigate(
+                          `/nurse-book/${encodeURIComponent(
+                            language === "ar" ? n.name : n.nameEn
+                          )}`
+                        )
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <div className="text-center py-12 text-gray-500">
