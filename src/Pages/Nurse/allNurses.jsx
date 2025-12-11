@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import nursesData from "./nurseData";
+import nursesData from "../../Data/nurseData";
 import { Star, MapPin, ArrowLeft } from "lucide-react";
 
 const NurseCard = ({ nurse, onClick }) => (

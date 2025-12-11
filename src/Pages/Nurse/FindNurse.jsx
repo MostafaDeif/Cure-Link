@@ -13,7 +13,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserDoctor, faUserNurse } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
-import nursesData from "./nurseData";
+import nursesData from "../../Data/nurseData";
 import nursepicture from "../../assets/nurse_p.png";
 import "./FindNurse.css";
 

@@ -1,15 +1,16 @@
-import doctor1 from "../../assets/doctor1.png";
-import doctor2 from "../../assets/doctor2.png";
-import doctor3 from "../../assets/doctor3.png";
-import doctor4 from "../../assets/doctor4.png";
-import doctor5 from "../../assets/doctor5.png";
-import doctor6 from "../../assets/doctor6.png";
-import doctor7 from "../../assets/doctor7.jpg";
-import doctor8 from "../../assets/doctor8.jpg";
-import doctor9 from "../../assets/doctor9.png";
-import doctor10 from "../../assets/doctor10.png";
-import doctor11 from "../../assets/doctor11.png";
-import doctor12 from "../../assets/doctor12.jpg";
+import doctor1 from "../assets/doctor1.png";
+import doctor2 from "../assets/doctor2.png";
+import doctor3 from "../assets/doctor3.png";
+import doctor4 from "../assets/doctor4.png";
+import doctor5 from "../assets/doctor5.png";
+import doctor6 from "../assets/doctor6.png";
+import doctor7 from "../assets/doctor7.jpg";
+import doctor8 from "../assets/doctor8.jpg";
+import doctor9 from "../assets/doctor9.png";
+import doctor10 from "../assets/doctor10.png";
+import doctor11 from "../assets/doctor11.png";
+import doctor12 from "../assets/doctor12.jpg";
+
 export const doctorsData = [
   { name: "Dr. Ahmed Youssef", imageUrl: doctor1, specialty: "General", rating: "4.5", distance: "300m away" },
   { name: "Dr. Fatma Hassan", imageUrl: doctor6, specialty: "Dentist", rating: "4.9", distance: "700m away" },
@@ -24,3 +25,5 @@ export const doctorsData = [
   { name: "Dr. Hossam Fathi", imageUrl: doctor5, specialty: "Lungs", rating: "4.5", distance: "950m away" },
   { name: "Dr. Sarah Nasser", imageUrl: doctor12, specialty: "Therapist", rating: "4.8", distance: "1.6km away" },
 ];
+
+export default doctorsData;

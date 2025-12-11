@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { nursesData } from "../Nurse/nurseData";
+import { nursesData } from "../../Data/nurseData";
 import { Star, Clock, User, Activity, Pill, Phone } from "lucide-react";
 import { FaCheckCircle, FaNotesMedical } from "react-icons/fa";
 

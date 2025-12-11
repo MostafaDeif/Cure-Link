@@ -1,13 +1,11 @@
-// src/data/products.js
-
-import medPanadol from "../../assets/med3.jpg";
-import medBodrex from "../../assets/med3.jpg";
-import medKonidin from "../../assets/med3.jpg";
-import medParacetamol from "../../assets/med3.jpg";
-import medOBH from "../../assets/med3.jpg";
-import medBetadine from "../../assets/med3.jpg";
-import medBodrexin from "../../assets/med3.jpg";
-import medAntangin from "../../assets/med3.jpg";
+import medPanadol from "../assets/med3.jpg";
+import medBodrex from "../assets/med3.jpg";
+import medKonidin from "../assets/med3.jpg";
+import medParacetamol from "../assets/med3.jpg";
+import medOBH from "../assets/med3.jpg";
+import medBetadine from "../assets/med3.jpg";
+import medBodrexin from "../assets/med3.jpg";
+import medAntangin from "../assets/med3.jpg";
 
 export const productsBase = [
   {
@@ -87,3 +85,5 @@ export const productsBase = [
     isFav: false,
   },
 ];
+
+export default productsBase;

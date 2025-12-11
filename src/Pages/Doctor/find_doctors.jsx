@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { doctorsData } from "../Doctor/doctorsData";
+import { doctorsData } from "../../Data/doctorsData";
 import {
   Users,
   ArrowLeft,

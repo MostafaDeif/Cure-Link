@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { productsBase } from "../data/products";
+import { productsBase } from "../../Data/products";
 import { useCart } from "../../Context/CartContext";
 import "./ProductInfo.css";
 

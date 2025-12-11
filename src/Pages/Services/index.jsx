@@ -1,8 +1,8 @@
 import React from 'react'
 import "./index.css"
 import HealthcareCategorySelector from '../../Components/HealthcareCategorySelector'
-import { doctorsData } from '../Doctor/doctorsData'
-import nursesData from '../Nurse/nurseData'
+import { doctorsData } from '../../Data/doctorsData'
+import nursesData from '../../Data/nurseData'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'

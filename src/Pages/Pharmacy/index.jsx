@@ -4,7 +4,7 @@ import "./pharmacy.css";
 // Slider removed as requested
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../Context/CartContext";
-import { productsBase } from "../data/products";
+import { productsBase } from "../../Data/products";
 
 /* Notification component (simple toast) */
 const Notification = ({ message, show }) => {

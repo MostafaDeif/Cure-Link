@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Star, MapPin } from "lucide-react";
-import { doctorsData } from "../Doctor/doctorsData";
+import { doctorsData } from "../../Data/doctorsData";
 
 export default function AllDoctors() {
   const navigate = useNavigate();
