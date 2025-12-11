@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addOrder } from "../../utils/orders";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../Context/CartContext";
 
@@ -88,6 +89,19 @@ export default function Cart() {
       return;
     }
 
+    // create a local order record so it appears in User -> Orders
+    try {
+      addOrder({
+        title: "صيدلية - طلبية أدوية",
+        total: getTotalPrice(),
+        nurse: "Pharmacy",
+        address: address || "-",
+        items: items.map((it) => `${it.name} x${it.qty}`),
+      });
+    } catch (err) {
+      // ignore storage errors
+    }
+
     clearCart();
     setShowCheckout(false);
     setAddress("");
@@ -96,6 +110,7 @@ export default function Cart() {
     setPhone("");
 
     alert("Order placed successfully!");
+    try { navigate('/user'); } catch {}
   };
 
   return (
