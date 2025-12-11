@@ -131,6 +131,23 @@ export default function PharmacyWebPage() {
     showNotification(`${product.name} added to cart`);
   };
 
+  const handleUploadPrescription = () => {
+    // simulate upload: create a local order so it appears in User Orders
+    import("../../utils/orders").then((m) => {
+      try {
+        m.addOrder({
+          title: "Prescription Upload",
+          total: 0,
+          nurse: "-",
+          address: "Uploaded prescription",
+          items: ["Prescription uploaded via website"],
+        });
+      } catch {}
+    }).catch(() => {});
+    showNotification("Prescription uploaded — يمكنك مشاهدة الطلب في طلباتي");
+    try { navigate('/user'); } catch {}
+  };
+
   return (
     <div className="page-root">
       {/* Search Bar Section */}
@@ -152,7 +169,7 @@ export default function PharmacyWebPage() {
         <div className="banner-content">
           <h2>Order Quickly with Prescription</h2>
           <p>Upload your prescription and get your medicine delivered fast and safely.</p>
-          <button className="banner-upload-btn" type="button">Upload Prescription</button>
+          <button className="banner-upload-btn" type="button" onClick={handleUploadPrescription}>Upload Prescription</button>
         </div>
       </div>
 

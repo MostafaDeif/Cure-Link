@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getOrders } from "../../../utils/orders";
 
-const ordersData = [
+const sampleOrders = [
   {
     id: 101,
     title: "طلب رعاية منزلية",
@@ -36,12 +37,18 @@ const orderStatusLabels = {
 };
 
 export default function OrdersSection() {
-  const [activeOrderId, setActiveOrderId] = useState(
-    ordersData.find((o) => o.status === "active")?.id || ordersData[0].id
+  const [orders, setOrders] = useState(sampleOrders);
+  useEffect(() => {
+    const stored = getOrders();
+    if (Array.isArray(stored) && stored.length > 0) setOrders(stored);
+  }, []);
+
+  const [activeOrderId, setActiveOrderId] = useState(() =>
+    (orders.find((o) => o.status === "active") && orders.find((o) => o.status === "active").id) || (orders[0] && orders[0].id)
   );
 
-  const activeOrder = ordersData.find((o) => o.id === activeOrderId);
-  const lastOrders = ordersData.filter((o) => o.id !== activeOrderId);
+  const activeOrder = orders.find((o) => o.id === activeOrderId) || orders[0];
+  const lastOrders = orders.filter((o) => o.id !== activeOrderId);
 
   return (
     <div>

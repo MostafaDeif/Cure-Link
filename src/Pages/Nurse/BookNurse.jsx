@@ -4,6 +4,7 @@ import { Star, ArrowLeft, MapPin } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
+import { addOrder } from "../../utils/orders";
 
 // Validation schema
 const bookingSchema = z.object({
@@ -80,10 +81,31 @@ export default function NurseProfileUser({ nursesData }) {
       setErrors(fieldErrors);
     } else {
       setErrors({});
+      // create an order record so it appears in User -> Orders
+      try {
+        addOrder({
+          title: `حجز ممرضة - ${nurse.name}`,
+          total: 250,
+          nurse: nurse.name,
+          address: bookingForm.notes || "-",
+          items: [
+            `Date: ${selectedDate.toDateString()}`,
+            `Time: ${selectedSlot}`,
+            `By: ${bookingForm.fullName || "Guest"}`,
+          ],
+        });
+      } catch (err) {
+        // ignore storage errors
+      }
+
       toast.success(`Appointment booked with ${nurse.name} successfully!`);
       setSelectedDate(null);
       setSelectedSlot(null);
       setBookingForm({ fullName: "", phone: "", notes: "" });
+      // navigate user to their orders page so they can see the request
+      try {
+        navigate('/user');
+      } catch {}
     }
   };
 

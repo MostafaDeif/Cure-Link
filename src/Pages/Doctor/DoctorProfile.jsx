@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addOrder } from "../../utils/orders";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Star } from "lucide-react";
 export default function DoctorProfile({ doctorsData }) {
@@ -33,11 +34,23 @@ export default function DoctorProfile({ doctorsData }) {
   const handleBook = () => {
     if (!selectedDate) return alert("Please select a date first");
     if (!selectedSlot) return alert("Please select a time slot first");
+    // persist order locally
+    try {
+      addOrder({
+        title: `حجز دكتور - ${doctor.name}`,
+        total: 0,
+        nurse: doctor.name,
+        address: "-",
+        items: [`Date: ${selectedDate.toDateString()}`, `Time: ${selectedSlot}`],
+      });
+    } catch {}
+
     alert(
       `Appointment booked with ${doctor.name} on ${selectedDate.toDateString()} at ${selectedSlot}`
     );
     setSelectedDate(null);
     setSelectedSlot(null);
+    try { navigate('/user'); } catch {}
   };
   const handleAddComment = () => {
     if (newComment.trim() !== "") {

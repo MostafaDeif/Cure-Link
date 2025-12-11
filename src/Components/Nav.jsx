@@ -4,7 +4,7 @@ import logo from "../assets/JustLogo.jpg";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../Context/LanguageContext.jsx";
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "../Context/CartContext"; // ← تم إضافة هذا
+import { useCart } from "../Context/CartContext"; 
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -18,8 +18,8 @@ export default function Nav() {
   });
 
   // Cart items count
-  const { getTotalItems } = useCart(); // ← تم إضافة هذا
-  const totalItems = getTotalItems(); // ← تم إضافة هذا
+  const { getTotalItems } = useCart(); 
+  const totalItems = getTotalItems(); 
 
   useEffect(() => {
     const onStorage = (e) => {
