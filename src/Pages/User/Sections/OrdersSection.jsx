@@ -47,6 +47,19 @@ export default function OrdersSection() {
     (orders.find((o) => o.status === "active") && orders.find((o) => o.status === "active").id) || (orders[0] && orders[0].id)
   );
 
+  // If orders change (e.g. a new pharmacy order was added), ensure activeOrderId points
+  // to an existing order. This prevents the UI from showing no active order and appearing
+  // like the new order disappeared.
+  useEffect(() => {
+    if (!orders || orders.length === 0) return;
+    const exists = orders.some((o) => o.id === activeOrderId);
+    if (!exists) {
+      // prefer the first 'active' status order, otherwise the most recent
+      const preferred = orders.find((o) => o.status === "active") || orders[0];
+      setActiveOrderId(preferred.id);
+    }
+  }, [orders, activeOrderId]);
+
   const activeOrder = orders.find((o) => o.id === activeOrderId) || orders[0];
   const lastOrders = orders.filter((o) => o.id !== activeOrderId);
 
