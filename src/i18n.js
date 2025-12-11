@@ -118,6 +118,56 @@ i18n
             Friday: "Friday",
             Saturday: "Saturday",
           },
+          user: {
+            profile: {
+              title: "Profile Information",
+              nameLabel: "Name",
+            },
+            orders: {
+              title: "My Orders",
+              details: "Order details:",
+              lastOrders: "Recent Orders",
+              itemsLabel: "Order Items",
+              status: {
+                active: "Active",
+                completed: "Completed",
+                cancelled: "Cancelled",
+              },
+            },
+            visits: {
+              title: "Home Visits",
+              nurseLabel: "Nurse:",
+              status: {
+                pending: "Pending",
+                done: "Done",
+                rejected: "Rejected",
+              },
+            },
+            favorites: {
+              title: "Favorites",
+              empty: "No favorite products yet.",
+              addedToCart: "{{name}} added to cart",
+            },
+            settings: {
+              personalInfo: "Personal Information",
+              firstName: "First Name",
+              lastName: "Last Name",
+              saveChanges: "Save Changes",
+              healthInfo: "Health Information",
+              height: "Height",
+              weight: "Weight",
+              selectBlood: "Select blood type",
+              unknown: "Don't know",
+            },
+            sidebar: {
+              profile: "Profile",
+              visits: "Visits",
+              orders: "Orders",
+              favorites: "Favorites",
+              settings: "Settings",
+              logout: "Logout",
+            },
+          },
         },
       },
       ar: {
@@ -227,6 +277,56 @@ i18n
           days: {
             Friday: "الجمعة",
             Saturday: "السبت",
+          },
+          user: {
+            profile: {
+              title: "المعلومات الشخصية",
+              nameLabel: "الاسم",
+            },
+            orders: {
+              title: "طلباتي",
+              details: "تفاصيل طلب:",
+              lastOrders: "آخر الطلبات",
+              itemsLabel: "محتويات الطلب",
+              status: {
+                active: "قيد التنفيذ",
+                completed: "مكتمل",
+                cancelled: "ملغي",
+              },
+            },
+            visits: {
+              title: "الزيارات المنزلية",
+              nurseLabel: "الممرض:",
+              status: {
+                pending: "قيد الانتظار",
+                done: "تمت",
+                rejected: "مرفوضة",
+              },
+            },
+            favorites: {
+              title: "المفضلة",
+              empty: "لا توجد منتجات في المفضلة حالياً.",
+              addedToCart: "{{name}} تمت إضافته إلى السلة",
+            },
+            settings: {
+              personalInfo: "المعلومات الشخصية",
+              firstName: "الاسم الأول",
+              lastName: "اسم العائلة",
+              saveChanges: "حفظ التغييرات",
+              healthInfo: "المعلومات الصحية",
+              height: "الطول",
+              weight: "الوزن",
+              selectBlood: "اختر فصيلة الدم",
+              unknown: "لا أعرف",
+            },
+            sidebar: {
+              profile: "الملف الشخصي",
+              visits: "الزيارات المنزلية",
+              orders: "طلباتي",
+              favorites: "المفضلة",
+              settings: "الإعدادات",
+              logout: "تسجيل الخروج",
+            },
           },
         },
       },

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { productsBase } from "../../data/products";
 import { useCart } from "../../../Context/CartContext";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ const Notification = ({ message, show }) => {
 
 export default function FavoritesSection({ ProductCardUser }) {
   const { addItem } = useCart();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const favorites = productsBase.filter((p) => p.isFav);
@@ -49,16 +51,16 @@ export default function FavoritesSection({ ProductCardUser }) {
   // ====== Add to Cart Action ======
   const handleAdd = (product) => {
     addItem(product, 1);
-    showNotification(`${product.name} تمت إضافته إلى السلة`);
+    showNotification(t("user.favorites.addedToCart", { name: product.name }));
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-4">المفضلة</h3>
+      <h3 className="text-xl font-bold mb-4">{t("user.favorites.title")}</h3>
 
       {favorites.length === 0 ? (
         <div className="text-gray-500 text-center py-6">
-          لا توجد منتجات في المفضلة حالياً.
+          {t("user.favorites.empty")}
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

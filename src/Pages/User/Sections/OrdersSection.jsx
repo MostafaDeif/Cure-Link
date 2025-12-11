@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getOrders } from "../../../utils/orders";
 
 const sampleOrders = [
@@ -37,6 +38,7 @@ const orderStatusLabels = {
 };
 
 export default function OrdersSection() {
+  const { t } = useTranslation();
   const [orders, setOrders] = useState(sampleOrders);
   useEffect(() => {
     const stored = getOrders();
@@ -65,12 +67,12 @@ export default function OrdersSection() {
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-4">طلباتي</h3>
+      <h3 className="text-xl font-bold mb-4">{t("user.orders.title")}</h3>
 
       {activeOrder && (
         <div className="bg-white p-4 md:p-6 rounded shadow mb-6 border border-gray-100">
           <h4 className="text-lg font-semibold">
-            تفاصيل طلب: {activeOrder.title}
+            {t("user.orders.details")} {activeOrder.title}
           </h4>
 
           <div className="text-sm text-gray-500 mt-1">{activeOrder.date}</div>
@@ -79,11 +81,11 @@ export default function OrdersSection() {
           <span
             className={`mt-3 inline-block px-3 py-1 rounded-full text-sm font-medium ${orderStatusColors[activeOrder.status]}`}
           >
-            {orderStatusLabels[activeOrder.status]}
+            {t(`user.orders.status.${activeOrder.status}`) || orderStatusLabels[activeOrder.status]}
           </span>
 
           <div className="mt-4 text-sm text-gray-700">
-            <div className="font-medium mb-1">محتويات الطلب:</div>
+            <div className="font-medium mb-1">{t("user.orders.itemsLabel")}</div>
             <ul className="list-disc list-inside">
               {activeOrder.items.map((it, idx) => (
                 <li key={idx}>{it}</li>
@@ -93,7 +95,7 @@ export default function OrdersSection() {
         </div>
       )}
 
-      <h4 className="text-lg font-semibold mb-3">آخر الطلبات</h4>
+      <h4 className="text-lg font-semibold mb-3">{t("user.orders.lastOrders")}</h4>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {lastOrders.map((order) => (
           <div
@@ -108,7 +110,7 @@ export default function OrdersSection() {
             <span
               className={`mt-2 px-3 py-1 inline-block rounded-full text-xs font-medium ${orderStatusColors[order.status]}`}
             >
-              {orderStatusLabels[order.status]}
+              {t(`user.orders.status.${order.status}`) || orderStatusLabels[order.status]}
             </span>
           </div>
         ))}

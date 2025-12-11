@@ -25,22 +25,19 @@ const visitsData = [
   },
 ];
 
+import { useTranslation } from "react-i18next";
+
 const statusColors = {
   pending: "text-yellow-600 bg-yellow-100",
   done: "text-green-600 bg-green-100",
   rejected: "text-red-600 bg-red-100",
 };
 
-const statusLabels = {
-  pending: "قيد الانتظار",
-  done: "تمت",
-  rejected: "مرفوضة",
-};
-
 export default function VisitsSection() {
+  const { t } = useTranslation();
   return (
     <div>
-      <h3 className="text-xl font-bold mb-4">الزيارات المنزلية</h3>
+      <h3 className="text-xl font-bold mb-4">{t("user.visits.title")}</h3>
       <div className="grid gap-4">
         {visitsData.map((visit) => (
           <div
@@ -53,7 +50,7 @@ export default function VisitsSection() {
                   {visit.name}
                 </span>
                 <span className="text-gray-500 text-sm md:ml-4">
-                  الممرض: {visit.nurse}
+                  {t("user.visits.nurseLabel")} {visit.nurse}
                 </span>
                 <span className="text-gray-400 text-xs md:ml-4">
                   {visit.date}
@@ -65,7 +62,7 @@ export default function VisitsSection() {
               <span
                 className={`px-4 py-1 rounded-full font-medium text-sm ${statusColors[visit.status]}`}
               >
-                {statusLabels[visit.status]}
+                {t(`user.visits.status.${visit.status}`) || visit.status}
               </span>
             </div>
           </div>

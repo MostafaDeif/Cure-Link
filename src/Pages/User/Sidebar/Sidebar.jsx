@@ -1,8 +1,10 @@
 import React from "react";
 import SidebarItem from "./SidebarItem";
 import LogoutButton from "./LogoutButton";
+import { useTranslation } from "react-i18next";
 
 export default function Sidebar({ activeSection, setActiveSection, currentUser }) {
+  const { t } = useTranslation();
   return (
     <div
       className="w-full md:w-1/4 bg-white p-4 rounded-lg shadow mb-4 md:mb-0 md:ml-5"
@@ -27,11 +29,11 @@ export default function Sidebar({ activeSection, setActiveSection, currentUser }
       </div>
 
       <ul className="space-y-2 flex md:block justify-between">
-        <SidebarItem section="profile" activeSection={activeSection} setActiveSection={setActiveSection} label="ملفي الشخصي" />
-        <SidebarItem section="visits" activeSection={activeSection} setActiveSection={setActiveSection} label="الزيارات المنزلية" />
-        <SidebarItem section="orders" activeSection={activeSection} setActiveSection={setActiveSection} label="طلباتي" />
-        <SidebarItem section="favorites" activeSection={activeSection} setActiveSection={setActiveSection} label="المفضلة" />
-        <SidebarItem section="settings" activeSection={activeSection} setActiveSection={setActiveSection} label="الإعدادات" />
+        <SidebarItem section="profile" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.profile')} />
+        <SidebarItem section="visits" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.visits')} />
+        <SidebarItem section="orders" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.orders')} />
+        <SidebarItem section="favorites" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.favorites')} />
+        <SidebarItem section="settings" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.settings')} />
       </ul>
 
       <div className="mt-6 text-center">
