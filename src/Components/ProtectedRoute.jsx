@@ -19,7 +19,6 @@ const parseJwt = (token) => {
 const ProtectedRoute = ({ children, requiredRole }) => {
   let currentUser = null;
 
-  // 1) حاول تقرأ التوكن
   const token = localStorage.getItem("token");
   if (token) {
     const payload = parseJwt(token);
