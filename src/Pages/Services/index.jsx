@@ -4,6 +4,7 @@ import HealthcareCategorySelector from '../../Components/HealthcareCategorySelec
 import { doctorsData } from '../../Data/doctorsData'
 import nursesData from '../../Data/nurseData'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Link } from 'react-router-dom'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -58,7 +59,9 @@ export default function Services() {
           >
             {doctorsData.map((d, i) => (
               <SwiperSlide key={i}>
-                <PersonCard name={d.name} image={d.imageUrl} subtitle={d.specialty} meta={`${d.rating} • ${d.distance}`} />
+                <Link to={`/doctor-profile/${encodeURIComponent(d.name)}`} className="block">
+                  <PersonCard name={d.name} image={d.imageUrl} subtitle={d.specialty} meta={`${d.rating} • ${d.distance}`} />
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -81,7 +84,9 @@ export default function Services() {
           >
             {nursesData.slice(0, 8).map((n, i) => (
               <SwiperSlide key={i}>
-                <PersonCard name={n.name} image={n.imageUrl} subtitle={n.specialty} meta={`${n.rating} • ${n.distance}`} />
+                <Link to={`/nurse-book/${encodeURIComponent(n.nameEn || n.name)}`} className="block">
+                  <PersonCard name={n.name} image={n.imageUrl} subtitle={n.specialty} meta={`${n.rating} • ${n.distance}`} />
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -104,7 +109,9 @@ export default function Services() {
           >
             {pharmaciesData.map((p) => (
               <SwiperSlide key={p.id}>
-                <PersonCard name={p.name} image={p.image} subtitle={p.location} meta={`${p.rating} rating`} />
+                <Link to={`/pharmacy?pharmacy=${encodeURIComponent(p.name)}`} className="block">
+                  <PersonCard name={p.name} image={p.image} subtitle={p.location} meta={`${p.rating} rating`} />
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>
