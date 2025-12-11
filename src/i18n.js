@@ -124,6 +124,8 @@ i18n
               nameLabel: "Name",
               emailLabel: "Email",
               phoneLabel: "Phone",
+              noUser: "You are not signed in",
+              edit: "Edit",
 
             },
             orders: {
@@ -289,6 +291,7 @@ i18n
               phoneLabel: "الهاتف",
               roleLabel: "الدور",
               noUser: "لم تقم بتسجيل الدخول",
+              edit: "تعديل",
             },
             orders: {
               title: "طلباتي",
