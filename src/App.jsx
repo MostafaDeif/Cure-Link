@@ -48,13 +48,13 @@ import NurseProfile from "./Pages/Nursing/NurseProfile.jsx";
 import NurseAppointments from "./Pages/Nursing/NurseAppointments.jsx";
 
 import FindNurse from "./Pages/Nurse/FindNurse.jsx";
-import nursesData from "./Pages/Nurse/nurseData";
+import nursesData from "./Data/nurseData";
 import BookNurse from "./Pages/Nurse/BookNurse";
 import AllNurses from "./Pages/Nurse/AllNurses.jsx";
 
 import FindDoctors from "./Pages/Doctor/find_doctors";
 import DoctorProfile from "./Pages/Doctor/DoctorProfile";
-import { doctorsData } from "./Pages/Doctor/doctorsData.js";
+import { doctorsData } from "./Data/doctorsData.js";
 import AllDoctors from "./Pages/Doctor/AllDoctors";
 
 import Footer from "./Components/Footer/Footer";
