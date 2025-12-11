@@ -5,6 +5,13 @@ import { useTranslation } from "react-i18next";
 
 export default function Sidebar({ activeSection, setActiveSection, currentUser }) {
   const { t } = useTranslation();
+  const displayName =
+    currentUser?.name ||
+    currentUser?.fullName ||
+    currentUser?.full_name ||
+    currentUser?.username ||
+    currentUser?.email ||
+    null;
   return (
     <div
       className="w-full md:w-1/4 bg-white p-4 rounded-lg shadow mb-4 md:mb-0 md:ml-5"
@@ -16,7 +23,7 @@ export default function Sidebar({ activeSection, setActiveSection, currentUser }
             src={
               currentUser?.avatar ||
               `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                currentUser?.name || "مصطفى ضيف"
+                displayName || "User"
               )}&background=426287&color=fff`
             }
             alt="avatar"
@@ -24,7 +31,7 @@ export default function Sidebar({ activeSection, setActiveSection, currentUser }
           />
         </div>
         <h2 className="font-semibold text-lg text-gray-700">
-          {currentUser?.name || "مصطفى ضيف"}
+          {displayName || t('user.profile.noUser')}
         </h2>
       </div>
 

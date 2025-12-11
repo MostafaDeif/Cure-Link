@@ -122,6 +122,9 @@ i18n
             profile: {
               title: "Profile Information",
               nameLabel: "Name",
+              emailLabel: "Email",
+              phoneLabel: "Phone",
+
             },
             orders: {
               title: "My Orders",
@@ -282,6 +285,10 @@ i18n
             profile: {
               title: "المعلومات الشخصية",
               nameLabel: "الاسم",
+              emailLabel: "البريد الإلكتروني",
+              phoneLabel: "الهاتف",
+              roleLabel: "الدور",
+              noUser: "لم تقم بتسجيل الدخول",
             },
             orders: {
               title: "طلباتي",
