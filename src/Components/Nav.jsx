@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/JustLogo.jpg";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../Context/LanguageContext.jsx";
@@ -66,10 +66,46 @@ export default function Nav() {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-6">
-        <Link to="/">{t("nav.home")}</Link>
-        <Link to="/about">{t("nav.about")}</Link>
-        <Link to="/services">{t("nav.services")}</Link>
-        <Link to="/articles">{t("nav.articles")}</Link>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive
+              ? "text-blue-600 font-semibold border-b-2 border-blue-600"
+              : "text-gray-700 hover:text-blue-600 border-b-2 border-transparent"
+          }
+        >
+          {t("nav.home")}
+        </NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive
+              ? "text-blue-600 font-semibold border-b-2 border-blue-600"
+              : "text-gray-700 hover:text-blue-600 border-b-2 border-transparent"
+          }
+        >
+          {t("nav.about")}
+        </NavLink>
+        <NavLink
+          to="/services"
+          className={({ isActive }) =>
+            isActive
+              ? "text-blue-600 font-semibold border-b-2 border-blue-600"
+              : "text-gray-700 hover:text-blue-600 border-b-2 border-transparent"
+          }
+        >
+          {t("nav.services")}
+        </NavLink>
+        <NavLink
+          to="/articles"
+          className={({ isActive }) =>
+            isActive
+              ? "text-blue-600 font-semibold border-b-2 border-blue-600"
+              : "text-gray-700 hover:text-blue-600 border-b-2 border-transparent"
+          }
+        >
+          {t("nav.articles")}
+        </NavLink>
 
         <button onClick={toggleLang} className="px-3 py-1 border rounded text-sm">
           {language === "en" ? "ع" : "EN"}
@@ -134,29 +170,76 @@ export default function Nav() {
 
         <button
           onClick={() => setOpen(!open)}
-          aria-label="Menu"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
           className="p-2"
         >
-          <svg width="21" height="15" viewBox="0 0 21 15" fill="none">
-            <rect width="21" height="1.5" rx=".75" fill="#426287" />
-            <rect x="8" y="6" width="13" height="1.5" rx=".75" fill="#426287" />
-            <rect x="6" y="13" width="15" height="1.5" rx=".75" fill="#426287" />
-          </svg>
+          {open ? (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 4L16 16" stroke="#426287" strokeWidth="1.6" strokeLinecap="round" />
+              <path d="M16 4L4 16" stroke="#426287" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <svg width="21" height="15" viewBox="0 0 21 15" fill="none">
+              <rect width="21" height="1.5" rx=".75" fill="#426287" />
+              <rect x="8" y="6" width="13" height="1.5" rx=".75" fill="#426287" />
+              <rect x="6" y="13" width="15" height="1.5" rx=".75" fill="#426287" />
+            </svg>
+          )}
         </button>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`${
-          open ? "flex" : "hidden"
-        } absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden z-[9999]`}
+        dir={language === "ar" ? "rtl" : "ltr"}
+        className={`${open ? "flex" : "hidden"} absolute top-full mt-2 left-0 right-0 bg-white shadow-lg py-3 flex-col items-stretch px-2 text-sm sm:hidden z-[9999] rounded-b-md divide-y divide-gray-100`}
       >
-        <Link to="/" onClick={() => setOpen(false)}>{t("nav.home")}</Link>
-        <Link to="/about" onClick={() => setOpen(false)}>{t("nav.about")}</Link>
-        <Link to="/services" onClick={() => setOpen(false)}>{t("nav.services")}</Link>
-        <Link to="/articles" onClick={() => setOpen(false)}>{t("nav.articles")}</Link>
+        <NavLink
+          to="/"
+          onClick={() => setOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "block text-blue-600 font-semibold w-full px-5 py-3"
+              : "block text-gray-700 hover:text-blue-600 w-full px-5 py-3"
+          }
+        >
+          {t("nav.home")}
+        </NavLink>
+        <NavLink
+          to="/about"
+          onClick={() => setOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "block text-blue-600 font-semibold w-full px-5 py-3"
+              : "block text-gray-700 hover:text-blue-600 w-full px-5 py-3"
+          }
+        >
+          {t("nav.about")}
+        </NavLink>
+        <NavLink
+          to="/services"
+          onClick={() => setOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "block text-blue-600 font-semibold w-full px-5 py-3"
+              : "block text-gray-700 hover:text-blue-600 w-full px-5 py-3"
+          }
+        >
+          {t("nav.services")}
+        </NavLink>
+        <NavLink
+          to="/articles"
+          onClick={() => setOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "block text-blue-600 font-semibold w-full px-5 py-3"
+              : "block text-gray-700 hover:text-blue-600 w-full px-5 py-3"
+          }
+        >
+          {t("nav.articles")}
+        </NavLink>
 
-        <div className="w-full flex items-center justify-between mt-2">
+        <div className="w-full flex items-center justify-between px-3 py-3">
           <button
             onClick={() => {
               toggleLang();
@@ -174,13 +257,11 @@ export default function Nav() {
                 navigate("/cart");
               }}
               aria-label="Go to cart"
-              className="px-3 py-2 rounded-md hover:bg-gray-100 transition"
+              className="px-3 py-2 rounded-md hover:bg-gray-100 transition flex items-center gap-2"
               type="button"
             >
-              <span className="inline-flex items-center gap-2">
-                <ShoppingCart size={16} />
-                <span>Cart</span>
-              </span>
+              <ShoppingCart size={16} />
+              <span>{t("nav.cart") || "Cart"}</span>
             </button>
           )}
         </div>
@@ -188,18 +269,18 @@ export default function Nav() {
         {user ? (
           <Link
             to="/user"
-            className="block px-3 py-2 rounded"
+            className="block px-5 py-3 rounded"
             onClick={() => setOpen(false)}
           >
-            {user.name || "Profile"}
+            {user.name || t("nav.profile")}
           </Link>
         ) : (
           <Link
             to="/login"
-            className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm"
+            className="cursor-pointer px-5 py-3 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm text-center"
             onClick={() => setOpen(false)}
           >
-            Login
+            {t("nav.login")}
           </Link>
         )}
       </div>

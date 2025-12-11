@@ -9,7 +9,7 @@ export default function ClientRegister({ setUser }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // ✅ Confirm Password
+  const [confirmPassword, setConfirmPassword] = useState(""); 
   const [phone, setPhone] = useState("");
   const [diseases, setDiseases] = useState("");
   const [address, setAddress] = useState("");
