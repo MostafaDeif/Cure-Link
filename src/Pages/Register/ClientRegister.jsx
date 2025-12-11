@@ -136,20 +136,51 @@ export default function ClientRegister({ setUser }) {
         console.log("=== Response Data from backend ===");
         console.log(response.data);
         console.log("=================================");
-        if (response.data.data.token) {
-
-          localStorage.setItem('token', String(response.data.data.token));
+        const token = response.data.data?.token;
+        if (token) {
+          try {
+            localStorage.setItem('token', String(token));
+          } catch {}
         }
 
-        let userObj = response.data.data.user;
+        let userObj = response.data.data?.user;
+
+        // Fallback: try to parse minimal user info from JWT if backend only returned a token
+        if (!userObj && token) {
+          try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(
+              atob(base64)
+                .split('')
+                .map(function (c) {
+                  return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join('')
+            );
+            const payload = JSON.parse(jsonPayload);
+            userObj = {
+              id: payload.sub || payload.userId || payload.id,
+              name: payload.name || payload.fullName || payload.username || payload.email,
+              email: payload.email,
+              role: payload.role || payload.roles || (payload.role && payload.role[0]) || 'customer',
+            };
+          } catch (err) {
+            // ignore
+          }
+        }
+
         if (userObj) {
-          localStorage.setItem('user', JSON.stringify(userObj));
+          try {
+            localStorage.setItem('user', JSON.stringify(userObj));
+          } catch {}
           if (setUser) setUser(userObj);
+          // Also notify same-tab listeners
           window.dispatchEvent(new Event('auth-change'));
         }
 
-        // Navigate to user dashboard or home
-        navigate("/user");
+        // Navigate to user dashboard and replace history so back doesn't go to signup
+        navigate('/user', { replace: true });
       }
     } catch (error) {
       setError(error.response?.data?.data?.message || 'Registration failed. Please try again.');
