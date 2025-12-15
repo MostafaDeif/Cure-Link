@@ -104,6 +104,8 @@ const Layout = ({ children }) => {
 };
 
 const App = () => {
+  console.log("AllNurses loaded", AllNurses);
+
   const [user, setUser] = useState(() => {
     try {
       const s = localStorage.getItem("user");
