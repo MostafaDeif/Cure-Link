@@ -4,7 +4,7 @@ import clientImg from "../../assets/client.png";
 import doctorImg from "../../assets/doctor.png";
 import nurseImg from "../../assets/nurse.png";
 import pharmacyImg from "../../assets/pharmacy.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -28,16 +28,23 @@ export default function SignUp() {
       <div className="flex flex-col lg:flex-row w-full max-w-5xl h-auto lg:h-[600px] shadow-lg rounded-lg overflow-hidden bg-white">
 
         <div className="hidden lg:block lg:w-1/2">
-          <img className="h-full w-full object-cover" src={logo} alt="leftSideImage" />
+          <img
+            className="h-full w-full object-cover"
+            src={logo}
+            alt="leftSideImage"
+          />
         </div>
 
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-8">
-          <h2 className="text-3xl lg:text-4xl text-gray-900 font-semibold mb-2">Sign up</h2>
+          <h2 className="text-3xl lg:text-4xl text-gray-900 font-semibold mb-2">
+            Sign up
+          </h2>
+
           <p className="text-sm text-gray-500/90 mb-6 text-center">
             Choose your role to continue registration
           </p>
 
-          <div className="grid grid-cols-2 gap-4 w-full max-w-sm">
+          <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-6">
             {["Client", "Doctor", "Nurse", "Pharmacy"].map((role) => (
               <button
                 key={role}
@@ -49,10 +56,23 @@ export default function SignUp() {
                   alt={role}
                   className="w-12 h-12 mb-2"
                 />
-                <span className="text-base font-medium text-gray-700">{role}</span>
+                <span className="text-base font-medium text-gray-700">
+                  {role}
+                </span>
               </button>
             ))}
           </div>
+
+          {/* Login link */}
+          <p className="text-sm text-gray-600">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-indigo-600 hover:underline font-medium"
+            >
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </div>
