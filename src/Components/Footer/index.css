@@ -1,7 +1,12 @@
 /* pulse عند hover لأيقونة الإسعاف */
 @keyframes pulse-hover {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 .animate-pulse-hover:hover {

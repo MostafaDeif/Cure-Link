@@ -4,10 +4,34 @@ import ArticleCard from "../ui/ArticleCard";
 import { useRole } from "../../Context/RoleContext";
 
 const tipsData = [
-  { id: "cpr", icon: "❤️", title: "الإنعاش القلبي الرئوي (CPR)", description: "تعلم المهارة التي قد تنقذ حياة خلال دقائق معدودة.", cta: "شاهد الفيديو" },
-  { id: "choking", icon: "🫁", title: "التعامل مع الاختناق", description: "مناورة هيملِك خطوة بخطوة لمنح الأمان لعائلتك.", cta: "شاهد الفيديو" },
-  { id: "bleeding", icon: "🩹", title: "إسعاف الجروح والنزيف", description: "كيفية إيقاف النزيف بشكل صحيح قبل وصول المساعدة.", cta: "شاهد الدليل" },
-  { id: "burns", icon: "🔥", title: "كيفية التعامل مع الحروق البسيطة", description: "خطوات سريعة وفعّالة لتخفيف الألم وتسريع التعافي.", cta: "اطلع على النصائح" },
+  {
+    id: "cpr",
+    icon: "❤️",
+    title: "الإنعاش القلبي الرئوي (CPR)",
+    description: "تعلم المهارة التي قد تنقذ حياة خلال دقائق معدودة.",
+    cta: "شاهد الفيديو",
+  },
+  {
+    id: "choking",
+    icon: "🫁",
+    title: "التعامل مع الاختناق",
+    description: "مناورة هيملِك خطوة بخطوة لمنح الأمان لعائلتك.",
+    cta: "شاهد الفيديو",
+  },
+  {
+    id: "bleeding",
+    icon: "🩹",
+    title: "إسعاف الجروح والنزيف",
+    description: "كيفية إيقاف النزيف بشكل صحيح قبل وصول المساعدة.",
+    cta: "شاهد الدليل",
+  },
+  {
+    id: "burns",
+    icon: "🔥",
+    title: "كيفية التعامل مع الحروق البسيطة",
+    description: "خطوات سريعة وفعّالة لتخفيف الألم وتسريع التعافي.",
+    cta: "اطلع على النصائح",
+  },
 ];
 
 const videoLibrary = [
@@ -17,9 +41,30 @@ const videoLibrary = [
 ];
 
 const workshopsData = [
-  { id: 1, title: "دورة الإسعافات الأولية الأساسية", schedule: "كل سبت | 5:00 مساءً", duration: "المدة: 3 ساعات", seats: 8, seatStatus: "limited" },
-  { id: 2, title: "ورشة الإنعاش القلبي للعائلات", schedule: "كل أحد | 4:00 مساءً", duration: "المدة: ساعتان", seats: 12, seatStatus: "available" },
-  { id: 3, title: "التوعية الصحية للأطفال", schedule: "الأربعاء والخميس | 6:00 مساءً", duration: "المدة: 1.5 ساعة", seats: 5, seatStatus: "urgent" },
+  {
+    id: 1,
+    title: "دورة الإسعافات الأولية الأساسية",
+    schedule: "كل سبت | 5:00 مساءً",
+    duration: "المدة: 3 ساعات",
+    seats: 8,
+    seatStatus: "limited",
+  },
+  {
+    id: 2,
+    title: "ورشة الإنعاش القلبي للعائلات",
+    schedule: "كل أحد | 4:00 مساءً",
+    duration: "المدة: ساعتان",
+    seats: 12,
+    seatStatus: "available",
+  },
+  {
+    id: 3,
+    title: "التوعية الصحية للأطفال",
+    schedule: "الأربعاء والخميس | 6:00 مساءً",
+    duration: "المدة: 1.5 ساعة",
+    seats: 5,
+    seatStatus: "urgent",
+  },
 ];
 
 const guideData = [
@@ -27,49 +72,81 @@ const guideData = [
     id: "burns",
     title: "الحروق",
     summary: "خطوات فورية لتخفيف الألم وتقليل أثر الحروق البسيطة.",
-    steps: ["إبعاد مصدر الحرارة فوراً وغسل المنطقة بماء فاتر لمدة 10 دقائق.", "إزالة الإكسسوارات الضيقة قبل تورّم الجلد.", "تغطية الحرق بشاش معقم وتجنب المراهم الدهنية."],
+    steps: [
+      "إبعاد مصدر الحرارة فوراً وغسل المنطقة بماء فاتر لمدة 10 دقائق.",
+      "إزالة الإكسسوارات الضيقة قبل تورّم الجلد.",
+      "تغطية الحرق بشاش معقم وتجنب المراهم الدهنية.",
+    ],
   },
   {
     id: "bleeding",
     title: "النزيف",
     summary: "كيفية السيطرة على النزيف قبل وصول الطوارئ.",
-    steps: ["استخدام قفازات أو قطعة قماش نظيفة لحماية نفسك.", "الضغط المباشر على الجرح ورفع الطرف المصاب إن أمكن.", "الاستمرار بالضغط حتى يتوقف النزيف أو يصل المسعفون."],
+    steps: [
+      "استخدام قفازات أو قطعة قماش نظيفة لحماية نفسك.",
+      "الضغط المباشر على الجرح ورفع الطرف المصاب إن أمكن.",
+      "الاستمرار بالضغط حتى يتوقف النزيف أو يصل المسعفون.",
+    ],
   },
   {
     id: "fractures",
     title: "الكسور",
     summary: "ثبت الطرف وامنع أي حركة لغاية وصول الرعاية الطبية.",
-    steps: ["تثبيت الطرف المصاب باستخدام جبيرة مؤقتة أو لوح خشبي.", "استخدام الثلج فوق قطعة قماش لتخفيف التورم.", "الاتصال بالطوارئ فوراً إذا وُجد نزيف أو تشوه ظاهر."],
+    steps: [
+      "تثبيت الطرف المصاب باستخدام جبيرة مؤقتة أو لوح خشبي.",
+      "استخدام الثلج فوق قطعة قماش لتخفيف التورم.",
+      "الاتصال بالطوارئ فوراً إذا وُجد نزيف أو تشوه ظاهر.",
+    ],
   },
   {
     id: "choking",
     title: "الاختناق",
     summary: "نصائح لإنقاذ الأطفال والبالغين عند انسداد مجرى الهواء.",
-    steps: ["تشجيع المصاب على السعال إذا كان قادراً.", "إجراء خمس ضربات بين لوحي الكتف ثم مناورة هيملِك.", "الاتصال بالطوارئ إن فقد المصاب الوعي وابدأ بالإنعاش القلبي."],
+    steps: [
+      "تشجيع المصاب على السعال إذا كان قادراً.",
+      "إجراء خمس ضربات بين لوحي الكتف ثم مناورة هيملِك.",
+      "الاتصال بالطوارئ إن فقد المصاب الوعي وابدأ بالإنعاش القلبي.",
+    ],
   },
   {
     id: "wounds",
     title: "الجروح",
     summary: "تنظيف الجرح وتغطيته يقلّل الالتهاب ويسرّع التعافي.",
-    steps: ["غسل اليدين جيداً ثم تنظيف الجرح بمحلول معقم.", "استخدام شاش معقم وتثبيته بلطف دون ضغط مفرط.", "مراقبة العلامات الحيوية والبحث عن أعراض العدوى."],
+    steps: [
+      "غسل اليدين جيداً ثم تنظيف الجرح بمحلول معقم.",
+      "استخدام شاش معقم وتثبيته بلطف دون ضغط مفرط.",
+      "مراقبة العلامات الحيوية والبحث عن أعراض العدوى.",
+    ],
   },
   {
     id: "shock",
     title: "الصدمة",
     summary: "حافظ على تدفق الدم إلى الأعضاء الحيوية.",
-    steps: ["إبقاء المصاب مستلقياً ورفع القدمين إن لم يكن هناك كسر.", "تدفئة الجسم ببطانية خفيفة.", "الاتصال بالطوارئ وعدم إعطاء المصاب شيئاً للأكل أو الشرب."],
+    steps: [
+      "إبقاء المصاب مستلقياً ورفع القدمين إن لم يكن هناك كسر.",
+      "تدفئة الجسم ببطانية خفيفة.",
+      "الاتصال بالطوارئ وعدم إعطاء المصاب شيئاً للأكل أو الشرب.",
+    ],
   },
   {
     id: "fainting",
     title: "الإغماء",
     summary: "تأكد من التنفس، وارفع القدمين قليلاً، وراقب الوعي.",
-    steps: ["وضع المصاب على ظهره ورفع الساقين بزاوية 30 درجة.", "التأكد من عدم وجود انسداد في مجرى الهواء.", "طلب المساعدة الطبية إذا تكرر الإغماء أو استمر طويلاً."],
+    steps: [
+      "وضع المصاب على ظهره ورفع الساقين بزاوية 30 درجة.",
+      "التأكد من عدم وجود انسداد في مجرى الهواء.",
+      "طلب المساعدة الطبية إذا تكرر الإغماء أو استمر طويلاً.",
+    ],
   },
   {
     id: "bites",
     title: "اللدغات",
     summary: "حدد نوع اللدغة وتعامل مع التورم بسرعة.",
-    steps: ["غسل المنطقة بالماء والصابون ووضع كمادة باردة.", "عدم شفط السم أو فتح الجرح بآلة حادة.", "الاتصال بالطوارئ إذا ظهرت أعراض حساسية خطيرة."],
+    steps: [
+      "غسل المنطقة بالماء والصابون ووضع كمادة باردة.",
+      "عدم شفط السم أو فتح الجرح بآلة حادة.",
+      "الاتصال بالطوارئ إذا ظهرت أعراض حساسية خطيرة.",
+    ],
   },
 ];
 
@@ -86,14 +163,21 @@ export default function ClientArticles() {
   const [activeGuide, setActiveGuide] = useState(guideData[0].id);
 
   useEffect(() => {
-    getArticles(role || "client").then(setArticles).catch(console.error);
+    getArticles(role || "client")
+      .then(setArticles)
+      .catch(console.error);
   }, [role]);
 
   const currentTip = tipsData[activeTipIndex];
-  const activeGuideContent = useMemo(() => guideData.find((guide) => guide.id === activeGuide), [activeGuide]);
+  const activeGuideContent = useMemo(
+    () => guideData.find((guide) => guide.id === activeGuide),
+    [activeGuide],
+  );
 
-  const handleNextTip = () => setActiveTipIndex((prev) => (prev + 1) % tipsData.length);
-  const handlePrevTip = () => setActiveTipIndex((prev) => (prev - 1 + tipsData.length) % tipsData.length);
+  const handleNextTip = () =>
+    setActiveTipIndex((prev) => (prev + 1) % tipsData.length);
+  const handlePrevTip = () =>
+    setActiveTipIndex((prev) => (prev - 1 + tipsData.length) % tipsData.length);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -106,10 +190,16 @@ export default function ClientArticles() {
     <div className="space-y-8" dir="rtl">
       <section className="rounded-[32px] bg-gradient-to-br from-[#a8ede5] via-[#7cded6] to-[#58c6be] p-6 text-white shadow-[0_30px_60px_rgba(13,148,136,0.25)] md:p-10">
         <div className="mb-6 flex flex-col items-center gap-3 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-2xl">💡</div>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-2xl">
+            💡
+          </div>
           <div>
-            <p className="text-sm uppercase tracking-[0.4em] text-white/80">نصيحة اليوم</p>
-            <h3 className="text-2xl font-bold text-white">تعلم مهارة إسعافات أولية في دقائق</h3>
+            <p className="text-sm uppercase tracking-[0.4em] text-white/80">
+              نصيحة اليوم
+            </p>
+            <h3 className="text-2xl font-bold text-white">
+              تعلم مهارة إسعافات أولية في دقائق
+            </h3>
           </div>
         </div>
         <div className="relative overflow-hidden rounded-[26px] bg-white/10 px-4 py-10 text-center backdrop-blur">
@@ -129,7 +219,9 @@ export default function ClientArticles() {
           </button>
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-4">
             <div className="text-5xl md:text-6xl">{currentTip.icon}</div>
-            <h4 className="text-3xl font-bold leading-snug">{currentTip.title}</h4>
+            <h4 className="text-3xl font-bold leading-snug">
+              {currentTip.title}
+            </h4>
             <p className="text-lg text-white/90">{currentTip.description}</p>
             <button className="inline-flex items-center gap-2 rounded-full bg-white/90 px-8 py-3 text-lg font-semibold text-[#0d9488] shadow-lg shadow-white/30 transition hover:-translate-y-0.5">
               {currentTip.cta}
@@ -150,10 +242,14 @@ export default function ClientArticles() {
 
       <section className="rounded-[28px] border border-[#a8ede5]/40 bg-white/70 p-6 shadow-[0_15px_40px_rgba(15,118,110,0.12)] backdrop-blur md:p-8">
         <div className="mb-6 flex items-center gap-3 text-[#035a5a]">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e0fbf8] text-2xl">🎬</div>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e0fbf8] text-2xl">
+            🎬
+          </div>
           <div>
             <p className="text-sm text-[#05817d]">مكتبة الفيديوهات التعليمية</p>
-            <h3 className="text-2xl font-semibold">شاهد أهم الشروحات العملية المختصرة</h3>
+            <h3 className="text-2xl font-semibold">
+              شاهد أهم الشروحات العملية المختصرة
+            </h3>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -174,22 +270,33 @@ export default function ClientArticles() {
 
       <section className="rounded-[32px] border border-[#b3f1eb]/40 bg-gradient-to-br from-white via-[#e9fbf8] to-white p-6 shadow-[0_20px_45px_rgba(9,132,117,0.15)] md:p-8">
         <div className="mb-6 flex items-center gap-3 text-[#035a5a]">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#c6f5ee] text-2xl">📅</div>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#c6f5ee] text-2xl">
+            📅
+          </div>
           <div>
             <p className="text-sm text-[#05817d]">جدول ورش الإسعافات الأولية</p>
-            <h3 className="text-2xl font-semibold">اختر الدورة الأنسب واحجز مقعدك</h3>
+            <h3 className="text-2xl font-semibold">
+              اختر الدورة الأنسب واحجز مقعدك
+            </h3>
           </div>
         </div>
         <div className="space-y-4">
           {workshopsData.map((workshop) => (
-            <div key={workshop.id} className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-[#bdeee9] bg-white px-5 py-4 shadow-sm">
+            <div
+              key={workshop.id}
+              className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-[#bdeee9] bg-white px-5 py-4 shadow-sm"
+            >
               <div>
-                <h4 className="text-lg font-semibold text-[#023f3e]">{workshop.title}</h4>
+                <h4 className="text-lg font-semibold text-[#023f3e]">
+                  {workshop.title}
+                </h4>
                 <p className="text-[#0b5a59]">{workshop.schedule}</p>
                 <p className="text-sm text-[#0b5a59]/70">{workshop.duration}</p>
               </div>
               <div className="flex flex-col items-end gap-3">
-                <span className={`rounded-full px-4 py-1 text-sm font-semibold ${seatBadgeClasses[workshop.seatStatus]}`}>
+                <span
+                  className={`rounded-full px-4 py-1 text-sm font-semibold ${seatBadgeClasses[workshop.seatStatus]}`}
+                >
                   {workshop.seats} مقعد متبقي
                 </span>
                 <button className="rounded-full border border-[#0d9488] px-6 py-2 font-semibold text-[#0d9488] transition hover:-translate-y-0.5 hover:bg-[#0d9488] hover:text-white">
@@ -203,10 +310,16 @@ export default function ClientArticles() {
 
       <section className="rounded-[32px] border border-[#b3f1eb]/40 bg-white/80 p-6 shadow-[0_20px_45px_rgba(9,132,117,0.12)] backdrop-blur md:p-8">
         <div className="mb-6 flex items-center gap-3 text-[#035a5a]">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d1f6f1] text-2xl">📘</div>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d1f6f1] text-2xl">
+            📘
+          </div>
           <div>
-            <p className="text-sm text-[#05817d]">الدليل التفاعلي للإسعافات الأولية</p>
-            <h3 className="text-2xl font-semibold">اختر الحالة لمعرفة الخطوات الصحيحة</h3>
+            <p className="text-sm text-[#05817d]">
+              الدليل التفاعلي للإسعافات الأولية
+            </p>
+            <h3 className="text-2xl font-semibold">
+              اختر الحالة لمعرفة الخطوات الصحيحة
+            </h3>
           </div>
         </div>
         <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5">
@@ -227,7 +340,9 @@ export default function ClientArticles() {
         </div>
         {activeGuideContent && (
           <div className="rounded-3xl border border-[#c5f4ef] bg-white p-6 shadow-sm">
-            <h4 className="text-xl font-semibold text-[#035a5a]">{activeGuideContent.title}</h4>
+            <h4 className="text-xl font-semibold text-[#035a5a]">
+              {activeGuideContent.title}
+            </h4>
             <p className="mt-2 text-[#066360]">{activeGuideContent.summary}</p>
             <ul className="mt-4 list-disc space-y-2 pr-5 text-[#024443]">
               {activeGuideContent.steps.map((step, index) => (
@@ -240,10 +355,14 @@ export default function ClientArticles() {
 
       <section className="rounded-[32px] border border-[#b3f1eb]/40 bg-white/80 p-6 shadow-[0_20px_45px_rgba(9,132,117,0.12)] backdrop-blur md:p-8">
         <div className="mb-6 flex items-center gap-3 text-[#035a5a]">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#c9f4ef] text-2xl">📰</div>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#c9f4ef] text-2xl">
+            📰
+          </div>
           <div>
             <p className="text-sm text-[#05817d]">مقالات مخصصة لك</p>
-            <h3 className="text-2xl font-semibold">اطلع على أحدث المقالات من الخبراء</h3>
+            <h3 className="text-2xl font-semibold">
+              اطلع على أحدث المقالات من الخبراء
+            </h3>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -255,4 +374,3 @@ export default function ClientArticles() {
     </div>
   );
 }
-

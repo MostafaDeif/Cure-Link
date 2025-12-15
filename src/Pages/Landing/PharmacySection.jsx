@@ -7,10 +7,10 @@ import logo2 from "../../assets/logo2.png";
 import logo3 from "../../assets/logo3.png";
 import logo4 from "../../assets/logo4.png";
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
 const PharmacySection = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   useEffect(() => {
     AOS.init({ duration: 1000, once: false });
   }, []);
@@ -20,10 +20,9 @@ const PharmacySection = () => {
       className="flex flex-col items-center text-center w-full px-4 lg:px-32 pt-24 overflow-hidden bg-[#f5f7fa] pb-16"
       data-aos="fade-up"
       data-aos-delay="200"
-      
     >
       <p className="font-[Alexandria] font-bold text-2xl sm:text-3xl lg:text-[36px] leading-snug text-[#10204D] max-w-[1200px]">
-        {t('landing.pharmacy.partners')}
+        {t("landing.pharmacy.partners")}
       </p>
 
       {/* logos && Slider */}
@@ -37,7 +36,7 @@ const PharmacySection = () => {
                 alt={`Logo ${index + 1}`}
                 className="h-12 hover:scale-110 transition-transform duration-300"
               />
-            )
+            ),
           )}
         </div>
       </div>

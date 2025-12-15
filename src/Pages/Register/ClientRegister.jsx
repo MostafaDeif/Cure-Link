@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 export default function ClientRegister({ setUser }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); 
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [diseases, setDiseases] = useState("");
   const [address, setAddress] = useState("");
@@ -48,7 +49,7 @@ export default function ClientRegister({ setUser }) {
           const pos = marker.getLatLng();
           setLocation({ lat: pos.lat, lon: pos.lng });
           setAddress(
-            `Latitude: ${pos.lat.toFixed(5)}, Longitude: ${pos.lng.toFixed(5)}`
+            `Latitude: ${pos.lat.toFixed(5)}, Longitude: ${pos.lng.toFixed(5)}`,
           );
         });
 
@@ -57,7 +58,7 @@ export default function ClientRegister({ setUser }) {
           marker.setLatLng(e.latlng);
           setLocation({ lat, lon: lng });
           setAddress(
-            `Latitude: ${lat.toFixed(5)}, Longitude: ${lng.toFixed(5)}`
+            `Latitude: ${lat.toFixed(5)}, Longitude: ${lng.toFixed(5)}`,
           );
         });
       }
@@ -80,7 +81,7 @@ export default function ClientRegister({ setUser }) {
         const { latitude, longitude } = position.coords;
         setLocation({ lat: latitude, lon: longitude });
         setAddress(
-          `Latitude: ${latitude.toFixed(5)}, Longitude: ${longitude.toFixed(5)}`
+          `Latitude: ${latitude.toFixed(5)}, Longitude: ${longitude.toFixed(5)}`,
         );
         setLoadingLocation(false);
 
@@ -92,7 +93,7 @@ export default function ClientRegister({ setUser }) {
       () => {
         alert("Unable to fetch location. Please allow location access.");
         setLoadingLocation(false);
-      }
+      },
     );
   };
 
@@ -129,7 +130,10 @@ export default function ClientRegister({ setUser }) {
       console.log("API URL:", `${API_BASE_URL}/api/auth/signup`);
       console.log("=====================================");
 
-      const response = await axios.post(`${API_BASE_URL}/api/auth/signup`, signupData);
+      const response = await axios.post(
+        `${API_BASE_URL}/api/auth/signup`,
+        signupData,
+      );
 
       if (response.data) {
         // Store token if provided
@@ -139,7 +143,7 @@ export default function ClientRegister({ setUser }) {
         const token = response.data.data?.token;
         if (token) {
           try {
-            localStorage.setItem('token', String(token));
+            localStorage.setItem("token", String(token));
           } catch {}
         }
 
@@ -148,22 +152,30 @@ export default function ClientRegister({ setUser }) {
         // Fallback: try to parse minimal user info from JWT if backend only returned a token
         if (!userObj && token) {
           try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const base64Url = token.split(".")[1];
+            const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
             const jsonPayload = decodeURIComponent(
               atob(base64)
-                .split('')
+                .split("")
                 .map(function (c) {
-                  return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                  return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
                 })
-                .join('')
+                .join(""),
             );
             const payload = JSON.parse(jsonPayload);
             userObj = {
               id: payload.sub || payload.userId || payload.id,
-              name: payload.name || payload.fullName || payload.username || payload.email,
+              name:
+                payload.name ||
+                payload.fullName ||
+                payload.username ||
+                payload.email,
               email: payload.email,
-              role: payload.role || payload.roles || (payload.role && payload.role[0]) || 'customer',
+              role:
+                payload.role ||
+                payload.roles ||
+                (payload.role && payload.role[0]) ||
+                "customer",
             };
           } catch (err) {
             // ignore
@@ -172,20 +184,26 @@ export default function ClientRegister({ setUser }) {
 
         if (userObj) {
           try {
-            localStorage.setItem('user', JSON.stringify(userObj));
+            localStorage.setItem("user", JSON.stringify(userObj));
           } catch {}
           if (setUser) setUser(userObj);
           // Also notify same-tab listeners
-          window.dispatchEvent(new Event('auth-change'));
+          window.dispatchEvent(new Event("auth-change"));
         }
 
         // Navigate to user dashboard and replace history so back doesn't go to signup
-        navigate('/user', { replace: true });
+        navigate("/user", { replace: true });
       }
     } catch (error) {
-      setError(error.response?.data?.data?.message || 'Registration failed. Please try again.');
-      console.error('Signup error:', error);
-      alert(error.response?.data?.data?.message || 'Registration failed. Please try again.');
+      setError(
+        error.response?.data?.data?.message ||
+          "Registration failed. Please try again.",
+      );
+      console.error("Signup error:", error);
+      alert(
+        error.response?.data?.data?.message ||
+          "Registration failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -292,7 +310,7 @@ export default function ClientRegister({ setUser }) {
           disabled={loading}
           className="mt-6 w-full py-3 rounded-md text-white bg-indigo-500 hover:bg-indigo-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? 'Registering...' : 'Register'}
+          {loading ? "Registering..." : "Register"}
         </button>
       </form>
     </div>

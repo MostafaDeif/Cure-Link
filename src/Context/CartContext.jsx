@@ -24,7 +24,7 @@ export const CartProvider = ({ children }) => {
       const found = prev.find((i) => i.id === product.id);
       if (found) {
         return prev.map((i) =>
-          i.id === product.id ? { ...i, qty: i.qty + qty } : i
+          i.id === product.id ? { ...i, qty: i.qty + qty } : i,
         );
       } else {
         return [
@@ -48,7 +48,7 @@ export const CartProvider = ({ children }) => {
 
   const updateQuantity = (id, qty) => {
     setItems((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, qty: Math.max(1, qty) } : i))
+      prev.map((i) => (i.id === id ? { ...i, qty: Math.max(1, qty) } : i)),
     );
   };
 

@@ -1,12 +1,25 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IconLayoutDashboard, IconCalendarCheck, IconUsers, IconUser } from "./icons";
+import {
+  IconLayoutDashboard,
+  IconCalendarCheck,
+  IconUsers,
+  IconUser,
+} from "./icons";
 
 export default function DoctorSidebar({ isOpen, toggleSidebar, activeName }) {
   const navigate = useNavigate();
   const navItems = [
-    { name: "Dashboard", icon: <IconLayoutDashboard />, path: "/doctor-dashboard" },
-    { name: "Appointments", icon: <IconCalendarCheck />, path: "/doctor-appointments" },
+    {
+      name: "Dashboard",
+      icon: <IconLayoutDashboard />,
+      path: "/doctor-dashboard",
+    },
+    {
+      name: "Appointments",
+      icon: <IconCalendarCheck />,
+      path: "/doctor-appointments",
+    },
     { name: "Patients", icon: <IconUsers />, path: "/doctor-patients" },
     { name: "Profile", icon: <IconUser />, path: "/doctor-profile" },
   ];
@@ -18,10 +31,16 @@ export default function DoctorSidebar({ isOpen, toggleSidebar, activeName }) {
       }`}
     >
       <div className="p-6 text-3xl font-bold text-[#006d77] flex justify-between items-center border-b">
-        <button onClick={() => navigate("/doctor-dashboard")} className="cursor-pointer">
+        <button
+          onClick={() => navigate("/doctor-dashboard")}
+          className="cursor-pointer"
+        >
           CureLink
         </button>
-        <button onClick={() => toggleSidebar(false)} className="text-gray-600 hover:text-gray-900 text-2xl">
+        <button
+          onClick={() => toggleSidebar(false)}
+          className="text-gray-600 hover:text-gray-900 text-2xl"
+        >
           ×
         </button>
       </div>
@@ -61,5 +80,3 @@ export default function DoctorSidebar({ isOpen, toggleSidebar, activeName }) {
     </div>
   );
 }
-
-

@@ -16,7 +16,7 @@ export default function DoctorProfile({ doctorsData }) {
   if (!doctorsData || doctorsData.length === 0)
     return <p className="p-6 text-red-500">No doctors data available</p>;
   const doctor = doctorsData.find(
-    (d) => d.name.toLowerCase() === doctorName.toLowerCase()
+    (d) => d.name.toLowerCase() === doctorName.toLowerCase(),
   );
   if (!doctor) return <p className="p-6 text-red-500">Doctor not found</p>;
   // Calendar logic
@@ -26,10 +26,15 @@ export default function DoctorProfile({ doctorsData }) {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const daysArray = Array.from({ length: firstDay }, () => null).concat(
-    Array.from({ length: daysInMonth }, (_, i) => i + 1)
+    Array.from({ length: daysInMonth }, (_, i) => i + 1),
   );
   const availableSlots = [
-    "09:00 AM","10:00 AM","11:00 AM","01:00 PM","02:00 PM","03:00 PM",
+    "09:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
   ];
   const handleBook = () => {
     if (!selectedDate) return alert("Please select a date first");
@@ -41,16 +46,21 @@ export default function DoctorProfile({ doctorsData }) {
         total: 0,
         nurse: doctor.name,
         address: "-",
-        items: [`Date: ${selectedDate.toDateString()}`, `Time: ${selectedSlot}`],
+        items: [
+          `Date: ${selectedDate.toDateString()}`,
+          `Time: ${selectedSlot}`,
+        ],
       });
     } catch {}
 
     alert(
-      `Appointment booked with ${doctor.name} on ${selectedDate.toDateString()} at ${selectedSlot}`
+      `Appointment booked with ${doctor.name} on ${selectedDate.toDateString()} at ${selectedSlot}`,
     );
     setSelectedDate(null);
     setSelectedSlot(null);
-    try { navigate('/user'); } catch {}
+    try {
+      navigate("/user");
+    } catch {}
   };
   const handleAddComment = () => {
     if (newComment.trim() !== "") {
@@ -127,8 +137,8 @@ export default function DoctorProfile({ doctorsData }) {
                       selectedDate?.getFullYear() === year
                         ? "bg-blue-600 text-white"
                         : isPast
-                        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                        : "bg-white text-gray-700 border-gray-300 hover:bg-blue-200"
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          : "bg-white text-gray-700 border-gray-300 hover:bg-blue-200"
                     }`}
                   >
                     {day}
@@ -137,7 +147,7 @@ export default function DoctorProfile({ doctorsData }) {
               })()
             ) : (
               <div key={idx}></div>
-            )
+            ),
           )}
         </div>
       </section>

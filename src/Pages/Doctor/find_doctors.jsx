@@ -40,7 +40,13 @@ const CategoryIcon = ({ icon: Icon, label, selected, onClick }) => (
 );
 
 // Component for Recommended Doctor Card
-const RecommendedDoctorCard = ({ name, specialty, rating, distance, imageUrl }) => {
+const RecommendedDoctorCard = ({
+  name,
+  specialty,
+  rating,
+  distance,
+  imageUrl,
+}) => {
   const navigate = useNavigate();
   return (
     <div className="flex items-center space-x-4 rounded-2xl bg-white p-4 shadow-md hover:shadow-lg transition">
@@ -60,7 +66,9 @@ const RecommendedDoctorCard = ({ name, specialty, rating, distance, imageUrl }) 
         <div className="mt-3 flex items-center space-x-4">
           <div className="flex items-center space-x-1 rounded-full bg-blue-100 px-2 py-0.5">
             <Star className="h-4 w-4 text-blue-600" fill="#3B82F6" />
-            <span className="text-sm font-semibold text-blue-700">{rating}</span>
+            <span className="text-sm font-semibold text-blue-700">
+              {rating}
+            </span>
           </div>
           <div className="flex items-center space-x-1">
             <MapPin className="h-4 w-4 text-gray-400" />
@@ -148,13 +156,13 @@ export default function FindDoctors() {
       ? doctorsData.filter(
           (doc) =>
             doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            doc.specialty.toLowerCase().includes(searchTerm.toLowerCase())
+            doc.specialty.toLowerCase().includes(searchTerm.toLowerCase()),
         )
       : doctorsData.filter(
           (doc) =>
             doc.specialty === selectedCategory &&
             (doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              doc.specialty.toLowerCase().includes(searchTerm.toLowerCase()))
+              doc.specialty.toLowerCase().includes(searchTerm.toLowerCase())),
         );
 
   const filteredRecommended = filteredDoctors.slice(0, 3);
@@ -286,7 +294,9 @@ export default function FindDoctors() {
                 className="h-48 w-full object-cover transition-transform duration-300 hover:scale-105"
               />
               <div className="p-4 text-center">
-                <h3 className="text-lg font-bold text-gray-800">{doctor.name}</h3>
+                <h3 className="text-lg font-bold text-gray-800">
+                  {doctor.name}
+                </h3>
                 <p className="text-sm text-gray-500 mb-2">{doctor.specialty}</p>
 
                 <div className="flex justify-center items-center gap-3 text-sm text-gray-600">

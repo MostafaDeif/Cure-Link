@@ -1,15 +1,20 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../../Context/LanguageContext";
 
-import LogoBadge from '../../assets/ourLogo.jpeg';
-import GooglePlayBadge from '../../assets/Group.png';
-import AppStoreBadge from '../../assets/katman2.png';
-import AppGalleryBadge from '../../assets/Badges.png';
+import LogoBadge from "../../assets/ourLogo.jpeg";
+import GooglePlayBadge from "../../assets/Group.png";
+import AppStoreBadge from "../../assets/katman2.png";
+import AppGalleryBadge from "../../assets/Badges.png";
 
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaAmbulance } from 'react-icons/fa';
-import './index.css';
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaAmbulance,
+} from "react-icons/fa";
+import "./index.css";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -21,10 +26,10 @@ const Footer = () => {
       className="bg-[#128ADD] text-white pt-16 pb-6 font-sans"
       dir={language === "ar" ? "rtl" : "ltr"}
     >
-
       {/* المحتوى الداخلي */}
-      <div className={`max-w-[1200px] mx-auto grid md:grid-cols-4 grid-cols-1 gap-10 px-6`}>
-
+      <div
+        className={`max-w-[1200px] mx-auto grid md:grid-cols-4 grid-cols-1 gap-10 px-6`}
+      >
         {/* 1. شعار وتفاصيل */}
         <div>
           <div className="flex items-center justify-start gap-2 mb-4">
@@ -42,14 +47,24 @@ const Footer = () => {
 
           {/* سوشيال */}
           <div className="flex gap-3 mt-2 items-center">
-            <a href="#" className="w-9 h-9 flex items-center justify-center bg-white text-[#128ADD] rounded-full shadow-md hover:scale-110 transition-transform duration-200">
+            <a
+              href="#"
+              className="w-9 h-9 flex items-center justify-center bg-white text-[#128ADD] rounded-full shadow-md hover:scale-110 transition-transform duration-200"
+            >
               <FaFacebookF size={15} />
             </a>
-            <a href="#" className="w-9 h-9 flex items-center justify-center bg-white text-[#128ADD] rounded-full shadow-md hover:scale-110 transition-transform duration-200">
+            <a
+              href="#"
+              className="w-9 h-9 flex items-center justify-center bg-white text-[#128ADD] rounded-full shadow-md hover:scale-110 transition-transform duration-200"
+            >
               <FaInstagram size={15} />
             </a>
-            <a href="https://www.linkedin.com/groups/16200018" target="_blank" rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center bg-white text-[#128ADD] rounded-full shadow-md hover:scale-110 transition-transform duration-200">
+            <a
+              href="https://www.linkedin.com/groups/16200018"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 flex items-center justify-center bg-white text-[#128ADD] rounded-full shadow-md hover:scale-110 transition-transform duration-200"
+            >
               <FaLinkedinIn size={15} />
             </a>
             <a
@@ -68,10 +83,26 @@ const Footer = () => {
           </h4>
 
           <ul className="space-y-2 text-sm opacity-90">
-            <li><Link to="/services" className="hover:underline">{t("nav.services")}</Link></li>
-            <li><a href="#" className="hover:underline">{t("footer.healthcare")}</a></li>
-            <li><Link to="/articles" className="hover:underline">{t("footer.conferences")}</Link></li>
-            <li><Link to="/about" className="hover:underline">{t("nav.about")}</Link></li>
+            <li>
+              <Link to="/services" className="hover:underline">
+                {t("nav.services")}
+              </Link>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">
+                {t("footer.healthcare")}
+              </a>
+            </li>
+            <li>
+              <Link to="/articles" className="hover:underline">
+                {t("footer.conferences")}
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:underline">
+                {t("nav.about")}
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -82,8 +113,16 @@ const Footer = () => {
           </h4>
 
           <ul className="space-y-2 text-sm opacity-90">
-            <li><a href="#" className="hover:underline">{t("footer.support")}</a></li>
-            <li><a href="#" className="hover:underline">{t("footer.FrequentlyAskedQuestions")}</a></li>
+            <li>
+              <a href="#" className="hover:underline">
+                {t("footer.support")}
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">
+                {t("footer.FrequentlyAskedQuestions")}
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -94,28 +133,42 @@ const Footer = () => {
           </h4>
 
           <div className="flex flex-col gap-3">
-            <img src={AppStoreBadge} alt="App Store" className="w-32 cursor-pointer" />
-            <img src={AppGalleryBadge} alt="App Gallery" className="w-32 cursor-pointer" />
-            <img src={GooglePlayBadge} alt="Google Play" className="w-32 cursor-pointer" />
+            <img
+              src={AppStoreBadge}
+              alt="App Store"
+              className="w-32 cursor-pointer"
+            />
+            <img
+              src={AppGalleryBadge}
+              alt="App Gallery"
+              className="w-32 cursor-pointer"
+            />
+            <img
+              src={GooglePlayBadge}
+              alt="Google Play"
+              className="w-32 cursor-pointer"
+            />
           </div>
         </div>
-
       </div>
 
       {/* البار السفلي */}
       <div className="max-w-[1200px] mx-auto mt-10 pt-5 border-t border-white/30 flex flex-col md:flex-row justify-between items-center text-sm px-6 gap-y-3">
-
         <div className="text-sm md:text-base font-medium text-center md:text-start">
-          © {year} جميع الحقوق محفوظة لـ <span className="font-semibold">CureLink</span>
+          © {year} جميع الحقوق محفوظة لـ{" "}
+          <span className="font-semibold">CureLink</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <a href="#" className="hover:underline">{t("footer.terms")}</a>
+          <a href="#" className="hover:underline">
+            {t("footer.terms")}
+          </a>
           <span>|</span>
-          <a href="#" className="hover:underline">{t("footer.privacy")}</a>
+          <a href="#" className="hover:underline">
+            {t("footer.privacy")}
+          </a>
         </div>
       </div>
-
     </footer>
   );
 };

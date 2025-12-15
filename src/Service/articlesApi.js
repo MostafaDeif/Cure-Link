@@ -4,7 +4,8 @@ const mockArticles = {
     {
       id: 1,
       title: "Latest Advances in Cardiology",
-      summary: "Exploring recent breakthroughs in cardiovascular medicine and patient care.",
+      summary:
+        "Exploring recent breakthroughs in cardiovascular medicine and patient care.",
     },
     {
       id: 2,
@@ -14,19 +15,22 @@ const mockArticles = {
     {
       id: 3,
       title: "Managing Chronic Conditions",
-      summary: "Strategies for long-term patient management and care coordination.",
+      summary:
+        "Strategies for long-term patient management and care coordination.",
     },
   ],
   pharmacist: [
     {
       id: 4,
       title: "New Medications in 2024",
-      summary: "Review of recently approved pharmaceutical products and their uses.",
+      summary:
+        "Review of recently approved pharmaceutical products and their uses.",
     },
     {
       id: 5,
       title: "Drug Interaction Guidelines",
-      summary: "Understanding common drug interactions and how to prevent them.",
+      summary:
+        "Understanding common drug interactions and how to prevent them.",
     },
     {
       id: 6,
@@ -56,7 +60,7 @@ const mockArticles = {
 export const getArticles = async (role) => {
   // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 100));
-  
+
   // Return mock data based on role
   const roleKey = role || "client";
   return mockArticles[roleKey] || mockArticles.client;

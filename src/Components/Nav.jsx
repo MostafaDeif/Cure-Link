@@ -4,7 +4,7 @@ import logo from "../assets/JustLogo.jpg";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../Context/LanguageContext.jsx";
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "../Context/CartContext"; 
+import { useCart } from "../Context/CartContext";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -18,8 +18,8 @@ export default function Nav() {
   });
 
   // Cart items count
-  const { getTotalItems } = useCart(); 
-  const totalItems = getTotalItems(); 
+  const { getTotalItems } = useCart();
+  const totalItems = getTotalItems();
 
   useEffect(() => {
     const onStorage = (e) => {
@@ -107,14 +107,17 @@ export default function Nav() {
           {t("nav.articles")}
         </NavLink>
 
-        <button onClick={toggleLang} className="px-3 py-1 border rounded text-sm">
+        <button
+          onClick={toggleLang}
+          className="px-3 py-1 border rounded text-sm"
+        >
           {language === "en" ? "ع" : "EN"}
         </button>
 
         {user ? (
           <Link
-  to="/user"
-  className="
+            to="/user"
+            className="
     flex items-center gap-2
     px-5 py-2
     rounded-full
@@ -127,12 +130,9 @@ export default function Nav() {
     hover:border-blue-300
     transition-all duration-200
   "
->
-  <span>
-    {user.name || t("nav.profile")}
-  </span>
-</Link>
-
+          >
+            <span>{user.name || t("nav.profile")}</span>
+          </Link>
         ) : (
           <Link
             to="/login"
@@ -157,7 +157,6 @@ export default function Nav() {
 
       {/* Mobile Menu Button */}
       <div className="flex items-center gap-3 sm:hidden">
-
         {totalItems > 0 && (
           <button
             onClick={() => navigate("/cart")}
@@ -177,14 +176,38 @@ export default function Nav() {
         >
           {open ? (
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M4 4L16 16" stroke="#426287" strokeWidth="1.6" strokeLinecap="round" />
-              <path d="M16 4L4 16" stroke="#426287" strokeWidth="1.6" strokeLinecap="round" />
+              <path
+                d="M4 4L16 16"
+                stroke="#426287"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+              <path
+                d="M16 4L4 16"
+                stroke="#426287"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
             </svg>
           ) : (
             <svg width="21" height="15" viewBox="0 0 21 15" fill="none">
               <rect width="21" height="1.5" rx=".75" fill="#426287" />
-              <rect x="8" y="6" width="13" height="1.5" rx=".75" fill="#426287" />
-              <rect x="6" y="13" width="15" height="1.5" rx=".75" fill="#426287" />
+              <rect
+                x="8"
+                y="6"
+                width="13"
+                height="1.5"
+                rx=".75"
+                fill="#426287"
+              />
+              <rect
+                x="6"
+                y="13"
+                width="15"
+                height="1.5"
+                rx=".75"
+                fill="#426287"
+              />
             </svg>
           )}
         </button>

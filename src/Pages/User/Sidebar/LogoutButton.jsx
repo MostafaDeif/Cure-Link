@@ -18,7 +18,7 @@ export default function LogoutButton() {
       onClick={handleLogout}
       className="w-full bg-red-50 text-red-700 px-4 py-2 rounded hover:bg-red-100 transition"
     >
-      {t('user.sidebar.logout')}
+      {t("user.sidebar.logout")}
     </button>
   );
 }

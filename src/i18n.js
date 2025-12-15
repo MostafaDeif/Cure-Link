@@ -37,7 +37,7 @@ i18n
             orderNowPharmacy:
               "Order all your pharmacy needs easily; get your medicines from an online pharmacy in Egypt.",
           },
-          
+
           landing: {
             hero: {
               title: "Your all-in-one medical platform in one place",
@@ -46,7 +46,8 @@ i18n
               button: "Browse Services",
             },
             pharmacy: {
-              partners: "We partner with over 1000 pharmacies to serve more users",
+              partners:
+                "We partner with over 1000 pharmacies to serve more users",
             },
             servicesSection: {
               title: "Medicines",
@@ -108,7 +109,8 @@ i18n
               woundDressing: "Wound Dressing",
             },
             highlight: "Early Protection for Your Family Health",
-            highlightDesc: "Book a nurse now for quick and trusted care at home.",
+            highlightDesc:
+              "Book a nurse now for quick and trusted care at home.",
             topNurses: "Top Nurses",
             showAll: "Show All",
             bookButton: "Book",
@@ -126,7 +128,6 @@ i18n
               phoneLabel: "Phone",
               noUser: "You are not signed in",
               edit: "Edit",
-
             },
             orders: {
               title: "My Orders",
@@ -177,7 +178,6 @@ i18n
       },
       ar: {
         translation: {
-
           nav: {
             home: "الرئيسية",
             about: "من نحن",
@@ -211,7 +211,8 @@ i18n
               button: "تصفح الخدمات",
             },
             pharmacy: {
-              partners: "نتعاون مع أكثر من 1000 صيدلية لخدمة أكبر عدد من المستخدمين",
+              partners:
+                "نتعاون مع أكثر من 1000 صيدلية لخدمة أكبر عدد من المستخدمين",
             },
             servicesSection: {
               title: "الأدوية",
@@ -256,7 +257,7 @@ i18n
                   link: "/Articles",
                 },
               ],
-            }
+            },
           },
           findNurse: {
             title: "ممرّضوك الموثوقون",
@@ -273,7 +274,8 @@ i18n
               woundDressing: "تغيير الضمادات",
             },
             highlight: "حماية مبكرة لصحة عائلتك",
-            highlightDesc: "احجز ممرضة الآن للحصول على رعاية سريعة وموثوقة في المنزل.",
+            highlightDesc:
+              "احجز ممرضة الآن للحصول على رعاية سريعة وموثوقة في المنزل.",
             topNurses: "أفضل الممرضات",
             showAll: "عرض الكل",
             bookButton: "احجز",

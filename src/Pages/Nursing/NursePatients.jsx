@@ -16,7 +16,7 @@ export default function NursePatients() {
   const startIndex = (currentPage - 1) * patientsPerPage;
   const currentPatients = filteredPatients.slice(
     startIndex,
-    startIndex + patientsPerPage
+    startIndex + patientsPerPage,
   );
   const totalPages = Math.ceil(filteredPatients.length / patientsPerPage);
 

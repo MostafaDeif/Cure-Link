@@ -3,7 +3,11 @@ import SidebarItem from "./SidebarItem";
 import LogoutButton from "./LogoutButton";
 import { useTranslation } from "react-i18next";
 
-export default function Sidebar({ activeSection, setActiveSection, currentUser }) {
+export default function Sidebar({
+  activeSection,
+  setActiveSection,
+  currentUser,
+}) {
   const { t } = useTranslation();
   const displayName =
     currentUser?.name ||
@@ -23,7 +27,7 @@ export default function Sidebar({ activeSection, setActiveSection, currentUser }
             src={
               currentUser?.avatar ||
               `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                displayName || "User"
+                displayName || "User",
               )}&background=426287&color=fff`
             }
             alt="avatar"
@@ -31,16 +35,41 @@ export default function Sidebar({ activeSection, setActiveSection, currentUser }
           />
         </div>
         <h2 className="font-semibold text-lg text-gray-700">
-          {displayName || t('user.profile.noUser')}
+          {displayName || t("user.profile.noUser")}
         </h2>
       </div>
 
       <ul className="space-y-2 flex md:block justify-between">
-        <SidebarItem section="profile" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.profile')} />
-        <SidebarItem section="visits" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.visits')} />
-        <SidebarItem section="orders" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.orders')} />
-        <SidebarItem section="favorites" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.favorites')} />
-        <SidebarItem section="settings" activeSection={activeSection} setActiveSection={setActiveSection} label={t('user.sidebar.settings')} />
+        <SidebarItem
+          section="profile"
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          label={t("user.sidebar.profile")}
+        />
+        <SidebarItem
+          section="visits"
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          label={t("user.sidebar.visits")}
+        />
+        <SidebarItem
+          section="orders"
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          label={t("user.sidebar.orders")}
+        />
+        <SidebarItem
+          section="favorites"
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          label={t("user.sidebar.favorites")}
+        />
+        <SidebarItem
+          section="settings"
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          label={t("user.sidebar.settings")}
+        />
       </ul>
 
       <div className="mt-6 text-center">

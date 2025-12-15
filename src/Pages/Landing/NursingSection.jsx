@@ -1,9 +1,9 @@
 import React from "react";
 import nursingimg from "../../assets/nursingimg.png";
 import { Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next";
 const NursingSection = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
       <div
@@ -21,7 +21,7 @@ const NursingSection = () => {
             data-aos-duration="600"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.nursingSection.title')}
+            {t("landing.nursingSection.title")}
           </h2>
 
           <p
@@ -31,7 +31,7 @@ const NursingSection = () => {
             data-aos-duration="700"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.nursingSection.paragraph')}
+            {t("landing.nursingSection.paragraph")}
           </p>
 
           <Link
@@ -54,7 +54,7 @@ const NursingSection = () => {
             data-aos-duration="750"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.nursingSection.button')}
+            {t("landing.nursingSection.button")}
           </Link>
         </div>
         {/* Image */}

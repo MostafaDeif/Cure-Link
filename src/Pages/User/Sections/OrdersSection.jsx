@@ -45,8 +45,11 @@ export default function OrdersSection() {
     if (Array.isArray(stored) && stored.length > 0) setOrders(stored);
   }, []);
 
-  const [activeOrderId, setActiveOrderId] = useState(() =>
-    (orders.find((o) => o.status === "active") && orders.find((o) => o.status === "active").id) || (orders[0] && orders[0].id)
+  const [activeOrderId, setActiveOrderId] = useState(
+    () =>
+      (orders.find((o) => o.status === "active") &&
+        orders.find((o) => o.status === "active").id) ||
+      (orders[0] && orders[0].id),
   );
 
   // If orders change (e.g. a new pharmacy order was added), ensure activeOrderId points
@@ -81,11 +84,14 @@ export default function OrdersSection() {
           <span
             className={`mt-3 inline-block px-3 py-1 rounded-full text-sm font-medium ${orderStatusColors[activeOrder.status]}`}
           >
-            {t(`user.orders.status.${activeOrder.status}`) || orderStatusLabels[activeOrder.status]}
+            {t(`user.orders.status.${activeOrder.status}`) ||
+              orderStatusLabels[activeOrder.status]}
           </span>
 
           <div className="mt-4 text-sm text-gray-700">
-            <div className="font-medium mb-1">{t("user.orders.itemsLabel")}</div>
+            <div className="font-medium mb-1">
+              {t("user.orders.itemsLabel")}
+            </div>
             <ul className="list-disc list-inside">
               {activeOrder.items.map((it, idx) => (
                 <li key={idx}>{it}</li>
@@ -95,7 +101,9 @@ export default function OrdersSection() {
         </div>
       )}
 
-      <h4 className="text-lg font-semibold mb-3">{t("user.orders.lastOrders")}</h4>
+      <h4 className="text-lg font-semibold mb-3">
+        {t("user.orders.lastOrders")}
+      </h4>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {lastOrders.map((order) => (
           <div
@@ -110,7 +118,8 @@ export default function OrdersSection() {
             <span
               className={`mt-2 px-3 py-1 inline-block rounded-full text-xs font-medium ${orderStatusColors[order.status]}`}
             >
-              {t(`user.orders.status.${order.status}`) || orderStatusLabels[order.status]}
+              {t(`user.orders.status.${order.status}`) ||
+                orderStatusLabels[order.status]}
             </span>
           </div>
         ))}

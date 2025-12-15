@@ -165,7 +165,7 @@ export default function FindNurse() {
           n.specialty.toLowerCase().includes(selectedCategory.toLowerCase());
         return matchesSearch && matchesGender && matchesCategory;
       }),
-    [searchTerm, selectedGender, selectedCategory]
+    [searchTerm, selectedGender, selectedCategory],
   );
 
   // إعداد السلايدر محسّن للتكرار ودعم اللغة
@@ -287,12 +287,12 @@ export default function FindNurse() {
 
           {filteredNurses.length > 0 ? (
             <div className="relative overflow-hidden w-full">
-           <div
-  className={`flex gap-6 whitespace-nowrap animate-slide ${
-    language === "ar" ? "rtl-slide" : ""
-  }`}
-  style={{ animationDuration: `${repeatedNurses.length * 1.5}s` }}
->
+              <div
+                className={`flex gap-6 whitespace-nowrap animate-slide ${
+                  language === "ar" ? "rtl-slide" : ""
+                }`}
+                style={{ animationDuration: `${repeatedNurses.length * 1.5}s` }}
+              >
                 {repeatedNurses.map((n, index) => (
                   <div
                     key={index}
@@ -305,8 +305,8 @@ export default function FindNurse() {
                       onBook={() =>
                         navigate(
                           `/nurse-book/${encodeURIComponent(
-                            language === "ar" ? n.name : n.nameEn
-                          )}`
+                            language === "ar" ? n.name : n.nameEn,
+                          )}`,
                         )
                       }
                     />

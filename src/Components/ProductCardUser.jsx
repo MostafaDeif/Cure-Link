@@ -11,9 +11,7 @@ export default function ProductCardUser({
   };
 
   const priceText =
-    typeof product.price === "number"
-      ? `$${product.price.toFixed(2)}`
-      : "";
+    typeof product.price === "number" ? `$${product.price.toFixed(2)}` : "";
 
   const oldPriceText =
     typeof product.oldPrice === "number"
@@ -21,11 +19,7 @@ export default function ProductCardUser({
       : null;
 
   return (
-    <article
-      className="product-card"
-      role="article"
-      aria-label={product.name}
-    >
+    <article className="product-card" role="article" aria-label={product.name}>
       <button
         className="card-click-area"
         onClick={() => onOpen(product)}

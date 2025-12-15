@@ -15,9 +15,24 @@ const Appointment = () => {
     setSidebarOpen(value);
   };
   const events = [
-    { title: "Mrs. Sarah Lee - Flu", start: new Date(2025, 9, 21, 10, 0), end: new Date(2025, 9, 21, 11, 0), color: "#80CBC4" },
-    { title: "Mr. Ahmed Nabil - Checkup", start: new Date(2025, 9, 22, 12, 0), end: new Date(2025, 9, 22, 13, 0), color: "#FFCC80" },
-    { title: "Mrs. Mona Saad - Diabetes", start: new Date(2025, 9, 23, 9, 0), end: new Date(2025, 9, 23, 10, 0), color: "#90CAF9" },
+    {
+      title: "Mrs. Sarah Lee - Flu",
+      start: new Date(2025, 9, 21, 10, 0),
+      end: new Date(2025, 9, 21, 11, 0),
+      color: "#80CBC4",
+    },
+    {
+      title: "Mr. Ahmed Nabil - Checkup",
+      start: new Date(2025, 9, 22, 12, 0),
+      end: new Date(2025, 9, 22, 13, 0),
+      color: "#FFCC80",
+    },
+    {
+      title: "Mrs. Mona Saad - Diabetes",
+      start: new Date(2025, 9, 23, 9, 0),
+      end: new Date(2025, 9, 23, 10, 0),
+      color: "#90CAF9",
+    },
   ];
   const eventStyleGetter = (event) => ({
     style: {
@@ -31,17 +46,25 @@ const Appointment = () => {
   });
   return (
     <div className="flex bg-gray-100 min-h-screen transition-all duration-500">
-      <DoctorSidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} activeName="Appointments" />
+      <DoctorSidebar
+        isOpen={sidebarOpen}
+        toggleSidebar={toggleSidebar}
+        activeName="Appointments"
+      />
       <div
         className={`flex-1 flex flex-col overflow-hidden transition-all duration-500 ${
           sidebarOpen ? "ml-64" : "ml-0"
         }`}
       >
-        <HeaderDoctor toggleSidebar={() => toggleSidebar(true)} sidebarOpen={sidebarOpen} className="fixed top-0 left-0 right-0 z-30" />
-<main
-  className="flex-1 overflow-y-auto bg-gray-100 p-4 md:p-8 transition-all duration-500 mt-16"
->
-          <h1 className="text-2xl font-bold mb-6 text-[#006d77]">Appointments Calendar</h1>
+        <HeaderDoctor
+          toggleSidebar={() => toggleSidebar(true)}
+          sidebarOpen={sidebarOpen}
+          className="fixed top-0 left-0 right-0 z-30"
+        />
+        <main className="flex-1 overflow-y-auto bg-gray-100 p-4 md:p-8 transition-all duration-500 mt-16">
+          <h1 className="text-2xl font-bold mb-6 text-[#006d77]">
+            Appointments Calendar
+          </h1>
           <div className="bg-white p-4 rounded-lg shadow-sm h-[80vh]">
             <Calendar
               localizer={localizer}

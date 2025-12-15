@@ -8,7 +8,7 @@ const parseJwt = (token) => {
       atob(base64)
         .split("")
         .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
+        .join(""),
     );
     return JSON.parse(jsonPayload);
   } catch {
@@ -28,10 +28,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
         id: payload.id || payload.sub,
         email: payload.email,
         name:
-          payload.name ||
-          payload.username ||
-          payload.fullName ||
-          payload.email,
+          payload.name || payload.username || payload.fullName || payload.email,
         role:
           payload.role ||
           (Array.isArray(payload.roles) ? payload.roles[0] : payload.roles) ||

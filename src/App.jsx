@@ -59,8 +59,6 @@ import AllDoctors from "./Pages/Doctor/AllDoctors";
 
 import Footer from "./Components/Footer/Footer";
 
-
-
 const Layout = ({ children }) => {
   const location = useLocation();
 
@@ -94,12 +92,11 @@ const Layout = ({ children }) => {
   const showFooter = showFooterOn.includes(location.pathname);
   const showNavbar = showNavbarOn.includes(location.pathname);
 
-
   // const isPharmacyPath = location.pathname.startsWith("/pharmacy");
 
   return (
     <>
-      {showNavbar &&  <Nav />}
+      {showNavbar && <Nav />}
       {children}
       {showFooter && <Footer />}
     </>
@@ -154,139 +151,130 @@ const App = () => {
 
   return (
     <Router>
-      
-        <ScrollToTop />
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/medicine" element={<Medicine />} />
+      <ScrollToTop />
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/medicine" element={<Medicine />} />
 
-            <Route path="/login" element={<Login setUser={setUser} />} />
-            <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/register" element={<Register />} />
 
-            {/*  صفحة المنتج دايناميك */}
-            <Route path="/product/:id" element={<ProductInfo />} />
+          {/*  صفحة المنتج دايناميك */}
+          <Route path="/product/:id" element={<ProductInfo />} />
 
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/pharmacy" element={<Pharmacy />} />
-            <Route path="/doctor" element={<Doctor />} />
-            <Route path="/landing" element={<Landing />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/pharmacy" element={<Pharmacy />} />
+          <Route path="/doctor" element={<Doctor />} />
+          <Route path="/landing" element={<Landing />} />
 
-            <Route
-              path="/user"
-              element={
-               
-                  <User />
-               
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute requiredRole="admin">
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
+          <Route path="/user" element={<User />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
 
-            <Route
-              path="/pharmacy-dashboard"
-              element={
-                <ProtectedRoute requiredRole="pharmacy">
-                  <PharmacyDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/doctor-dashboard"
-              element={
-                <ProtectedRoute requiredRole="doctor">
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/doctor-appointments"
-              element={
-                <ProtectedRoute requiredRole="doctor">
-                  <Appoinment />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/doctor-patients"
-              element={
-                <ProtectedRoute requiredRole="doctor">
-                  <Patients />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/doctor-profile"
-              element={
-                <ProtectedRoute requiredRole="doctor">
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
+          <Route
+            path="/pharmacy-dashboard"
+            element={
+              <ProtectedRoute requiredRole="pharmacy">
+                <PharmacyDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/doctor-dashboard"
+            element={
+              <ProtectedRoute requiredRole="doctor">
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/doctor-appointments"
+            element={
+              <ProtectedRoute requiredRole="doctor">
+                <Appoinment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/doctor-patients"
+            element={
+              <ProtectedRoute requiredRole="doctor">
+                <Patients />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/doctor-profile"
+            element={
+              <ProtectedRoute requiredRole="doctor">
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
 
-            <Route path="/find_doctor" element={<FindDoctors />} />
-            <Route path="/all-doctors" element={<AllDoctors />} />
-            <Route
-              path="/doctor-profile/:doctorName"
-              element={<DoctorProfile doctorsData={doctorsData} />}
-            />
+          <Route path="/find_doctor" element={<FindDoctors />} />
+          <Route path="/all-doctors" element={<AllDoctors />} />
+          <Route
+            path="/doctor-profile/:doctorName"
+            element={<DoctorProfile doctorsData={doctorsData} />}
+          />
 
-            <Route
-              path="/find_nurse"
-              element={<FindNurse nursesData={nursesData} />}
-            />
-            <Route
-              path="/nurse-book/:nurseName"
-              element={<BookNurse nursesData={nursesData} />}
-            />
-            <Route
-              path="/all-nurses"
-              element={<AllNurses nursesData={nursesData} />}
-            />
+          <Route
+            path="/find_nurse"
+            element={<FindNurse nursesData={nursesData} />}
+          />
+          <Route
+            path="/nurse-book/:nurseName"
+            element={<BookNurse nursesData={nursesData} />}
+          />
+          <Route
+            path="/all-nurses"
+            element={<AllNurses nursesData={nursesData} />}
+          />
 
-            <Route path="/nursing" element={<NurseLayout />}>
-              <Route index element={<NurseDashboard />} />
-              <Route path="nurse_dashboard/:id" element={<NurseDashboard />} />
-              <Route
-                path="nurse_appointments/:id"
-                element={<NurseAppointments />}
-              />
-              <Route path="nurse_patients/:id" element={<NursePatients />} />
-              <Route path="nurse_profile/:id" element={<NurseProfile />} />
-            </Route>
+          <Route path="/nursing" element={<NurseLayout />}>
+            <Route index element={<NurseDashboard />} />
+            <Route path="nurse_dashboard/:id" element={<NurseDashboard />} />
+            <Route
+              path="nurse_appointments/:id"
+              element={<NurseAppointments />}
+            />
+            <Route path="nurse_patients/:id" element={<NursePatients />} />
+            <Route path="nurse_profile/:id" element={<NurseProfile />} />
+          </Route>
 
-            <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles" element={<ArticlesPage />} />
 
-            <Route
-              path="/doctor-register"
-              element={<DoctorRegister setUser={setUser} />}
-            />
-            <Route
-              path="/nurse-register"
-              element={<NurseRegister setUser={setUser} />}
-            />
-            <Route
-              path="/pharmacy-register"
-              element={<PharmacyRegister setUser={setUser} />}
-            />
-            <Route
-              path="/client-register"
-              element={<ClientRegister setUser={setUser} />}
-            />
-            <Route path="/under-review" element={<UnderReview />} />
+          <Route
+            path="/doctor-register"
+            element={<DoctorRegister setUser={setUser} />}
+          />
+          <Route
+            path="/nurse-register"
+            element={<NurseRegister setUser={setUser} />}
+          />
+          <Route
+            path="/pharmacy-register"
+            element={<PharmacyRegister setUser={setUser} />}
+          />
+          <Route
+            path="/client-register"
+            element={<ClientRegister setUser={setUser} />}
+          />
+          <Route path="/under-review" element={<UnderReview />} />
 
-            <Route path="*" element={<Error />} />
-          </Routes>
-        </Layout>
-      
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 };

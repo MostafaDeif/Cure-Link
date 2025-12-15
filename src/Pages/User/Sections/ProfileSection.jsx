@@ -26,7 +26,12 @@ const ProfileSection = () => {
   }, []);
 
   const displayName =
-    user?.name || user?.fullName || user?.full_name || user?.username || user?.email || "";
+    user?.name ||
+    user?.fullName ||
+    user?.full_name ||
+    user?.username ||
+    user?.email ||
+    "";
 
   const avatarSrc =
     user?.avatar ||
@@ -47,9 +52,15 @@ const ProfileSection = () => {
         <div className="md:flex md:items-start md:gap-6">
           <div className="flex-shrink-0 mb-4 md:mb-0">
             <div className="w-28 h-28 rounded-full overflow-hidden bg-gray-100">
-              <img src={avatarSrc} alt="avatar" className="w-full h-full object-cover" />
+              <img
+                src={avatarSrc}
+                alt="avatar"
+                className="w-full h-full object-cover"
+              />
             </div>
-            <div className="text-center mt-3 font-semibold text-gray-700">{displayName || "-"}</div>
+            <div className="text-center mt-3 font-semibold text-gray-700">
+              {displayName || "-"}
+            </div>
           </div>
 
           <div className="flex-1">

@@ -6,7 +6,6 @@ export function BannerSlider() {
     "https://via.placeholder.com/1200x400?text=Banner+2",
     "https://via.placeholder.com/1200x400?text=Banner+2",
     "https://via.placeholder.com/1200x400?text=Banner+3",
-    
   ];
 
   const [index, setIndex] = React.useState(0);

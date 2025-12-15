@@ -75,8 +75,12 @@ const PharmacySlider = () => {
                   className="w-full h-full object-cover"
                 />
                 <div className="flex flex-col items-center justify-center px-4 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 absolute bottom-0 backdrop-blur-md left-0 w-full h-full bg-black/40">
-                  <p className="text-white text-xl font-bold">{pharmacy.name}</p>
-                  <p className="text-gray-200 text-sm mt-2">{pharmacy.branch}</p>
+                  <p className="text-white text-xl font-bold">
+                    {pharmacy.name}
+                  </p>
+                  <p className="text-gray-200 text-sm mt-2">
+                    {pharmacy.branch}
+                  </p>
                 </div>
               </div>
             ))}

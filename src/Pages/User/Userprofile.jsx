@@ -46,7 +46,13 @@ const User = () => {
   return (
     <div
       className="flex flex-col md:flex-row gap-6 bg-gray-50 p-2 md:p-4 rounded-xl"
-      dir={currentUser?.language === 'ar' ? 'rtl' : document.documentElement.lang === 'ar' ? 'rtl' : 'ltr'}
+      dir={
+        currentUser?.language === "ar"
+          ? "rtl"
+          : document.documentElement.lang === "ar"
+            ? "rtl"
+            : "ltr"
+      }
       style={{ minHeight: "80vh" }}
     >
       {/* Sidebar */}

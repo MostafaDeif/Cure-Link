@@ -1,10 +1,10 @@
 import React from "react";
 import doctorimg from "../../assets/Doctorsection.png";
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const DoctorSection = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
       <div
@@ -22,7 +22,7 @@ const DoctorSection = () => {
             data-aos-duration="600"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.doctorSection.title')}
+            {t("landing.doctorSection.title")}
           </h2>
 
           <p
@@ -32,7 +32,7 @@ const DoctorSection = () => {
             data-aos-duration="700"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.doctorSection.paragraph')}
+            {t("landing.doctorSection.paragraph")}
           </p>
           <Link
             to="/find_doctor"
@@ -54,9 +54,8 @@ const DoctorSection = () => {
             data-aos-duration="750"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.doctorSection.button')}
+            {t("landing.doctorSection.button")}
           </Link>
-
         </div>
 
         {/* Image */}

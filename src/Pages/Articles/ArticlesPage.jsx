@@ -8,22 +8,26 @@ import { useRole } from "../../Context/RoleContext";
 // Banner images with text - يمكن استبدالها بصور حقيقية
 const bannerData = [
   {
-    image: "https://i.pinimg.com/1200x/7d/0f/70/7d0f701cb5fa74c8374de417455affa6.jpg",
+    image:
+      "https://i.pinimg.com/1200x/7d/0f/70/7d0f701cb5fa74c8374de417455affa6.jpg",
     title: "كن جزءا من أكبر المؤتمرات الطبية العالمية",
     subtitle: "تابع الجديد أولا بأول مع Cure Link",
   },
   {
-    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&h=400&fit=crop",
     title: "تطوير مستمر للأطباء والممرضين",
     subtitle: "احصل على شهادات معتمدة من مؤسسات عالمية",
   },
   {
-    image:" https://i.pinimg.com/736x/cf/cb/ec/cfcbec57b9cce056db5f294f33e7d599.jpg",
+    image:
+      " https://i.pinimg.com/736x/cf/cb/ec/cfcbec57b9cce056db5f294f33e7d599.jpg",
     title: "آخر أخبار الأدوية والابتكارات الصيدلانية",
     subtitle: "ابق على اطلاع بأحدث التحديثات الطبية",
   },
   {
-    image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=1200&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=1200&h=400&fit=crop",
     title: "تعلم تنقذ حياة",
     subtitle: "ورش الإسعافات الأولية والتوعية الصحية للجميع",
   },
@@ -68,7 +72,10 @@ export default function ArticlesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--turquoise-50)] font-['Alexandria',sans-serif]" dir="rtl">
+    <div
+      className="min-h-screen bg-[var(--turquoise-50)] font-['Alexandria',sans-serif]"
+      dir="rtl"
+    >
       <div className="mx-auto w-full max-w-6xl px-4 pt-10 md:px-6 lg:px-0">
         {/* Banner Carousel */}
         <div className="relative mb-8 h-[360px] w-full overflow-hidden rounded-[32px] shadow-[0_35px_90px_rgba(15,118,110,0.28)]">
@@ -99,7 +106,9 @@ export default function ArticlesPage() {
                   <h2 className="text-3xl font-bold leading-snug drop-shadow-md md:text-4xl lg:text-[42px]">
                     {bannerData[bannerIndex].title}
                   </h2>
-                  <p className="text-lg text-white/90 md:text-xl">{bannerData[bannerIndex].subtitle}</p>
+                  <p className="text-lg text-white/90 md:text-xl">
+                    {bannerData[bannerIndex].subtitle}
+                  </p>
                   <div className="flex items-center justify-end gap-3 text-sm text-white/80">
                     <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-4 py-1.5">
                       <span className="h-2 w-2 rounded-full bg-lime-300" />
@@ -118,19 +127,39 @@ export default function ArticlesPage() {
           {/* Banner Navigation Arrows */}
           <button
             className="absolute right-6 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#0f766e] shadow-lg transition hover:scale-110"
-            onClick={() => setBannerIndex((prev) => (prev - 1 + bannerData.length) % bannerData.length)}
+            onClick={() =>
+              setBannerIndex(
+                (prev) => (prev - 1 + bannerData.length) % bannerData.length,
+              )
+            }
             aria-label="الشريحة السابقة"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
           <button
             className="absolute left-6 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#0f766e] shadow-lg transition hover:scale-110"
-            onClick={() => setBannerIndex((prev) => (prev + 1) % bannerData.length)}
+            onClick={() =>
+              setBannerIndex((prev) => (prev + 1) % bannerData.length)
+            }
             aria-label="الشريحة التالية"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
@@ -162,7 +191,14 @@ export default function ArticlesPage() {
             }`}
             onClick={() => setActiveTab("doctor")}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
@@ -177,7 +213,14 @@ export default function ArticlesPage() {
             }`}
             onClick={() => setActiveTab("pharmacist")}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <rect x="3" y="3" width="18" height="18" rx="2" />
               <path d="M9 9h6v6H9z" />
             </svg>
@@ -192,7 +235,14 @@ export default function ArticlesPage() {
             }`}
             onClick={() => setActiveTab("client")}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
             <span>العملاء</span>

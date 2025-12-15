@@ -7,13 +7,21 @@ const Profile = () => {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   return (
     <div className="flex bg-gray-100 overflow-hidden">
-      <DoctorSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} activeName="Profile" />
+      <DoctorSidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        activeName="Profile"
+      />
       <div
         className={`flex-1 flex flex-col transition-all duration-300 ${
           isSidebarOpen ? "ml-64" : "ml-0"
         }`}
       >
-        <HeaderDoctor toggleSidebar={toggleSidebar} sidebarOpen={isSidebarOpen} className={`fixed top-0 left-0 right-0 ${isSidebarOpen ? "ml-64" : "ml-0"}`} />
+        <HeaderDoctor
+          toggleSidebar={toggleSidebar}
+          sidebarOpen={isSidebarOpen}
+          className={`fixed top-0 left-0 right-0 ${isSidebarOpen ? "ml-64" : "ml-0"}`}
+        />
         <main className="flex-1 p-10 mt-16 overflow-y-auto">
           <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-md p-10">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
@@ -28,10 +36,14 @@ const Profile = () => {
                 </button>
               </div>
               <div className="flex-1 w-full">
-                <h2 className="text-2xl font-semibold text-[#006d77] mb-6">Doctor Information</h2>
+                <h2 className="text-2xl font-semibold text-[#006d77] mb-6">
+                  Doctor Information
+                </h2>
                 <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Full Name</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Full Name
+                    </label>
                     <input
                       type="text"
                       defaultValue="Dr. Mohamed Ahmad"
@@ -39,7 +51,9 @@ const Profile = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Email</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Email
+                    </label>
                     <input
                       type="email"
                       defaultValue="info@cu-hospital.com"
@@ -47,7 +61,9 @@ const Profile = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Phone</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Phone
+                    </label>
                     <input
                       type="text"
                       defaultValue="(02) 35676105"
@@ -55,7 +71,9 @@ const Profile = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Specialization</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Specialization
+                    </label>
                     <input
                       type="text"
                       defaultValue="Cardiology"
@@ -63,7 +81,9 @@ const Profile = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Hospital</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Hospital
+                    </label>
                     <input
                       type="text"
                       defaultValue="Cairo University Hospital"
@@ -71,7 +91,9 @@ const Profile = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Years of Experience</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Years of Experience
+                    </label>
                     <input
                       type="number"
                       defaultValue="10"

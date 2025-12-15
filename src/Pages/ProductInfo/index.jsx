@@ -19,7 +19,7 @@ export default function ProductInfo() {
   const [qty, setQty] = useState(1);
   const [isFav, setIsFav] = useState(false);
   const [mainImg, setMainImg] = useState(
-    product ? product.imageUrl || imagesFallback[0] : imagesFallback[0]
+    product ? product.imageUrl || imagesFallback[0] : imagesFallback[0],
   );
 
   const { addItem } = useCart();
@@ -73,7 +73,10 @@ export default function ProductInfo() {
         <div className="pi-right">
           <div className="pi-header">
             <h4 className="category">{product.category}</h4>
-            <button className={`fav ${isFav ? "active" : ""}`} onClick={toggleFav}>
+            <button
+              className={`fav ${isFav ? "active" : ""}`}
+              onClick={toggleFav}
+            >
               {isFav ? "♥" : "♡"}
             </button>
           </div>
@@ -93,16 +96,21 @@ export default function ProductInfo() {
                 <>
                   <span className="old">${product.oldPrice.toFixed(2)}</span>
                   <span className="discount">
-                    {Math.round((1 - product.price / product.oldPrice) * 100)}% off
+                    {Math.round((1 - product.price / product.oldPrice) * 100)}%
+                    off
                   </span>
                 </>
               )}
             </div>
 
             <div className="qty-control">
-              <button onClick={decrease} className="qty-btn">−</button>
+              <button onClick={decrease} className="qty-btn">
+                −
+              </button>
               <div className="qty-num">{qty}</div>
-              <button onClick={increase} className="qty-btn">+</button>
+              <button onClick={increase} className="qty-btn">
+                +
+              </button>
             </div>
           </div>
 
@@ -115,7 +123,9 @@ export default function ProductInfo() {
           </div>
 
           <div className="cta-row">
-            <button className="cart-btn" onClick={onAddToCart}>🛒 Add to cart</button>
+            <button className="cart-btn" onClick={onAddToCart}>
+              🛒 Add to cart
+            </button>
             <button
               className="buy-btn"
               onClick={() => {

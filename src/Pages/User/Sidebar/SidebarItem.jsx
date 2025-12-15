@@ -1,4 +1,9 @@
-export default function SidebarItem({ label, section, activeSection, setActiveSection }) {
+export default function SidebarItem({
+  label,
+  section,
+  activeSection,
+  setActiveSection,
+}) {
   return (
     <li
       className={`cursor-pointer p-2 rounded ${

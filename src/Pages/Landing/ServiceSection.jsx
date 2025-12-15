@@ -1,10 +1,10 @@
 import React from "react";
 import medicineimg from "../../assets/medecineimg.png";
 import { Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
 const ServicesSection = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <section className="w-full bg-white flex justify-center py-[53px] px-4 lg:py-[119px]">
       <div
@@ -22,7 +22,7 @@ const ServicesSection = () => {
             data-aos-duration="600"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.servicesSection.title')}
+            {t("landing.servicesSection.title")}
           </h2>
 
           <p
@@ -32,7 +32,7 @@ const ServicesSection = () => {
             data-aos-duration="700"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.servicesSection.paragraph')}
+            {t("landing.servicesSection.paragraph")}
           </p>
 
           <Link
@@ -55,7 +55,7 @@ const ServicesSection = () => {
             data-aos-duration="750"
             data-aos-easing="ease-out-sine"
           >
-            {t('landing.servicesSection.button')}
+            {t("landing.servicesSection.button")}
           </Link>
         </div>
 

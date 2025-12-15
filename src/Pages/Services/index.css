@@ -113,7 +113,9 @@
   opacity: 1;
   margin: 0 6px !important;
   border-radius: 999px;
-  transition: transform 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
 }
 
 .section .swiper .swiper-pagination-bullet-active {

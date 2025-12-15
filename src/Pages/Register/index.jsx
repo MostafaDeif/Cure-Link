@@ -26,7 +26,6 @@ export default function SignUp() {
   return (
     <div className="flex justify-center items-center min-h-screen w-full bg-gray-50 px-4">
       <div className="flex flex-col lg:flex-row w-full max-w-5xl h-auto lg:h-[600px] shadow-lg rounded-lg overflow-hidden bg-white">
-
         <div className="hidden lg:block lg:w-1/2">
           <img
             className="h-full w-full object-cover"

@@ -76,10 +76,7 @@ export default function FavoritesSection({ ProductCardUser }) {
       )}
 
       {/* Notification at bottom */}
-      <Notification
-        message={notification.message}
-        show={notification.show}
-      />
+      <Notification message={notification.message} show={notification.show} />
     </div>
   );
 }

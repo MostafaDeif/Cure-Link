@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import cameraIcon from "../../assets/camera.png";
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 export default function PharmacyRegister({ setUser }) {
   const [ownerName, setOwnerName] = useState("");
@@ -65,19 +66,21 @@ export default function PharmacyRegister({ setUser }) {
         mapInstanceRef.current.on("click", (e) => {
           const { lat, lng } = e.latlng;
           setLocation({ lat, lon: lng });
-          setAddress(`Latitude: ${lat.toFixed(5)}, Longitude: ${lng.toFixed(5)}`);
+          setAddress(
+            `Latitude: ${lat.toFixed(5)}, Longitude: ${lng.toFixed(5)}`,
+          );
 
           if (markerRef.current) {
             markerRef.current.setLatLng(e.latlng);
           } else {
             markerRef.current = L.marker(e.latlng, { draggable: true }).addTo(
-              mapInstanceRef.current
+              mapInstanceRef.current,
             );
             markerRef.current.on("dragend", (ev) => {
               const pos = ev.target.getLatLng();
               setLocation({ lat: pos.lat, lon: pos.lng });
               setAddress(
-                `Latitude: ${pos.lat.toFixed(5)}, Longitude: ${pos.lng.toFixed(5)}`
+                `Latitude: ${pos.lat.toFixed(5)}, Longitude: ${pos.lng.toFixed(5)}`,
               );
             });
           }
@@ -97,13 +100,15 @@ export default function PharmacyRegister({ setUser }) {
       (position) => {
         const { latitude, longitude } = position.coords;
         setLocation({ lat: latitude, lon: longitude });
-        setAddress(`Latitude: ${latitude.toFixed(5)}, Longitude: ${longitude.toFixed(5)}`);
+        setAddress(
+          `Latitude: ${latitude.toFixed(5)}, Longitude: ${longitude.toFixed(5)}`,
+        );
         setLoadingLocation(false);
       },
       () => {
         alert("Unable to fetch location. Please allow location access.");
         setLoadingLocation(false);
-      }
+      },
     );
   };
 
@@ -149,7 +154,13 @@ export default function PharmacyRegister({ setUser }) {
       console.log("=== FormData being sent to backend ===");
       for (let pair of formData.entries()) {
         if (pair[1] instanceof File) {
-          console.log(pair[0], ":", pair[1].name, `(${pair[1].size} bytes)`, `type: ${pair[1].type}`);
+          console.log(
+            pair[0],
+            ":",
+            pair[1].name,
+            `(${pair[1].size} bytes)`,
+            `type: ${pair[1].type}`,
+          );
         } else {
           console.log(pair[0], ":", pair[1]);
         }
@@ -157,9 +168,13 @@ export default function PharmacyRegister({ setUser }) {
       console.log("API URL:", `${API_BASE_URL}/api/auth/signup`);
       console.log("=====================================");
 
-      const response = await axios.post(`${API_BASE_URL}/api/auth/signup`, formData, {
-        timeout: 30000,
-      });
+      const response = await axios.post(
+        `${API_BASE_URL}/api/auth/signup`,
+        formData,
+        {
+          timeout: 30000,
+        },
+      );
 
       if (response.data) {
         if (response.data.token) {
@@ -168,9 +183,9 @@ export default function PharmacyRegister({ setUser }) {
 
         let userObj = response.data.user;
         if (userObj) {
-          localStorage.setItem('user', JSON.stringify(userObj));
+          localStorage.setItem("user", JSON.stringify(userObj));
           if (setUser) setUser(userObj);
-          window.dispatchEvent(new Event('auth-change'));
+          window.dispatchEvent(new Event("auth-change"));
         }
 
         navigate("/under-review");
@@ -185,7 +200,9 @@ export default function PharmacyRegister({ setUser }) {
   };
 
   const UploadField = ({ label, file, setFile, isLicense }) => (
-    <div className={`flex flex-col items-center ${isLicense ? "w-full" : "w-[48%]"}`}>
+    <div
+      className={`flex flex-col items-center ${isLicense ? "w-full" : "w-[48%]"}`}
+    >
       <label className="text-sm font-medium mb-1">{label}</label>
       <div className="relative w-full h-28 bg-white border-2 border-dashed border-gray-300 rounded-lg shadow-sm flex flex-col items-center justify-center cursor-pointer hover:border-indigo-400 transition">
         {file ? (
@@ -236,7 +253,10 @@ export default function PharmacyRegister({ setUser }) {
         Pharmacy Registration
       </h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-xl">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 w-full max-w-xl"
+      >
         {error && (
           <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
             {error}
@@ -307,7 +327,9 @@ export default function PharmacyRegister({ setUser }) {
         />
 
         <div>
-          <label className="text-sm font-medium text-gray-700">Address / Location</label>
+          <label className="text-sm font-medium text-gray-700">
+            Address / Location
+          </label>
           <div className="flex gap-2 mt-2">
             <input
               type="text"
@@ -326,12 +348,22 @@ export default function PharmacyRegister({ setUser }) {
           </div>
 
           <div className="mt-3 w-full h-64 border rounded-lg shadow-md overflow-hidden">
-            <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
-            <p className="text-xs text-gray-500 mt-1">اضغط على الخريطة لتحديد موقعك.</p>
+            <div
+              ref={mapContainerRef}
+              style={{ width: "100%", height: "100%" }}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              اضغط على الخريطة لتحديد موقعك.
+            </p>
           </div>
         </div>
 
-        <UploadField label="Pharmacy License" file={licenseFile} setFile={setLicenseFile} isLicense />
+        <UploadField
+          label="Pharmacy License"
+          file={licenseFile}
+          setFile={setLicenseFile}
+          isLicense
+        />
 
         <div className="flex gap-4">
           <UploadField label="ID Front" file={idFront} setFile={setIdFront} />

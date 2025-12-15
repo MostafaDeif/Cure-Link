@@ -1,21 +1,22 @@
-import React, { useState } from 'react'
-import logo from '../../assets/logo.jpg';
+import React, { useState } from "react";
+import logo from "../../assets/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 function parseJwt(token) {
   try {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
       atob(base64)
-        .split('')
+        .split("")
         .map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
         })
-        .join('')
+        .join(""),
     );
     return JSON.parse(jsonPayload);
   } catch {
@@ -24,28 +25,28 @@ function parseJwt(token) {
 }
 
 export default function Login({ setAuth, setUser }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
         email,
-        password
+        password,
       });
-      console.log( response.data.data.token);
+      console.log(response.data.data.token);
       // Handle successful login
       if (response.data) {
         // Store token if provided
         if (response.data.data.token) {
-          localStorage.setItem('token', response.data.data.token);
+          localStorage.setItem("token", response.data.data.token);
         }
 
         let userObj = null;
@@ -53,20 +54,28 @@ export default function Login({ setAuth, setUser }) {
         // Prefer explicit user object from server
         if (response.data.data.user) {
           userObj = response.data.data.user;
-          localStorage.setItem('user', JSON.stringify(userObj));
+          localStorage.setItem("user", JSON.stringify(userObj));
         } else if (response.data.data.token) {
           // Try to parse JWT token to extract user info (role/name/id)
           const payload = parseJwt(response.data.data.token);
           if (payload) {
             userObj = {
               id: payload.sub || payload.userId || payload.id,
-              name: payload.name || payload.fullName || payload.username || payload.email,
+              name:
+                payload.name ||
+                payload.fullName ||
+                payload.username ||
+                payload.email,
               email: payload.email,
-              role: payload.role || payload.roles || payload?.role?.[0] || 'customer',
+              role:
+                payload.role ||
+                payload.roles ||
+                payload?.role?.[0] ||
+                "customer",
             };
             // persist a minimal user object so other components can read it
             try {
-              localStorage.setItem('user', JSON.stringify(userObj));
+              localStorage.setItem("user", JSON.stringify(userObj));
             } catch {
               // Ignore localStorage errors
             }
@@ -78,33 +87,36 @@ export default function Login({ setAuth, setUser }) {
         if (setAuth) setAuth(true);
 
         // Dispatch custom event for same-tab listeners
-        window.dispatchEvent(new Event('auth-change'));
+        window.dispatchEvent(new Event("auth-change"));
 
         // Touch a temp key to trigger storage events in other tabs
         try {
-          localStorage.setItem('__authTimestamp', String(Date.now()));
-          localStorage.removeItem('__authTimestamp');
+          localStorage.setItem("__authTimestamp", String(Date.now()));
+          localStorage.removeItem("__authTimestamp");
         } catch {
           // Ignore localStorage errors
         }
 
         // Navigate based on role
-        const userRole = userObj?.role || 'customer';
-        if (userRole === 'admin') {
-          navigate('/admin');
-        } else if (userRole === 'doctor') {
-          navigate('/doctor-dashboard');
-        } else if (userRole === 'nurse') {
-          navigate('/nursing');
-        } else if (userRole === 'pharmacy') {
-          navigate('/pharmacy-dashboard');
+        const userRole = userObj?.role || "customer";
+        if (userRole === "admin") {
+          navigate("/admin");
+        } else if (userRole === "doctor") {
+          navigate("/doctor-dashboard");
+        } else if (userRole === "nurse") {
+          navigate("/nursing");
+        } else if (userRole === "pharmacy") {
+          navigate("/pharmacy-dashboard");
         } else {
-          navigate('/');
+          navigate("/");
         }
       }
     } catch (error) {
-      setError(error.response?.data?.data?.message || 'Login failed. Please check your credentials.');
-      console.error('Login error:', error);
+      setError(
+        error.response?.data?.data?.message ||
+          "Login failed. Please check your credentials.",
+      );
+      console.error("Login error:", error);
     } finally {
       setLoading(false);
     }
@@ -114,7 +126,6 @@ export default function Login({ setAuth, setUser }) {
     <div className="flex justify-center items-center min-h-screen w-full bg-gray-50 px-4">
       {/* Container */}
       <div className="flex flex-col lg:flex-row w-full max-w-5xl h-auto lg:h-[700px] shadow-lg rounded-lg overflow-hidden bg-white">
-
         {/* الصورة (تظهر فقط في lg وما فوق) */}
         <div className="hidden lg:block lg:w-1/2">
           <img
@@ -126,8 +137,13 @@ export default function Login({ setAuth, setUser }) {
 
         {/* الفورم */}
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-6">
-          <form onSubmit={handleSubmit} className="w-full max-w-sm flex flex-col items-center justify-center">
-            <h2 className="text-3xl lg:text-4xl text-gray-900 font-medium">Sign in</h2>
+          <form
+            onSubmit={handleSubmit}
+            className="w-full max-w-sm flex flex-col items-center justify-center"
+          >
+            <h2 className="text-3xl lg:text-4xl text-gray-900 font-medium">
+              Sign in
+            </h2>
             <p className="text-sm text-gray-500/90 mt-3 text-center">
               Welcome back! Please sign in to continue
             </p>
@@ -153,7 +169,9 @@ export default function Login({ setAuth, setUser }) {
             {/* Divider */}
             <div className="flex items-center gap-4 w-full my-5">
               <div className="w-full h-px bg-gray-300/90"></div>
-              <p className="text-sm text-gray-500/90 whitespace-nowrap">or sign in with email</p>
+              <p className="text-sm text-gray-500/90 whitespace-nowrap">
+                or sign in with email
+              </p>
               <div className="w-full h-px bg-gray-300/90"></div>
             </div>
 
@@ -211,9 +229,13 @@ export default function Login({ setAuth, setUser }) {
             <div className="w-full flex items-center justify-between mt-8 text-gray-500/80">
               <div className="flex items-center gap-2">
                 <input className="h-5" type="checkbox" id="checkbox" />
-                <label className="text-sm" htmlFor="checkbox">Remember me</label>
+                <label className="text-sm" htmlFor="checkbox">
+                  Remember me
+                </label>
               </div>
-              <a className="text-sm underline" href="#">Forgot password?</a>
+              <a className="text-sm underline" href="#">
+                Forgot password?
+              </a>
             </div>
 
             {/* Login Button */}
@@ -222,13 +244,16 @@ export default function Login({ setAuth, setUser }) {
               disabled={loading}
               className="mt-8 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? "Logging in..." : "Login"}
             </button>
 
             {/* Sign up Link */}
             <p className="text-gray-500/90 text-sm mt-4 text-center">
               Don't have an account?{" "}
-              <Link to="/register" className="text-indigo-400 hover:underline myColor">
+              <Link
+                to="/register"
+                className="text-indigo-400 hover:underline myColor"
+              >
                 Sign up
               </Link>
             </p>
@@ -236,5 +261,5 @@ export default function Login({ setAuth, setUser }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

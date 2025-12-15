@@ -1,27 +1,57 @@
-import React from 'react'
-import "./index.css"
-import HealthcareCategorySelector from '../../Components/HealthcareCategorySelector'
-import { doctorsData } from '../../Data/doctorsData'
-import nursesData from '../../Data/nurseData'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Link } from 'react-router-dom'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import masrPharmacy from '../../assets/masrPharmacy.png'
-import maherPharmacy from '../../assets/maherPharmacy.png'
-import DwaPharmacy from '../../assets/DwaPharmacy.png'
-import ElezabyPharmacy from '../../assets/ElezabyPharmacy.png'
-import KhabiryPharmacy from '../../assets/KhabiryPharmacy.png'
+import React from "react";
+import "./index.css";
+import HealthcareCategorySelector from "../../Components/HealthcareCategorySelector";
+import { doctorsData } from "../../Data/doctorsData";
+import nursesData from "../../Data/nurseData";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router-dom";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import masrPharmacy from "../../assets/masrPharmacy.png";
+import maherPharmacy from "../../assets/maherPharmacy.png";
+import DwaPharmacy from "../../assets/DwaPharmacy.png";
+import ElezabyPharmacy from "../../assets/ElezabyPharmacy.png";
+import KhabiryPharmacy from "../../assets/KhabiryPharmacy.png";
 
 const pharmaciesData = [
-  { id: 1, name: 'Misr Pharmacy', image: masrPharmacy, location: 'Cairo', rating: '4.6' },
-  { id: 2, name: 'Maher Pharmacy', image: maherPharmacy, location: 'Alexandria', rating: '4.4' },
-  { id: 3, name: 'El Khabiry', image: KhabiryPharmacy, location: 'Giza', rating: '4.5' },
-  { id: 4, name: 'Dawaa Misr', image: DwaPharmacy, location: 'Tanta', rating: '4.3' },
-  { id: 5, name: 'Elezaby', image: ElezabyPharmacy, location: 'Aswan', rating: '4.7' },
-]
+  {
+    id: 1,
+    name: "Misr Pharmacy",
+    image: masrPharmacy,
+    location: "Cairo",
+    rating: "4.6",
+  },
+  {
+    id: 2,
+    name: "Maher Pharmacy",
+    image: maherPharmacy,
+    location: "Alexandria",
+    rating: "4.4",
+  },
+  {
+    id: 3,
+    name: "El Khabiry",
+    image: KhabiryPharmacy,
+    location: "Giza",
+    rating: "4.5",
+  },
+  {
+    id: 4,
+    name: "Dawaa Misr",
+    image: DwaPharmacy,
+    location: "Tanta",
+    rating: "4.3",
+  },
+  {
+    id: 5,
+    name: "Elezaby",
+    image: ElezabyPharmacy,
+    location: "Aswan",
+    rating: "4.7",
+  },
+];
 
 const PersonCard = ({ name, image, subtitle, meta }) => (
   <div className="person-card" role="group" aria-label={name}>
@@ -32,7 +62,7 @@ const PersonCard = ({ name, image, subtitle, meta }) => (
       <div className="person-meta">{meta}</div>
     </div>
   </div>
-)
+);
 
 // Swiper will be used instead of the custom AutoSlider
 
@@ -48,19 +78,26 @@ export default function Services() {
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={16}
             slidesPerView={3}
-            
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000, disableOnInteraction: false }}
             breakpoints={{
               320: { slidesPerView: 1 },
               640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 }
+              1024: { slidesPerView: 3 },
             }}
           >
             {doctorsData.map((d, i) => (
               <SwiperSlide key={i}>
-                <Link to={`/doctor-profile/${encodeURIComponent(d.name)}`} className="block">
-                  <PersonCard name={d.name} image={d.imageUrl} subtitle={d.specialty} meta={`${d.rating} • ${d.distance}`} />
+                <Link
+                  to={`/doctor-profile/${encodeURIComponent(d.name)}`}
+                  className="block"
+                >
+                  <PersonCard
+                    name={d.name}
+                    image={d.imageUrl}
+                    subtitle={d.specialty}
+                    meta={`${d.rating} • ${d.distance}`}
+                  />
                 </Link>
               </SwiperSlide>
             ))}
@@ -73,19 +110,26 @@ export default function Services() {
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={16}
             slidesPerView={3}
-            
             pagination={{ clickable: true }}
             autoplay={{ delay: 2000, disableOnInteraction: false }}
             breakpoints={{
               320: { slidesPerView: 1 },
               640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 }
+              1024: { slidesPerView: 3 },
             }}
           >
             {nursesData.slice(0, 8).map((n, i) => (
               <SwiperSlide key={i}>
-                <Link to={`/nurse-book/${encodeURIComponent(n.nameEn || n.name)}`} className="block">
-                  <PersonCard name={n.name} image={n.imageUrl} subtitle={n.specialty} meta={`${n.rating} • ${n.distance}`} />
+                <Link
+                  to={`/nurse-book/${encodeURIComponent(n.nameEn || n.name)}`}
+                  className="block"
+                >
+                  <PersonCard
+                    name={n.name}
+                    image={n.imageUrl}
+                    subtitle={n.specialty}
+                    meta={`${n.rating} • ${n.distance}`}
+                  />
                 </Link>
               </SwiperSlide>
             ))}
@@ -98,19 +142,26 @@ export default function Services() {
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={16}
             slidesPerView={3}
-            
             pagination={{ clickable: true }}
             autoplay={{ delay: 3500, disableOnInteraction: false }}
             breakpoints={{
               320: { slidesPerView: 1 },
               640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 }
+              1024: { slidesPerView: 3 },
             }}
           >
             {pharmaciesData.map((p) => (
               <SwiperSlide key={p.id}>
-                <Link to={`/pharmacy?pharmacy=${encodeURIComponent(p.name)}`} className="block">
-                  <PersonCard name={p.name} image={p.image} subtitle={p.location} meta={`${p.rating} rating`} />
+                <Link
+                  to={`/pharmacy?pharmacy=${encodeURIComponent(p.name)}`}
+                  className="block"
+                >
+                  <PersonCard
+                    name={p.name}
+                    image={p.image}
+                    subtitle={p.location}
+                    meta={`${p.rating} rating`}
+                  />
                 </Link>
               </SwiperSlide>
             ))}
@@ -118,5 +169,5 @@ export default function Services() {
         </section>
       </main>
     </div>
-  )
+  );
 }

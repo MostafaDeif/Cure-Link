@@ -16,12 +16,13 @@ const bookingSchema = z.object({
   notes: z.string().optional(),
 });
 
-
 export default function NurseProfileUser({ nursesData }) {
   const navigate = useNavigate();
   const { nurseName } = useParams();
   const decodedName = nurseName ? decodeURIComponent(nurseName) : nurseName;
-  const nurse = nursesData.find((n) => n.nameEn === decodedName || n.name === decodedName);
+  const nurse = nursesData.find(
+    (n) => n.nameEn === decodedName || n.name === decodedName,
+  );
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -38,7 +39,7 @@ export default function NurseProfileUser({ nursesData }) {
     notes: "",
   });
 
-  const [errors, setErrors] = useState({}); 
+  const [errors, setErrors] = useState({});
 
   if (!nurse) return <p className="p-6 text-red-500">Nurse not found</p>;
 
@@ -48,7 +49,7 @@ export default function NurseProfileUser({ nursesData }) {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const daysArray = Array.from({ length: firstDay }, () => null).concat(
-    Array.from({ length: daysInMonth }, (_, i) => i + 1)
+    Array.from({ length: daysInMonth }, (_, i) => i + 1),
   );
 
   const availableSlots = [
@@ -104,7 +105,7 @@ export default function NurseProfileUser({ nursesData }) {
       setBookingForm({ fullName: "", phone: "", notes: "" });
       // navigate user to their orders page so they can see the request
       try {
-        navigate('/user');
+        navigate("/user");
       } catch {}
     }
   };
@@ -195,8 +196,8 @@ export default function NurseProfileUser({ nursesData }) {
                       selectedDate?.getFullYear() === year
                         ? "bg-blue-600 text-white"
                         : isPast
-                        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                        : "bg-white text-gray-700 border-gray-300 hover:bg-blue-200"
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          : "bg-white text-gray-700 border-gray-300 hover:bg-blue-200"
                     }`}
                   >
                     {day}
@@ -205,7 +206,7 @@ export default function NurseProfileUser({ nursesData }) {
               })()
             ) : (
               <div key={idx}></div>
-            )
+            ),
           )}
         </div>
       </section>

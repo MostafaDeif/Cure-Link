@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
 const WhatsNewSection = () => {
-  const { t } = useTranslation()
-  const cards = t('landing.whatsnew.cards', { returnObjects: true }) || []
+  const { t } = useTranslation();
+  const cards = t("landing.whatsnew.cards", { returnObjects: true }) || [];
 
   const delayOrder = [1, 0, 2];
 
@@ -15,7 +15,7 @@ const WhatsNewSection = () => {
         data-aos="fade-up"
         data-aos-duration="700"
       >
-        {t('landing.whatsnew.title')}
+        {t("landing.whatsnew.title")}
       </h2>
 
       <div className="flex flex-col md:flex-row-reverse justify-center items-center gap-[40px] px-4">
