@@ -113,25 +113,26 @@ export default function Nav() {
 
         {user ? (
           <Link
-            to="/user"
-            className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition"
-          >
-            <span className="inline-block h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
-              <img
-                src={
-                  user.avatar ||
-                  `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                    user.name || "User"
-                  )}&background=426287&color=fff`
-                }
-                alt="User Profile"
-                className="h-full w-full object-cover"
-              />
-            </span>
-            <span className="font-medium text-gray-700">
-              {user.name || t("nav.profile")}
-            </span>
-          </Link>
+  to="/user"
+  className="
+    flex items-center gap-2
+    px-5 py-2
+    rounded-full
+    bg-gray-50
+    text-gray-700
+    font-medium
+    border border-gray-200
+    hover:bg-blue-50
+    hover:text-blue-600
+    hover:border-blue-300
+    transition-all duration-200
+  "
+>
+  <span>
+    {user.name || t("nav.profile")}
+  </span>
+</Link>
+
         ) : (
           <Link
             to="/login"

@@ -50,11 +50,11 @@ import NurseAppointments from "./Pages/Nursing/NurseAppointments.jsx";
 import FindNurse from "./Pages/Nurse/FindNurse.jsx";
 import nursesData from "./Data/nurseData";
 import BookNurse from "./Pages/Nurse/BookNurse";
-import AllNurses from "./Pages/Nurse/AllNurses.jsx";
+import AllNurses from "./Pages/Nurse/AllNurses";
 
 import FindDoctors from "./Pages/Doctor/find_doctors";
 import DoctorProfile from "./Pages/Doctor/DoctorProfile";
-import { doctorsData } from "./Data/doctorsData.js";
+import { doctorsData } from "./Data/doctorsData";
 import AllDoctors from "./Pages/Doctor/AllDoctors";
 
 import Footer from "./Components/Footer/Footer";
@@ -70,7 +70,7 @@ const Layout = ({ children }) => {
     "/medicine",
     "/pharmacy",
     "/user",
-    "/admin",
+    // "/admin",
     "/cart",
     "/services",
     "/find_doctor",
@@ -84,7 +84,7 @@ const Layout = ({ children }) => {
     "/about",
     "/medicine",
     "/user",
-    "/admin",
+    // "/admin",
     "/cart",
     "/services",
     "/doctor",
@@ -185,10 +185,9 @@ const App = () => {
             <Route
               path="/admin"
               element={
-            <ProtectedRoute requiredRole="admin">
+                <ProtectedRoute requiredRole="admin">
                   <Admin />
-            </ProtectedRoute>
-
+                </ProtectedRoute>
               }
             />
 
