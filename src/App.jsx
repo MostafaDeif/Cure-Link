@@ -19,7 +19,7 @@ import Nav from "./Components/Nav";
 import Home from "./Pages/Home";
 import About from "./Pages/About/Index";
 import Medicine from "./Pages/Medicine";
-import Nursing from "./Pages/Nursing/index.jsx";
+// import Nursing from "./Pages/Nursing/index.jsx";
 import User from "./Pages/User/Userprofile.jsx";
 import Admin from "./Pages/Admin";
 import Cart from "./Pages/Cart";
@@ -49,8 +49,8 @@ import NurseAppointments from "./Pages/Nursing/NurseAppointments.jsx";
 
 import FindNurse from "./Pages/Nurse/FindNurse.jsx";
 import nursesData from "./Data/nurseData";
-import BookNurse from "./Pages/Nurse/BookNurse";
-import AllNurses from "./Pages/Nurse/AllNurses";
+import BookNurse from "./Pages/Nurse/BookNurse.jsx";
+import AllNurses from "./Pages/Nurse/AllNurses.jsx";
 
 import FindDoctors from "./Pages/Doctor/find_doctors";
 import DoctorProfile from "./Pages/Doctor/DoctorProfile";
